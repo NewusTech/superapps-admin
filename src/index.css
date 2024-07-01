@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+    background: #0705EC;
+    color: white;
+    border-radius: 6px;
+}
+
+.react-calendar__tile--now {
+    border-radius: 6px;
+    color: white;
+    background-color: #0704ec;
+}
