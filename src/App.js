@@ -18,6 +18,7 @@ import Pengguna from './pages/pengguna/Pengguna';
 import TambahPengguna from './pages/pengguna/TambahPengguna';
 import Peran from './pages/peran-pengguna/Peran';
 import TambahPeran from './pages/peran-pengguna/TambahPeran';
+import TambahRute from './pages/rute/TambahRute';
 
 const App = () => {
   return (
@@ -46,6 +47,8 @@ const App = () => {
             <Route path="/jadwal" element={<ProtectedRoute element={<Jadwal />} />} />
             <Route path="/mobil" element={<ProtectedRoute element={<Mobil />} />} />
             <Route path="/rute" element={<ProtectedRoute element={<Rute />} />} />
+            <Route path="/rute/tambah" element={<ProtectedRoute element={<TambahRute />} />} />
+
             <Route path="/cabang" element={<ProtectedRoute element={<Cabang />} />} />
             <Route path="/titik-lokasi" element={<ProtectedRoute element={<TitikLokasi />} />} />
             <Route path="/kursi" element={<ProtectedRoute element={<Kursi />} />} />

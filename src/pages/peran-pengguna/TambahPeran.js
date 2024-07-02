@@ -16,7 +16,7 @@ const TambahPeran = () => {
       </Breadcrumb>
       <div className="bg-white w-1/2 mt-10">
         <form className="p-10">
-          <div className="flex gap-4 flex-col w-[45%]">
+          <div className="flex gap-4 flex-col w-full">
             <label className="font-poppins">Role</label>
             <input
               placeholder="Masukan nama lengkap"
@@ -24,7 +24,7 @@ const TambahPeran = () => {
               className="border shadow py-3 px-4 rounded-sm"
             />
           </div>
-          <div className="flex gap-10 pt-5">
+          <div className="flex gap-10 pt-10">
             <div className="flex items-center gap-2">
               <Checkbox id="create" />
               <Label htmlFor="create">Create</Label>
@@ -42,7 +42,7 @@ const TambahPeran = () => {
               <Label htmlFor="delete">Delete</Label>
             </div>
           </div>
-          <div className="pt-5 w-full">
+          <div className="pt-10 w-full">
             <Button text="Tambah" type="Tambah" height="48" />
           </div>
         </form>
