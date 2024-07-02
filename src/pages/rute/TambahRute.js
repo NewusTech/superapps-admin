@@ -7,7 +7,7 @@ const TambahRute = () => {
   return (
     <section className="p-5 min-h-screen">
       <Breadcrumb>
-        <Link to="/pengguna" className="flex pr-3 items-center text-[#0705EC]">
+        <Link to="/rute" className="flex pr-3 items-center text-[#0705EC]">
           <p>Rute</p>
         </Link>
         <Breadcrumb.Item active="true" className="">
