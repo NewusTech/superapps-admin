@@ -15,7 +15,7 @@ const Pengguna = () => {
       </div>
       <div className="pt-4">
         <div>
-          <table className="table-auto w-full text-xs">
+          <table className="table-auto w-full">
             <thead>
               <tr className="text-center bg-gray-100">
                 <th className="p-3">Nama</th>

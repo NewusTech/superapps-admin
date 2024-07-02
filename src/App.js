@@ -16,6 +16,8 @@ import TitikLokasi from './pages/titik-lokasi/TitikLokasi';
 import Kursi from './pages/kursi/Kursi';
 import Pengguna from './pages/pengguna/Pengguna';
 import TambahPengguna from './pages/pengguna/TambahPengguna';
+import Peran from './pages/peran-pengguna/Peran';
+import TambahPeran from './pages/peran-pengguna/TambahPeran';
 
 const App = () => {
   return (
@@ -52,6 +54,8 @@ const App = () => {
               path="/pengguna/tambah"
               element={<ProtectedRoute element={<TambahPengguna />} />}
             />
+            <Route path="/peran-pengguna" element={<ProtectedRoute element={<Peran />} />} />
+            <Route path="/peran/tambah" element={<ProtectedRoute element={<TambahPeran />} />} />
           </Route>
         </Route>
       </Routes>
