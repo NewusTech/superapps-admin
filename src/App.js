@@ -20,6 +20,7 @@ import Peran from './pages/peran-pengguna/Peran';
 import TambahPeran from './pages/peran-pengguna/TambahPeran';
 import TambahRute from './pages/rute/TambahRute';
 import TambahCabang from './pages/cabang/TambahCabang';
+import TambahTitik from './pages/titik-lokasi/TambahTitik';
 
 const App = () => {
   return (
@@ -54,6 +55,8 @@ const App = () => {
             <Route path="/cabang/tambah" element={<ProtectedRoute element={<TambahCabang />} />} />
 
             <Route path="/titik-lokasi" element={<ProtectedRoute element={<TitikLokasi />} />} />
+            <Route path="/titik/tambah" element={<ProtectedRoute element={<TambahTitik />} />} />
+
             <Route path="/kursi" element={<ProtectedRoute element={<Kursi />} />} />
             <Route path="/pengguna" element={<ProtectedRoute element={<Pengguna />} />} />
             <Route
