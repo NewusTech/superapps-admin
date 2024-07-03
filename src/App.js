@@ -23,6 +23,7 @@ import TambahCabang from './pages/cabang/TambahCabang';
 import TambahTitik from './pages/titik-lokasi/TambahTitik';
 import Supir from './pages/supir/Supir';
 import TambahSupir from './pages/supir/TambahSupir';
+import TambahMobil from './pages/mobil/TambahMobil';
 
 const App = () => {
   return (
@@ -49,7 +50,10 @@ const App = () => {
               element={<ProtectedRoute element={<DatabaseKonsumen />} />}
             />
             <Route path="/jadwal" element={<ProtectedRoute element={<Jadwal />} />} />
+
             <Route path="/mobil" element={<ProtectedRoute element={<Mobil />} />} />
+            <Route path="/mobil/tambah" element={<ProtectedRoute element={<TambahMobil />} />} />
+
             <Route path="/rute" element={<ProtectedRoute element={<Rute />} />} />
             <Route path="/rute/tambah" element={<ProtectedRoute element={<TambahRute />} />} />
 
