@@ -1,6 +1,6 @@
 import SearchInput from '../../components/Search';
 import Button from '../../components/Button';
-import { Breadcrumb, Select } from 'flowbite-react';
+import { Breadcrumb } from 'flowbite-react';
 import { Link } from 'react-router-dom';
 
 const TambahPengguna = () => {
@@ -14,7 +14,7 @@ const TambahPengguna = () => {
           <p className="ml-3">Profile</p>
         </Breadcrumb.Item>
       </Breadcrumb>
-      <div className="pt-16 bg-white">
+      <div className="mt-16 p-5 bg-white">
         <form>
           <div className="flex-wrap flex gap-10">
             <div className="flex gap-4 flex-col w-[45%]">
@@ -44,20 +44,20 @@ const TambahPengguna = () => {
             </div>
             <div className="flex gap-4 flex-col w-[45%]">
               <label className="font-poppins">Role</label>
-              <Select id="role" required>
+              <select id="role" className="border shadow py-3 px-4 rounded-sm" required>
                 <option>Super Admin</option>
                 <option>Admin</option>
                 <option>Client</option>
-              </Select>
+              </select>
             </div>
             <div className="flex gap-4 flex-col w-[45%]">
               <label className="font-poppins">Cabang</label>
-              <Select id="Cabang" required>
+              <select id="Cabang" className="border-none shadow py-3 px-4 rounded-sm" required>
                 <option>United States</option>
                 <option>Canada</option>
                 <option>France</option>
                 <option>Germany</option>
-              </Select>
+              </select>
             </div>
           </div>
           <div className="pt-10 w-full">
