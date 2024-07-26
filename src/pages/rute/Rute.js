@@ -1,21 +1,29 @@
 import SearchInput from '../../components/Search';
 import Button from '../../components/Button';
 import { Link } from 'react-router-dom';
-
-const orders = [
-  { dari: 'Lampung', ke: 'Palembang', jamBerangkat: '08.00', harga: '350.000' },
-  { dari: 'Lampung', ke: 'Palembang', jamBerangkat: '08.00', harga: '350.000' },
-  { dari: 'Lampung', ke: 'Palembang', jamBerangkat: '08.00', harga: '350.000' },
-  { dari: 'Lampung', ke: 'Palembang', jamBerangkat: '08.00', harga: '350.000' },
-  { dari: 'Lampung', ke: 'Palembang', jamBerangkat: '08.00', harga: '350.000' },
-  { dari: 'Jakarta', ke: 'Lampung', jamBerangkat: '08.00', harga: '250.000' },
-  { dari: 'Jakarta', ke: 'Lampung', jamBerangkat: '08.00', harga: '250.000' },
-  { dari: 'Jakarta', ke: 'Lampung', jamBerangkat: '08.00', harga: '250.000' },
-  { dari: 'Jakarta', ke: 'Lampung', jamBerangkat: '08.00', harga: '250.000' },
-  { dari: 'Jakarta', ke: 'Lampung', jamBerangkat: '08.00', harga: '250.000' },
-];
+import { useEffect, useState } from 'react';
+import Loading from '../../components/Loading';
+import { getAllRute } from '../../service/api';
 
 const Rute = () => {
+  const [rute, setRute] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const getRute = async () => {
+    setIsLoading(true);
+    try {
+      const response = await getAllRute();
+      setRute(response?.data.data)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setIsLoading(false);
+    }
+  }
+  console.log(rute)
+
+  useEffect(() => {
+    getRute();
+  }, [])
   return (
     <section className="min-h-screen">
       <div className="">
@@ -27,28 +35,43 @@ const Rute = () => {
         </div>
       </div>
       <div className="pt-4">
-        <div>
-          <table className="table-auto w-full text-xs">
-            <thead>
-              <tr className="text-center bg-gray-100">
-                <th className="p-3">Dari</th>
-                <th className="p-3">Ke</th>
-                <th className="p-3">Jam Berangkat</th>
-                <th className="p-3">Harga</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((_, index) => (
-                <tr key={index} className="border-b text-center">
-                  <td className="p-3 px-4">{_.dari}</td>
-                  <td className="p-3">{_.ke}</td>
-                  <td className="p-3">{_.jamBerangkat}</td>
-                  <td className="p-3">{_.harga}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        {
+          isLoading ? (
+            <Loading />
+          ) :
+            <div>
+              <table className="table-auto w-full text-xs">
+                <thead>
+                  <tr className="text-center bg-gray-100">
+                    <th className="p-3">Dari</th>
+                    <th className="p-3">Ke</th>
+                    <th className="p-3">Harga</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    rute.length === 0 ? (
+                      <tr>
+                        <td colSpan={10}>
+                          <p className="text-lg mt-5 font-light text-center">Data Kosong</p>
+                        </td>
+                      </tr>
+                    ) :
+                      rute.map(
+                        (item, index) => (
+                          <tr key={index} className="border-b text-center">
+                            {/* <td className="p-3">{item.id}</td> */}
+                            <td className="p-3 px-4">{item.kota_asal}</td>
+                            <td className="p-3">{item.kota_tujuan}</td>
+                            <td className="p-3">Rp.{item.harga?.toLocaleString("id-ID")}</td>
+                          </tr>
+                        )
+                      )
+                  }
+                </tbody>
+              </table>
+            </div>
+        }
       </div>
     </section>
   );

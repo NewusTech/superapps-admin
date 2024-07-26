@@ -24,6 +24,7 @@ import TambahTitik from './pages/titik-lokasi/TambahTitik';
 import Supir from './pages/supir/Supir';
 import TambahSupir from './pages/supir/TambahSupir';
 import TambahMobil from './pages/mobil/TambahMobil';
+import TambahPesanan from './pages/pesanan/TambahPesanan';
 
 const App = () => {
   return (
@@ -36,6 +37,8 @@ const App = () => {
           <Route index element={<Navigate to="/dashboard" />} />
           <Route element={<Layout />}>
             <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
+            <Route path="/pesanan/tambah" element={<ProtectedRoute element={<TambahPesanan/>} />} />
+
             <Route path="/paket" element={<ProtectedRoute element={<Paket />} />} />
             <Route
               path="/riwayat-pesanan"

@@ -16,6 +16,7 @@ const Login = () => {
     e.preventDefault();
     console.log('Login submitted:', user.email, user.password);
     try {
+      setIsLoading(true);
       const response = await fetch('https://backend-superapps.newus.id/api/auth/login', {
         method: 'POST',
         headers: {
@@ -25,7 +26,6 @@ const Login = () => {
       });
 
       if (response.ok) {
-        setIsLoading(true);
         const data = await response.json();
         console.log(data);
         const { token } = data.data;

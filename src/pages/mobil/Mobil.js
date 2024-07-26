@@ -1,9 +1,21 @@
 import SearchInput from '../../components/Search';
 import Button from '../../components/Button';
-import { ReactComponent as IconPrint } from '../../assets/icons/Print.svg';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 const Mobil = () => {
+  const [mobil, setMobil] = useState([]);
+  const [isLoading, setIsLoading] = useState([]);
+
+  const getMobil = async ()=> {
+    setIsLoading(true);
+
+    try {
+      
+    } catch (error) {
+      
+    }
+  }
   return (
     <section className="min-h-screen">
       <div className="">
