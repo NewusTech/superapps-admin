@@ -2,39 +2,43 @@ import SearchInput from '../../components/Search';
 import Button from '../../components/Button';
 import { Link } from 'react-router-dom';
 
-const TitikLokasi = () => {
+const Pengguna = () => {
   return (
-    <section className="min-h-screen">
+    <>
       <div className="">
         <SearchInput />
         <div className="pt-[29px]">
-          <Link to="/titik/tambah">
-            <Button text="+ Tambah" type="button" width="195" height="48" />
+          <Link to="/pengguna/tambah">
+            <Button text="+ Tambah Rute" type="button" width="195" height="48" />
           </Link>
         </div>
       </div>
       <div className="pt-4">
         <div>
-          <table className="table-auto w-full text-sm">
+          <table className="table-auto w-full">
             <thead>
               <tr className="text-center bg-gray-100">
-                <th className="p-4">Titik Penjemputan</th>
-                <th className="p-4">Cabang</th>
+                <th className="p-3">Nama</th>
+                <th className="p-3">Nomor Telepon</th>
+                <th className="p-3">Email</th>
+                <th className="p-3">Role</th>
               </tr>
             </thead>
             <tbody>
               {[...Array(5)].map((_, index) => (
                 <tr key={index} className="border-b text-center">
-                  <td className="p-4 px-4">Kantor Cabang Ramatranz</td>
-                  <td className="p-4 px-4">Lampung</td>
+                  <td className="p-3 px-4">Dila</td>
+                  <td className="p-3 px-4">08662787236</td>
+                  <td className="p-3 px-4">Dila@gmail.com</td>
+                  <td className="p-3 px-4">2.000.000</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       </div>
-    </section>
+    </>
   );
 };
 
-export default TitikLokasi;
+export default Pengguna;

@@ -4,46 +4,36 @@ import Button from '../../components/Button';
 import Filter from '../../components/Filter';
 import { ReactComponent as IconPrint } from '../../assets/icons/Print.svg'
 import DatePrintFilter from '../../components/DatePrintFilter';
-import { useNavigate } from 'react-router-dom';
+import Loading from '../../components/Loading';
+import { getAllPesanan } from '../../service/api';
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
     const [order, setOrder] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const apiUrl = process.env.REACT_APP_API_URL_LOCAL;
-    const endpoint = '/pesanan/pesanan';
-    const navigate = useNavigate();
-    const token = localStorage.getItem('token')
     const pesanan = async () => {
         setIsLoading(true);
         try {
-            const response = await fetch(`${apiUrl}${endpoint}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-            const responseData = await response.json();
-            if (!token) {
-                navigate('/login')
-            }
-            setOrder(responseData.data)
+            const response = await getAllPesanan();
+            setOrder(response?.data)
         } catch (error) {
-
             console.log(error.name)
-
         } finally {
             setIsLoading(false);
         }
     }
     console.log(order)
     useEffect(() => {
-        pesanan();
+            pesanan();
     }, [])
     return (
         <>
             <div className="">
                 <SearchInput />
                 <div className="pt-[29px]">
-                    <Button text="+ Tambah Pesanan" type='button' width="195" height="48" />
+                    <Link to="/pesanan/tambah">
+                        <Button text="+ Tambah Pesanan" type='button' width="195" height="48" />
+                    </Link>
                 </div>
                 <div className="flex justify-between">
                     <div className="space-x-1 flex items-center pt-4">
@@ -61,9 +51,7 @@ const Dashboard = () => {
 
             <div className="py-2">
                 {isLoading ? (
-                    <div className="flex justify-center items-center pt-20">
-                        <div className="w-16 h-16 border-8 border-t-8 border-t-main border-gray-200 rounded-full animate-spin"></div>
-                    </div>
+                    <Loading />
                 ) : (
                     <div>
                         <table className="table-auto w-full text-xs">
