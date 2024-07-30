@@ -19,6 +19,7 @@ import Pengguna from "pages/pengguna/Pengguna";
 import TambahPengguna from "pages/pengguna/TambahPengguna";
 import PeranPengguna from "pages/peran-pengguna/PeranPengguna";
 import TambahPeranPengguna from "pages/peran-pengguna/TambahPeranPengguna";
+import TambahPesanan from "pages/dashboard/TambahPesanan";
 
 const App = () => {
   return (
@@ -93,6 +94,10 @@ const App = () => {
             <Route
               path="/tambah-peran-pengguna"
               element={<ProtectedRoute element={<TambahPeranPengguna />} />}
+            />
+            <Route
+              path="/tambah-pesanan"
+              element={<ProtectedRoute element={<TambahPesanan />} />}
             />
           </Route>
         </Route>

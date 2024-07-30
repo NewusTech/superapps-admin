@@ -20,7 +20,7 @@ export default function TambahPeranPengguna() {
           <div className="flex flex-row gap-4">
             <div className="flex flex-row gap-2">
               <input
-                type="radio"
+                type="checkbox"
                 id="create"
                 name="permission"
                 className="bg-red-400"
@@ -28,15 +28,30 @@ export default function TambahPeranPengguna() {
               <label htmlFor="create">Create</label>
             </div>
             <div className="flex flex-row gap-2">
-              <input type="radio" id="update" name="permission" />
+              <input
+                type="checkbox"
+                id="update"
+                name="permission"
+                className="bg-red-400"
+              />
               <label htmlFor="update">Update</label>
             </div>
             <div className="flex flex-row gap-2">
-              <input type="radio" id="read" name="permission" />
+              <input
+                type="checkbox"
+                id="read"
+                name="permission"
+                className="bg-red-400"
+              />
               <label htmlFor="read">Read</label>
             </div>
             <div className="flex flex-row gap-2">
-              <input type="radio" id="delete" name="permission" />
+              <input
+                type="checkbox"
+                id="delete"
+                name="permission"
+                className="bg-red-400"
+              />
               <label htmlFor="delete">Delete</label>
             </div>
           </div>
