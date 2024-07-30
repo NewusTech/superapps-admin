@@ -30,6 +30,6 @@ jobs:
       run: npm ci
     - name : Run build
       run: npm run build --if-present
-    - name : change repo
+    #- name : change repo
     #  run : cd /home/newus-admin-superapps/htdocs/admin-superapps.newus.id/_work/mpp-web-fe/mpp-web-fe/mpp-mobile
     #- run : pm2 restart mppdigital.newus.id
