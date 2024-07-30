@@ -116,9 +116,11 @@ const isTokenValid = (token) => {
 const ProtectedRoute = ({ element }) => {
   const token = localStorage.getItem("token");
 
-  // if (!token || !isTokenValid(token)) {
-  //   return <Navigate to="/login" replace state={{ message: 'Token invalid' }} />;
-  // }
+  if (!token || !isTokenValid(token)) {
+    return (
+      <Navigate to="/login" replace state={{ message: "Token invalid" }} />
+    );
+  }
 
   return element;
 };
