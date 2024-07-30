@@ -30,6 +30,21 @@ jobs:
       run: npm ci
     - name : Run build
       run: npm run build --if-present
-    #- name : change repo
-    #  run : cd /home/newus-admin-superapps/htdocs/admin-superapps.newus.id/_work/mpp-web-fe/mpp-web-fe/mpp-mobile
-    #- run : pm2 restart mppdigital.newus.id
+    - name : change repo
+      run : cd /home/newus-admin-superapps/htdocs/admin-superapps.newus.id/actions-runner/_work/superapps-admin/superapps-admin
+    - name : restart PM2
+      run : |
+          APP_NAME="admin-superapps.newus.id"
+          APP_ID="15"
+
+          if pm2 restart $APP_NAME; then
+            echo "Successfully restarted app with name $APP_NAME"
+          else
+            echo "Failed to restart app with name $APP_NAME, trying with ID $APP_ID"
+            if pm2 restart $APP_ID; then
+              echo "Successfully restarted app with ID $APP_ID"
+            else
+              echo "Failed to restart app with both name and ID"
+              exit 1
+            fi
+          fi
