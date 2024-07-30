@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ReactComponent as IconPrint } from "../assets/icons/Print.svg";
-import { ReactComponent as IconCalendar } from "../assets/icons/calendar.svg";
 import DateComponent from "components/DateComponent";
 
 const DatePrintFilter = () => {

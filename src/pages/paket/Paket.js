@@ -3,14 +3,20 @@ import Button from '../../components/Button';
 import Filter from '../../components/Filter';
 import { ReactComponent as IconPrint } from '../../assets/icons/Print.svg';
 import DatePrintFilter from '../../components/DatePrintFilter';
+import { useNavigate } from 'react-router-dom';
 
 const Paket = () => {
+    const navigate = useNavigate();
+
+    const handleNewPaket = ()=>{
+        navigate("/paket/tambah")
+    }
     return (
         <>
             <div className="">
                 <SearchInput />
                 <div className="pt-[29px]">
-                    <Button text="+ Tambah" type='button' width="195" height="48" />
+                    <Button text="+ Tambah" type='button' width="195" height="48" onButoonClick={handleNewPaket} />
                 </div>
                 <div className="flex justify-between">
                     <div className="space-x-1 flex items-center pt-4">

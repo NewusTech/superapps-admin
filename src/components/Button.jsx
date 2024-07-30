@@ -8,13 +8,13 @@ const Button = ({
   height,
   onButoonClick,
   className,
+  icon
 }) => {
   if (type === "status-filter") {
     return (
       <button
-        className={`px-4  text-sm rounded w-[120px] h-[40px] ${
-          active ? "bg-main text-white" : "bg-main text-white"
-        } hover:bg-blue-700 transition duration-300`}
+        className={`px-4  text-sm rounded w-[120px] h-[40px] ${active ? "bg-main text-white" : "bg-main text-white"
+          } hover:bg-blue-700 transition duration-300`}
         onClick={onButoonClick}
       >
         {text}
@@ -23,11 +23,11 @@ const Button = ({
   } else {
     return (
       <button
-        className={`px-4 py-[13px] rounded text-sm bg-main ${
-          className ?? `w-[${width}px] h-[${height}px]`
-        } text-white hover:bg-blue-700  transition duration-300`}
+        className={`px-4 py-[13px] rounded text-sm bg-main ${className ?? `w-[${width}px] h-[${height}px]`
+          } text-white hover:bg-blue-700  transition duration-300 flex flex-row items-center gap-2 justify-center`}
         onClick={onButoonClick}
       >
+        {icon}
         {text}
       </button>
     );

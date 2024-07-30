@@ -20,6 +20,10 @@ import TambahPengguna from "pages/pengguna/TambahPengguna";
 import PeranPengguna from "pages/peran-pengguna/PeranPengguna";
 import TambahPeranPengguna from "pages/peran-pengguna/TambahPeranPengguna";
 import TambahPesanan from "pages/dashboard/TambahPesanan";
+import Pembayaran from "pages/dashboard/Pembayaran";
+import NoSidebarLayout from "layouts/NoSidebarLayout";
+import StatusPembayaran from "pages/dashboard/StatusPembayaran";
+import TambahPaket from "pages/paket/TambahPaket";
 
 const App = () => {
   return (
@@ -96,8 +100,22 @@ const App = () => {
               element={<ProtectedRoute element={<TambahPeranPengguna />} />}
             />
             <Route
-              path="/tambah-pesanan"
+              path="/pesanan/tambah"
               element={<ProtectedRoute element={<TambahPesanan />} />}
+            />
+            <Route
+              path="/pesanan/pembayaran"
+              element={<ProtectedRoute element={<Pembayaran />} />}
+            />
+            <Route
+              path="/paket/tambah"
+              element={<ProtectedRoute element={<TambahPaket />} />}
+            />
+          </Route>
+          <Route element={<NoSidebarLayout/>}>
+          <Route
+              path="/pesanan/status-pembayaran"
+              element={<ProtectedRoute element={<StatusPembayaran />} />}
             />
           </Route>
         </Route>

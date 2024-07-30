@@ -54,7 +54,6 @@ const Sidebar = () => {
           space={"space-x-3"}
           menuIcon={<IconLaporan fill="#8C8D89" />}
         />
-
         <SidebarItem text="Kelola Travel" />
         <SidebarItem
           text="Jadwal"
@@ -92,7 +91,6 @@ const Sidebar = () => {
           space={"space-x-2"}
           menuIcon={<IconTitikLokasi fill="#8C8D89" />}
         />
-
         <SidebarItem text="Kelola Artikel" />
         <SidebarItem
           text="Artikel"
@@ -100,7 +98,6 @@ const Sidebar = () => {
           space={"space-x-3"}
           menuIcon={<IconJadwal fill="#8C8D89" />}
         />
-
         <SidebarItem text="Kelola Pengguna" />
         <SidebarItem
           text="Pengguna"
