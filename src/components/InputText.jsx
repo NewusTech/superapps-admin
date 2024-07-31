@@ -11,7 +11,7 @@ export default function InputText({
       <label htmlFor={label}>{label}</label>
       <input
         type={type}
-        className={`border p-3 rounded-md ${className}`}
+        className={`border p-3 py-4 rounded-md ${className}`}
         id={label}
         placeholder={placeholder}
       />

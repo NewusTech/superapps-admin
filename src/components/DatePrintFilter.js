@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import { ReactComponent as IconPrint } from "../assets/icons/Print.svg";
 import DateComponent from "components/DateComponent";
+import { FiPrinter } from "react-icons/fi";
 
 const DatePrintFilter = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -18,8 +18,8 @@ const DatePrintFilter = () => {
         selectedDate={endDate}
         onChangeDate={(date) => setEndDate(date)}
       />
-      <button className="flex items-center space-x-1 text-xs text-main border border-main rounded px-2 py-1">
-        <IconPrint />
+      <button className="flex items-center space-x-1 text-xs text-main border border-gray-500 rounded px-4 py-2 h-10 hover:text-white hover:bg-main hover:border-main duration-300">
+        <FiPrinter size={24} />
         <span>Print</span>
       </button>
     </div>

@@ -19,10 +19,10 @@ export default function Laporan() {
         </div>
       </div>
       <div className="pt-4">
-        <div>
+        <div className="bg-white rounded-md border my-5">
           <table className="table-auto w-full text-xs">
             <thead>
-              <tr className="text-center bg-gray-100">
+              <tr className="text-center bg-gray-100 border-b">
                 <th className="p-3">Rute</th>
                 <th className="p-3">Mobil</th>
                 <th className="p-3">Jam Berangkat</th>
@@ -32,20 +32,20 @@ export default function Laporan() {
             </thead>
             <tbody>
               {[...Array(4)].map((_, index) => (
-                <tr key={index} className="h-14">
-                  <td className="p-1 px-4 text-center">Palembang</td>
-                  <td className="p-1 text-center">Toyota Hiace</td>
-                  <td className="p-1 text-center">08.00</td>
-                  <td className="p-1 text-center">5</td>
-                  <td className="p-1 text-center">2.000.000</td>
+                <tr key={index} className="h-10 border-b">
+                  <td className="px-3 py-1 text-center">Palembang</td>
+                  <td className="px-3 py-1 text-center">Toyota Hiace</td>
+                  <td className="px-3 py-1 text-center">08.00</td>
+                  <td className="px-3 py-1 text-center">5</td>
+                  <td className="px-3 py-1 text-center">2.000.000</td>
                 </tr>
               ))}
-              <tr className="font-semibold border-t">
-                <td className="p-3" colSpan={3}>
+              <tr className="font-semibold border-t h-12">
+                <td className="px-3 py-1" colSpan={3}>
                   Total
                 </td>
-                <td className="p-3 text-center">25</td>
-                <td className="p-3 text-center">10.000.000</td>
+                <td className="px-3 py-1 text-center">25</td>
+                <td className="px-3 py-1 text-center">10.000.000</td>
               </tr>
             </tbody>
           </table>

@@ -1,16 +1,10 @@
 import React from 'react'
 import DatePicker from "react-datepicker";
 
-
-export default function InputDate({
+export default function InputTime({
     label,
-    selectedDate,
+    selectedDate = new Date(),
     onChangeDate,
-    showTimeSelect,
-    showTimeSelectOnly,
-    timeIntervals,
-    timeCaption
-
 }) {
     return (
         <div className="flex flex-col gap-4">
@@ -20,7 +14,7 @@ export default function InputDate({
                 onChange={onChangeDate}
                 showTimeSelect
                 showTimeSelectOnly
-                timeIntervals={15}
+                timeIntervals={60}
                 timeCaption="Time"
                 dateFormat="h:mm aa"
                 className="border p-4 rounded-md w-full"

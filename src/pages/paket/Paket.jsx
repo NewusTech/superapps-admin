@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const Paket = () => {
     const navigate = useNavigate();
 
-    const handleNewPaket = ()=>{
+    const handleNewPaket = () => {
         navigate("/paket/tambah")
     }
     return (
@@ -28,26 +28,27 @@ const Paket = () => {
                 </div>
             </div>
             <div className="pt-4">
-                <div>
+                <div className="bg-white rounded-md border my-5">
                     <table className="table-auto w-full text-xs">
                         <thead>
-                            <tr className="text-left bg-gray-100">
+                            <tr className="text-left bg-gray-100 border-b">
                                 <th className="p-3">Nama Pengirim</th>
                                 <th className="p-3">Nama Penerima</th>
                                 <th className="p-3">Jenis</th>
                                 <th className="p-3">Total Berat</th>
                                 <th className="p-3">Biaya</th>
+                                <th className="p-3">Print</th>
                             </tr>
                         </thead>
                         <tbody>
                             {[...Array(8)].map((_, index) => (
                                 <tr key={index} className="border-b">
-                                    <td className="p-1 px-4">Yulivia</td>
-                                    <td className="p-1">Dila Azzahra</td>
-                                    <td className="p-1">Makanan</td>
-                                    <td className="p-1">1 kg</td>
-                                    <td className="p-1">24.000</td>
-                                    <td className="p-2">
+                                    <td className="px-3 py-1">Yulivia</td>
+                                    <td className="px-3 py-1">Dila Azzahra</td>
+                                    <td className="px-3 py-1">Makanan</td>
+                                    <td className="px-3 py-1">1 kg</td>
+                                    <td className="px-3 py-1">24.000</td>
+                                    <td className="px-3 py-1">
                                         <button>
                                             <IconPrint stroke="#0705EC" />
                                         </button>
@@ -56,7 +57,7 @@ const Paket = () => {
                             ))}
                         </tbody>
                     </table>
-                    <div className="flex justify-between text-sm mt-2">
+                    <div className="flex justify-between text-sm mt-2 p-4">
                         <div>
                             <p className="text-left font-bold">Pesanan</p>
                             <p className="text-left">Total</p>

@@ -5,7 +5,7 @@ import Filter from "components/Filter";
 import { ReactComponent as IconPrint } from "assets/icons/Print.svg";
 import DatePrintFilter from "components/DatePrintFilter";
 import { useNavigate } from "react-router-dom";
-import { getAllPesanan } from "service/api";
+import { getAllPesanan } from "service/dashboard"
 
 const Dashboard = () => {
   const [order, setOrder] = useState([]);
@@ -15,18 +15,16 @@ const Dashboard = () => {
     setIsLoading(true);
     try {
       const response = await getAllPesanan();
-      setOrder(response?.data);
+      setOrder(response.data);
     } catch (error) {
       console.log(error.name);
     } finally {
       setIsLoading(false);
     }
   };
-
   const handleOnTambahPesanan = () => {
     navigate("/pesanan/tambah");
   };
-  console.log(order);
   useEffect(() => {
     pesanan();
   }, []);
@@ -63,11 +61,11 @@ const Dashboard = () => {
             <div className="w-16 h-16 border-8 border-t-8 border-t-main border-gray-200 rounded-full animate-spin"></div>
           </div>
         ) : (
-          <div>
+          <div className="bg-white rounded-md border my-5">
             <table className="table-auto w-full text-xs">
               <thead>
-                <tr className="text-left bg-gray-100">
-                  <th className="p-3">No</th>
+                <tr className="text-left bg-gray-100 border-b">
+                  <th className="p-3 text-center">No</th>
                   <th className="p-3">Nama</th>
                   <th className="p-3">Rute</th>
                   <th className="p-3">Jam Berangkat</th>
@@ -92,7 +90,7 @@ const Dashboard = () => {
                   order.map((item, index) => (
                     <tr key={index} className="border-b">
                       <td className="p-1 text-center">{index + 1}</td>
-                      <td className="p-1">{item.nama}</td>
+                      <td className="p-3">{item.nama}</td>
                       <td className="p-1">
                         {item.jadwal.master_rute.kota_asal} -{" "}
                         {item.jadwal.master_rute.kota_tujuan}
@@ -129,7 +127,7 @@ const Dashboard = () => {
                 )}
               </tbody>
             </table>
-            <div className="flex justify-between text-sm mt-2">
+            <div className="flex justify-between text-sm mt-2 p-4">
               <div>
                 <p className="text-left font-bold">Pesanan</p>
                 <p className="text-left">Total</p>

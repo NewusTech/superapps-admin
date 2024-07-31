@@ -24,6 +24,12 @@ import Pembayaran from "pages/dashboard/Pembayaran";
 import NoSidebarLayout from "layouts/NoSidebarLayout";
 import StatusPembayaran from "pages/dashboard/StatusPembayaran";
 import TambahPaket from "pages/paket/TambahPaket";
+import TambahMobil from "pages/mobil/TambahMobil";
+import TambahRute from "pages/rute/TambahRute";
+import Supir from "pages/supir/Supir";
+import TambahSupir from "pages/supir/TambahSupir";
+import TambahCabang from "pages/cabang/TambahCabang";
+import TambahTitik from "pages/titik-lokasi/TambahTitik";
 
 const App = () => {
   return (
@@ -64,20 +70,44 @@ const App = () => {
               element={<ProtectedRoute element={<Mobil />} />}
             />
             <Route
+              path="/mobil/tambah"
+              element={<ProtectedRoute element={<TambahMobil />} />}
+            />
+            <Route
               path="/rute"
               element={<ProtectedRoute element={<Rute />} />}
+            />
+            <Route
+              path="/rute/tambah"
+              element={<ProtectedRoute element={<TambahRute />} />}
             />
             <Route
               path="/cabang"
               element={<ProtectedRoute element={<Cabang />} />}
             />
             <Route
+              path="/cabang/tambah"
+              element={<ProtectedRoute element={<TambahCabang />} />}
+            />
+            <Route
               path="/titik-lokasi"
               element={<ProtectedRoute element={<TitikLokasi />} />}
             />
             <Route
+              path="/titik-lokasi/tambah"
+              element={<ProtectedRoute element={<TambahTitik />} />}
+            />
+            <Route
               path="/kursi"
               element={<ProtectedRoute element={<Kursi />} />}
+            />
+            <Route
+              path="/supir"
+              element={<ProtectedRoute element={<Supir />} />}
+            />
+            <Route
+              path="/supir/tambah"
+              element={<ProtectedRoute element={<TambahSupir />} />}
             />
             <Route
               path="/laporan"
@@ -88,7 +118,7 @@ const App = () => {
               element={<ProtectedRoute element={<Pengguna />} />}
             />
             <Route
-              path="/tambah-pengguna"
+              path="/pengguna/tambah"
               element={<ProtectedRoute element={<TambahPengguna />} />}
             />
             <Route
@@ -112,8 +142,8 @@ const App = () => {
               element={<ProtectedRoute element={<TambahPaket />} />}
             />
           </Route>
-          <Route element={<NoSidebarLayout/>}>
-          <Route
+          <Route element={<NoSidebarLayout />}>
+            <Route
               path="/pesanan/status-pembayaran"
               element={<ProtectedRoute element={<StatusPembayaran />} />}
             />
