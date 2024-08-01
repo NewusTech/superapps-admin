@@ -12,6 +12,7 @@ export default function DateComponent({ selectedDate, onChangeDate }) {
         onChange={onChangeDate}
         dateFormat="dd-MM-yyyy"
         className="outline-none w-20 h-8"
+        placeholderText="dd-mm-yyy"
       />
       <IconCalendar />
     </div>

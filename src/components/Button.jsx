@@ -6,7 +6,7 @@ const Button = ({
   active,
   width,
   height,
-  onButoonClick,
+  onButonClick,
   className,
   icon,
   outline = false,
@@ -27,9 +27,9 @@ const Button = ({
   if (type === "status-filter") {
     return (
       <button
-        className={`px-4  text-sm rounded w-[120px] h-[40px] ${active ? "bg-main text-white" : "bg-main text-white"
+        className={`px-4  text-sm rounded w-[120px] h-[40px] ${active ? "bg-main text-white" : "bg-white text-main border border-main"
           } hover:bg-blue-700 transition duration-300`}
-        onClick={onButoonClick}
+        onClick={onButonClick}
       >
         {text}
       </button>
@@ -39,7 +39,7 @@ const Button = ({
       <button
         className={`px-4 py-[13px] rounded text-sm ${outline ? `border ${_colorB}` : _color}  ${className ?? `w-[${width}px] h-[${height}px]`
           } transition duration-300 flex flex-row items-center gap-2 justify-center`}
-        onClick={onButoonClick}
+        onClick={onButonClick}
       >
         {icon}
         {text}

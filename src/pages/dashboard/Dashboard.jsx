@@ -6,16 +6,42 @@ import { ReactComponent as IconPrint } from "assets/icons/Print.svg";
 import DatePrintFilter from "components/DatePrintFilter";
 import { useNavigate } from "react-router-dom";
 import { getAllPesanan } from "service/dashboard"
+import { NumericFormat } from "react-number-format";
+
+const dataFilter = [
+  {
+    name: "Semua",
+    filter: ""
+  },
+  {
+    name: "Sukses",
+    filter: "sukses"
+  },
+  {
+    name: "Menunggu",
+    filter: "menunggu"
+  },
+  {
+    name: "Gagal",
+    filter: "gagal"
+  },
+]
 
 const Dashboard = () => {
-  const [order, setOrder] = useState([]);
+  const [order, setOrder] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [filterStatus, setFilterStatus] = useState(true);
+  const [filterDateStart, setFilterDateStart] = useState(null);
+  const [filterDateEnd, setFilterDateEnd] = useState(null);
+  const [filter, setFilter] = useState("");
   const navigate = useNavigate();
+
   const pesanan = async () => {
     setIsLoading(true);
     try {
       const response = await getAllPesanan();
-      setOrder(response.data);
+      setOrder(response);
+      console.log({ response })
     } catch (error) {
       console.log(error.name);
     } finally {
@@ -25,9 +51,25 @@ const Dashboard = () => {
   const handleOnTambahPesanan = () => {
     navigate("/pesanan/tambah");
   };
+  const hanldeOnFilterClear = () => {
+    setFilterStatus(false);
+    setFilter("");
+    setFilterDateStart(null);
+    setFilterDateEnd(null);
+  }
+  const handleOnSetFilter = (value) => {
+    setFilter(value);
+    setFilterStatus(value != "")
+  }
   useEffect(() => {
     pesanan();
   }, []);
+  useEffect(() => {
+    console.log(order)
+  }, [order]);
+  useEffect(() => {
+    console.log({ filterDateEnd, filterDateStart })
+  }, [filterDateStart, filterDateEnd])
   return (
     <>
       <div className="">
@@ -38,19 +80,18 @@ const Dashboard = () => {
             type="button"
             width="195"
             height="48"
-            onButoonClick={handleOnTambahPesanan}
+            onButonClick={handleOnTambahPesanan}
           />
         </div>
-        <div className="flex justify-between">
+        <div className="flex flex-col xl:flex-row justify-between gap-4">
           <div className="space-x-1 flex items-center pt-4">
-            <Button text="Semua" type="status-filter" active={true} />
-            <Button text="Sukses" type="status-filter" active={false} />
-            <Button text="Menunggu" type="status-filter" active={false} />
-            <Button text="Gagal" type="status-filter" active={false} />
-            <Filter active={false} />
+            {dataFilter.map((f) => (
+              <Button key={f.name} text={f.name} type="status-filter" active={filter == f.filter} onButonClick={() => handleOnSetFilter(f.filter)} />
+            ))}
+            <Filter active={filterStatus} handleButtonClick={hanldeOnFilterClear} />
           </div>
           <div className="flex items-end">
-            <DatePrintFilter />
+            <DatePrintFilter startDate={filterDateStart} setStartDate={setFilterDateStart} endDate={filterDateEnd} setEndDate={setFilterDateEnd} />
           </div>
         </div>
       </div>
@@ -66,19 +107,19 @@ const Dashboard = () => {
               <thead>
                 <tr className="text-left bg-gray-100 border-b">
                   <th className="p-3 text-center">No</th>
-                  <th className="p-3">Nama</th>
-                  <th className="p-3">Rute</th>
-                  <th className="p-3">Jam Berangkat</th>
-                  <th className="p-3">Tanggal</th>
-                  <th className="p-3">Mobil</th>
-                  <th className="p-3">Supir</th>
-                  <th className="p-3">Harga</th>
-                  <th className="p-3">Status</th>
-                  <th className="p-3">Print</th>
+                  <th className="p-3 w-56 text-center">Nama</th>
+                  <th className="p-3 text-center">Rute</th>
+                  <th className="p-3 text-center">Jam Berangkat</th>
+                  <th className="p-3 text-center">Tanggal</th>
+                  <th className="p-3 text-center">Mobil</th>
+                  <th className="p-3 text-center">Supir</th>
+                  <th className="p-3 text-center">Harga</th>
+                  <th className="p-3 text-center">Status</th>
+                  <th className="p-3 text-center">Print</th>
                 </tr>
               </thead>
               <tbody>
-                {order.length === 0 ? (
+                {Array(order.data).length === 0 ? (
                   <tr>
                     <td colSpan={10}>
                       <p className="text-lg mt-5 font-light text-center">
@@ -87,22 +128,31 @@ const Dashboard = () => {
                     </td>
                   </tr>
                 ) : (
-                  order.map((item, index) => (
-                    <tr key={index} className="border-b">
-                      <td className="p-1 text-center">{index + 1}</td>
-                      <td className="p-3">{item.nama}</td>
-                      <td className="p-1">
-                        {item.jadwal.master_rute.kota_asal} -{" "}
-                        {item.jadwal.master_rute.kota_tujuan}
+                  order.data?.map((item, index) => (
+                    <tr key={item.kode_pesanan} className="border-b">
+                      <td className="px-3 py-1 text-center">{index + 1}</td>
+                      <td className="px-3 py-1 text-center">{item.nama_pemesan}</td>
+                      <td className="px-3 py-1 text-center">
+                        {item.rute}
                       </td>
-                      <td className="p-1 ps-4">
-                        {item.jadwal.waktu_keberangkatan}
+                      <td className="px-3 py-1 text-center">
+                        {item.jam_berangkat}
                       </td>
-                      <td className="p-1">{item.jadwal.tanggal_berangkat}</td>
-                      <td className="p-1">{item.jadwal.master_mobil.type}</td>
-                      <td className="p-1">{item.jadwal.master_supir.nama}</td>
-                      <td className="p-1">{item.jadwal.master_rute.harga}</td>
-                      <td className="p-1">
+                      <td className="px-3 py-1 text-center">{item.tanggal_berangkat}</td>
+                      <td className="px-3 py-1 text-center">{item.mobil}</td>
+                      <td className="px-3 py-1 text-center">{item.supir}</td>
+                      <td className="px-3 py-1 text-center">
+                        <NumericFormat
+                          className=""
+                          displayType="text"
+                          prefix="Rp. "
+                          thousandsGroupStyle="none"
+                          thousandSeparator="."
+                          decimalSeparator=","
+                          value={item.harga}
+                        />
+                      </td>
+                      <td className="px-3 py-1 text-center">
                         {item.status === "Sukses" ? (
                           <span className="bg-green-100 text-greenColor py-1 px-3 rounded text-xs">
                             Sukses
@@ -117,7 +167,7 @@ const Dashboard = () => {
                           </span>
                         )}
                       </td>
-                      <td className="p-3">
+                      <td className="px-3 py-1 text-center">
                         <button>
                           <IconPrint stroke="#0705EC" />
                         </button>
@@ -133,8 +183,16 @@ const Dashboard = () => {
                 <p className="text-left">Total</p>
               </div>
               <div>
-                <p className="text-right font-bold">8</p>
-                <p className="text-right">2.000.000</p>
+                <p className="text-right font-bold">{order.total_pesanan}</p>
+                <p className="text-right"><NumericFormat
+                  className=""
+                  displayType="text"
+                  prefix="Rp. "
+                  thousandsGroupStyle="none"
+                  thousandSeparator="."
+                  decimalSeparator=","
+                  value={order.total_uang}
+                /></p>
               </div>
             </div>
           </div>

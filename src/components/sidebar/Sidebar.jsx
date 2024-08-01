@@ -153,6 +153,7 @@ const Sidebar = () => {
           return (
             (
               <SidebarItem
+                key={r.name}
                 text={r.name}
                 link={r.link}
                 active={active}
@@ -170,6 +171,7 @@ const Sidebar = () => {
           return (
             (
               <SidebarItem
+                key={r.name}
                 text={r.name}
                 link={r.link}
                 active={active}
@@ -187,6 +189,7 @@ const Sidebar = () => {
           return (
             (
               <SidebarItem
+                key={r.name}
                 text={r.name}
                 link={r.link}
                 active={active}
@@ -204,6 +207,7 @@ const Sidebar = () => {
           return (
             (
               <SidebarItem
+                key={r.name}
                 text={r.name}
                 link={r.link}
                 active={active}

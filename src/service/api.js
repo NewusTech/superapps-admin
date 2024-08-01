@@ -1,4 +1,13 @@
+import axios from "axios";
+
 const apiUrl = process.env.REACT_APP_API_URL_LOCAL;
+
+export const axiosJwt = axios.create({
+  baseURL: apiUrl,
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
+});
 
 export const getAllPesanan = async () => {
   const response = await fetch(`${apiUrl}/pesanan/pesanan`, {
