@@ -1,18 +1,19 @@
-import React from 'react';
-import { ReactComponent as SearchIcon } from '../assets/icons/search-normal.svg'; // Impor SVG sebagai komponen React
+import React from "react";
+import { ReactComponent as SearchIcon } from "assets/icons/search-normal.svg"; // Impor SVG sebagai komponen React
 
-const SearchInput = () => {
-    return (
-        <div className="relative flex items-center w-[655px] h-[52px] bg-white shadow-lg rounded-lg">
-            <SearchIcon className="absolute left-4 w-6 h-6 text-gray-500" />
-            <input
-            
-                type="text"
-                placeholder="Search"
-                className="w-full h-full pl-12 pr-4 text-gray-700 bg-transparent rounded-lg focus:outline-none"
-            />
-        </div>
-    );
+const SearchInput = ({ className }) => {
+  return (
+    <div
+      className={`flex flex-row items-center rounded-md border p-2 ${className}`}
+    >
+      <SearchIcon className="w-6 h-6 text-gray-500 ml-4" />
+      <input
+        type="text"
+        placeholder="Search"
+        className={`w-full h-full ml-4 mr-4 text-gray-700 bg-transparent rounded-lg focus:outline-none`}
+      />
+    </div>
+  );
 };
 
 export default SearchInput;
