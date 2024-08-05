@@ -1,6 +1,6 @@
-import Button from '../../components/Button';
-import { Breadcrumb, Select } from 'flowbite-react';
-import { Link } from 'react-router-dom';
+import Button from "../../elements/Button";
+import { Breadcrumb, Select } from "flowbite-react";
+import { Link } from "react-router-dom";
 
 const TambahPesanan = () => {
   return (
@@ -35,7 +35,10 @@ const TambahPesanan = () => {
             </div>
             <div className="flex gap-4 flex-col w-[45%]">
               <label className="font-poppins">Kursi</label>
-              <select name="kursi_id" id="kursi" className="border shadow py-3 px-4 rounded-sm">
+              <select
+                name="kursi_id"
+                id="kursi"
+                className="border shadow py-3 px-4 rounded-sm">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>

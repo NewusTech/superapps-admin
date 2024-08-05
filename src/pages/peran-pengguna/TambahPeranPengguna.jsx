@@ -1,5 +1,5 @@
-import Button from "components/Button";
-import InputText from "components/InputText";
+import Button from "elements/Button";
+import InputText from "elements/InputText";
 import React from "react";
 import { Link } from "react-router-dom";
 

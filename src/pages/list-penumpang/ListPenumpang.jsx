@@ -1,8 +1,8 @@
 import React from "react";
-import SearchInput from "../../components/Search";
-import Filter from "../../components/Filter";
+import SearchInput from "../../elements/Search";
+import Filter from "../../elements/Filter";
 import { ReactComponent as IconPrint } from "../../assets/icons/Print.svg";
-import DatePrintFilter from "../../components/DatePrintFilter";
+import DatePrintFilter from "../../elements/DatePrintFilter";
 const ListPenumpang = () => {
   return (
     <>

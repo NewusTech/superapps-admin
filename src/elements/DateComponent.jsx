@@ -14,7 +14,7 @@ export default function DateComponent({ selectedDate, onChangeDate }) {
         className="outline-none w-20 h-8"
         placeholderText="dd-mm-yyy"
       />
-      <IconCalendar />
+      <IconCalendar className="w-5 h-5" />
     </div>
   );
 }

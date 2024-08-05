@@ -1,6 +1,6 @@
-import Button from "components/Button";
-import InputSelect from "components/InputSelect";
-import InputText from "components/InputText";
+import Button from "elements/Button";
+import InputSelect from "elements/InputSelect";
+import InputText from "elements/InputText";
 import React from "react";
 import { Link } from "react-router-dom";
 
