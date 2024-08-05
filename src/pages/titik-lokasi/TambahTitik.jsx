@@ -1,18 +1,18 @@
-import SearchInput from '../../components/Search';
-import Button from '../../components/Button';
-import { Breadcrumb, Select } from 'flowbite-react';
-import { Link } from 'react-router-dom';
-import InputSelect from 'components/InputSelect';
-import InputText from 'components/InputText';
+import SearchInput from "../../elements/Search";
+import Button from "../../elements/Button";
+import { Breadcrumb, Select } from "flowbite-react";
+import { Link } from "react-router-dom";
+import InputSelect from "elements/InputSelect";
+import InputText from "elements/InputText";
 
 const TambahTitik = () => {
   return (
     <section className="p-5 min-h-screen">
-      <div className="my-5">
-        .
-      </div>
+      <div className="my-5">.</div>
       <Breadcrumb>
-        <Link to="/titik-lokasi" className="flex pr-3 items-center text-[#0705EC]">
+        <Link
+          to="/titik-lokasi"
+          className="flex pr-3 items-center text-[#0705EC]">
           <p>Titik Lokasi</p>
         </Link>
         <Breadcrumb.Item active="true" className="">
@@ -22,8 +22,8 @@ const TambahTitik = () => {
       <div className="p-10 mt-10 bg-white w-full xl:w-1/2">
         <form>
           <div className="grid gap-6">
-            <InputSelect label="Cabang" placeholder='Pilih Cabang' />
-            <InputText label="Titik Lokasi..." placeholder='Masukan tujuan' />
+            <InputSelect label="Cabang" placeholder="Pilih Cabang" />
+            <InputText label="Titik Lokasi..." placeholder="Masukan tujuan" />
           </div>
           <div className="pt-10">
             <Button text="Tambah" type="Tambah" height="48" />

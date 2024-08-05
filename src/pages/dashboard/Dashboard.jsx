@@ -1,75 +1,72 @@
 import React, { useEffect, useState } from "react";
-import SearchInput from "components/Search";
-import Button from "components/Button";
-import Filter from "components/Filter";
+import SearchInput from "elements/Search";
+import Button from "elements/Button";
+import Filter from "elements/Filter";
 import { ReactComponent as IconPrint } from "assets/icons/Print.svg";
-import DatePrintFilter from "components/DatePrintFilter";
+import DatePrintFilter from "elements/DatePrintFilter";
 import { useNavigate } from "react-router-dom";
-import { getAllPesanan } from "service/dashboard"
 import { NumericFormat } from "react-number-format";
-
-const dataFilter = [
-  {
-    name: "Semua",
-    filter: ""
-  },
-  {
-    name: "Sukses",
-    filter: "sukses"
-  },
-  {
-    name: "Menunggu",
-    filter: "menunggu"
-  },
-  {
-    name: "Gagal",
-    filter: "gagal"
-  },
-]
+import Select from "react-select";
+import { columns, dataFilters } from "constants/constants";
+import { formatLongDate, formatTime } from "helpers";
+import { getAllPesanan } from "service/api";
 
 const Dashboard = () => {
+  const [selectedColumns, setSelectedColumns] = useState([]);
   const [order, setOrder] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const [filterStatus, setFilterStatus] = useState(true);
-  const [filterDateStart, setFilterDateStart] = useState(null);
-  const [filterDateEnd, setFilterDateEnd] = useState(null);
+  const [filterStatus, setFilterStatus] = useState("");
+  const [filterDateStart, setFilterDateStart] = useState("");
+  const [filterDateEnd, setFilterDateEnd] = useState("");
   const [filter, setFilter] = useState("");
   const navigate = useNavigate();
 
-  const pesanan = async () => {
+  const handleColumnSelect = (selectedOptions) => {
+    setSelectedColumns(selectedOptions.map((option) => option.value));
+  };
+
+  const columnOptions = columns.map((col) => ({
+    value: col.key,
+    label: col.label,
+  }));
+
+  const pesanan = async (status, startDate, endDate) => {
     setIsLoading(true);
     try {
-      const response = await getAllPesanan();
+      const response = await getAllPesanan(status, startDate, endDate);
       setOrder(response);
-      console.log({ response })
     } catch (error) {
       console.log(error.name);
     } finally {
       setIsLoading(false);
     }
   };
+
   const handleOnTambahPesanan = () => {
     navigate("/pesanan/tambah");
   };
-  const hanldeOnFilterClear = () => {
-    setFilterStatus(false);
+
+  const handleOnFilterClear = () => {
+    setFilterStatus("");
     setFilter("");
     setFilterDateStart(null);
     setFilterDateEnd(null);
-  }
+  };
+
   const handleOnSetFilter = (value) => {
     setFilter(value);
-    setFilterStatus(value != "")
-  }
+    setFilterStatus(value !== "" ? value : "");
+  };
+
   useEffect(() => {
-    pesanan();
-  }, []);
-  useEffect(() => {
-    console.log(order)
-  }, [order]);
-  useEffect(() => {
-    console.log({ filterDateEnd, filterDateStart })
-  }, [filterDateStart, filterDateEnd])
+    pesanan(filterStatus, filterDateStart, filterDateEnd);
+  }, [filterStatus, filterDateStart, filterDateEnd]);
+
+  const displayedColumns =
+    selectedColumns.length > 0
+      ? selectedColumns
+      : columns?.map((col) => col?.key);
+
   return (
     <>
       <div className="">
@@ -83,15 +80,47 @@ const Dashboard = () => {
             onButonClick={handleOnTambahPesanan}
           />
         </div>
-        <div className="flex flex-col xl:flex-row justify-between gap-4">
-          <div className="space-x-1 flex items-center pt-4">
-            {dataFilter.map((f) => (
-              <Button key={f.name} text={f.name} type="status-filter" active={filter == f.filter} onButonClick={() => handleOnSetFilter(f.filter)} />
+        <div className="flex flex-row justify-between gap-x-3">
+          <div className="space-x-1 flex items-end pt-4">
+            {dataFilters?.map((f) => (
+              <Button
+                key={f.name}
+                text={f.name}
+                type="status-filter"
+                active={filterStatus === f?.filter}
+                onButonClick={() => handleOnSetFilter(f?.filter)}
+              />
             ))}
-            <Filter active={filterStatus} handleButtonClick={hanldeOnFilterClear} />
+            <Filter
+              active={filterStatus}
+              handleButtonClick={handleOnFilterClear}
+            />
           </div>
+
+          <div className="w-full flex items-end">
+            <Select
+              id="columnSelect"
+              options={columnOptions}
+              isMulti
+              closeMenuOnSelect={false}
+              hideSelectedOptions={false}
+              onChange={handleColumnSelect}
+              placeholder="Select Columns"
+              value={columnOptions.filter((option) =>
+                selectedColumns.includes(option.value)
+              )}
+              className="basic-multi-select border border-main rounded-md"
+              classNamePrefix="select"
+            />
+          </div>
+
           <div className="flex items-end">
-            <DatePrintFilter startDate={filterDateStart} setStartDate={setFilterDateStart} endDate={filterDateEnd} setEndDate={setFilterDateEnd} />
+            <DatePrintFilter
+              startDate={filterDateStart}
+              setStartDate={setFilterDateStart}
+              endDate={filterDateEnd}
+              setEndDate={setFilterDateEnd}
+            />
           </div>
         </div>
       </div>
@@ -106,20 +135,19 @@ const Dashboard = () => {
             <table className="table-auto w-full text-xs">
               <thead>
                 <tr className="text-left bg-gray-100 border-b">
-                  <th className="p-3 text-center">No</th>
-                  <th className="p-3 w-56 text-center">Nama</th>
-                  <th className="p-3 text-center">Rute</th>
-                  <th className="p-3 text-center">Jam Berangkat</th>
-                  <th className="p-3 text-center">Tanggal</th>
-                  <th className="p-3 text-center">Mobil</th>
-                  <th className="p-3 text-center">Supir</th>
-                  <th className="p-3 text-center">Harga</th>
-                  <th className="p-3 text-center">Status</th>
-                  <th className="p-3 text-center">Print</th>
+                  {columns
+                    .filter((col) => displayedColumns?.includes(col.key))
+                    .map((col) => (
+                      <th
+                        key={col.key}
+                        className="p-3 text-center font-extrabold">
+                        {col.label}
+                      </th>
+                    ))}
                 </tr>
               </thead>
               <tbody>
-                {Array(order.data).length === 0 ? (
+                {order?.data?.length === 0 ? (
                   <tr>
                     <td colSpan={10}>
                       <p className="text-lg mt-5 font-light text-center">
@@ -128,52 +156,67 @@ const Dashboard = () => {
                     </td>
                   </tr>
                 ) : (
-                  order.data?.map((item, index) => (
-                    <tr key={item.kode_pesanan} className="border-b">
-                      <td className="px-3 py-1 text-center">{index + 1}</td>
-                      <td className="px-3 py-1 text-center">{item.nama_pemesan}</td>
-                      <td className="px-3 py-1 text-center">
-                        {item.rute}
-                      </td>
-                      <td className="px-3 py-1 text-center">
-                        {item.jam_berangkat}
-                      </td>
-                      <td className="px-3 py-1 text-center">{item.tanggal_berangkat}</td>
-                      <td className="px-3 py-1 text-center">{item.mobil}</td>
-                      <td className="px-3 py-1 text-center">{item.supir}</td>
-                      <td className="px-3 py-1 text-center">
-                        <NumericFormat
-                          className=""
-                          displayType="text"
-                          prefix="Rp. "
-                          thousandsGroupStyle="none"
-                          thousandSeparator="."
-                          decimalSeparator=","
-                          value={item.harga}
-                        />
-                      </td>
-                      <td className="px-3 py-1 text-center">
-                        {item.status === "Sukses" ? (
-                          <span className="bg-green-100 text-greenColor py-1 px-3 rounded text-xs">
-                            Sukses
-                          </span>
-                        ) : item.status === "Gagal" ? (
-                          <span className="bg-red-100 text-redColor py-1 px-3 rounded text-xs">
-                            Gagal
-                          </span>
-                        ) : (
-                          <span className="bg-gray-300 text-gray-600 py-1 px-3 rounded text-xs">
-                            Menunggu
-                          </span>
-                        )}
-                      </td>
-                      <td className="px-3 py-1 text-center">
-                        <button>
-                          <IconPrint stroke="#0705EC" />
-                        </button>
-                      </td>
-                    </tr>
-                  ))
+                  order &&
+                  order.data.length > 0 &&
+                  order?.data?.map((item, index) => {
+                    const date = formatLongDate(item?.tanggal_berangkat);
+                    const time = formatTime(item?.jam_berangkat);
+
+                    return (
+                      <tr key={item?.kode_pesanan} className="border-b">
+                        {columns
+                          ?.filter((col) =>
+                            displayedColumns?.includes(col?.key)
+                          )
+                          ?.map((col) => {
+                            return (
+                              <td
+                                key={col?.key}
+                                className="px-3 py-1 text-center">
+                                {col?.key === "no" && index + 1}
+                                {col?.key === "nama_pemesan" &&
+                                  item?.nama_pemesan}
+                                {col?.key === "rute" && item?.rute}
+                                {col?.key === "jam_berangkat" && time}
+                                {col?.key === "tanggal_berangkat" && date}
+                                {col?.key === "mobil" && item?.mobil}
+                                {col?.key === "supir" && item?.supir}
+                                {col?.key === "harga" && (
+                                  <NumericFormat
+                                    className=""
+                                    displayType="text"
+                                    prefix="Rp. "
+                                    thousandsGroupStyle="none"
+                                    thousandSeparator="."
+                                    decimalSeparator=","
+                                    value={item?.harga}
+                                  />
+                                )}
+                                {col?.key === "status" &&
+                                  (item?.status === "Sukses" ? (
+                                    <span className="bg-green-100 text-greenColor py-1 px-3 rounded text-xs">
+                                      Sukses
+                                    </span>
+                                  ) : item?.status === "Gagal" ? (
+                                    <span className="bg-red-100 text-redColor py-1 px-3 rounded text-xs">
+                                      Gagal
+                                    </span>
+                                  ) : (
+                                    <span className="bg-gray-300 text-textSecondary py-1 px-3 rounded text-xs">
+                                      Menunggu
+                                    </span>
+                                  ))}
+                                {col?.key === "print" && (
+                                  <button>
+                                    <IconPrint stroke="#0705EC" />
+                                  </button>
+                                )}
+                              </td>
+                            );
+                          })}
+                      </tr>
+                    );
+                  })
                 )}
               </tbody>
             </table>
@@ -183,16 +226,18 @@ const Dashboard = () => {
                 <p className="text-left">Total</p>
               </div>
               <div>
-                <p className="text-right font-bold">{order.total_pesanan}</p>
-                <p className="text-right"><NumericFormat
-                  className=""
-                  displayType="text"
-                  prefix="Rp. "
-                  thousandsGroupStyle="none"
-                  thousandSeparator="."
-                  decimalSeparator=","
-                  value={order.total_uang}
-                /></p>
+                <p className="text-right font-bold">{order?.total_pesanan}</p>
+                <p className="text-right">
+                  <NumericFormat
+                    className=""
+                    displayType="text"
+                    prefix="Rp. "
+                    thousandsGroupStyle="none"
+                    thousandSeparator="."
+                    decimalSeparator=","
+                    value={order?.total_uang}
+                  />
+                </p>
               </div>
             </div>
           </div>

@@ -1,7 +1,7 @@
-import Filter from "components/Filter";
-import SearchInput from "components/Search";
-import DatePrintFilter from "components/DatePrintFilter";
-import DatabaseKonsumenItem from "components/DatabaseKonsumenItem";
+import Filter from "elements/Filter";
+import SearchInput from "elements/Search";
+import DatePrintFilter from "elements/DatePrintFilter";
+import DatabaseKonsumenItem from "elements/DatabaseKonsumenItem";
 
 const DatabaseKonsumen = () => {
   return (

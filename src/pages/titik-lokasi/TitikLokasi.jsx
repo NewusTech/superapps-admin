@@ -1,8 +1,7 @@
-import SearchInput from '../../components/Search';
-import Button from '../../components/Button';
-import { Link } from 'react-router-dom';
+import SearchInput from "../../elements/Search";
+import Button from "../../elements/Button";
+import { Link } from "react-router-dom";
 import { FaRegPenToSquare, FaTrash } from "react-icons/fa6";
-
 
 const TitikLokasi = () => {
   return (

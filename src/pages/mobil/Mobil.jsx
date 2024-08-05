@@ -1,5 +1,5 @@
-import SearchInput from "../../components/Search";
-import Button from "../../components/Button";
+import SearchInput from "../../elements/Search";
+import Button from "../../elements/Button";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { FaRegPenToSquare, FaTrash } from "react-icons/fa6";
@@ -13,12 +13,13 @@ const Mobil = () => {
     setIsLoading(true);
 
     try {
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const handleAddMobil = () => {
     navigate("/mobil/tambah");
   };
+
   return (
     <section className="min-h-screen">
       <div className="">
@@ -29,7 +30,7 @@ const Mobil = () => {
             type="button"
             width="195"
             height="48"
-            onButoonClick={handleAddMobil}
+            onButonClick={handleAddMobil}
           />
         </div>
       </div>
@@ -40,6 +41,7 @@ const Mobil = () => {
               <tr className="text-center font-semibold bg-gray-100">
                 <th className="py-3">Tipe Mobil</th>
                 <th className="py-3">Jumlah Kursi</th>
+                <th className="py-3 w-56">Fasilitas</th>
                 <th className="py-3 w-56">Action</th>
               </tr>
             </thead>
@@ -48,9 +50,19 @@ const Mobil = () => {
                 <tr key={index} className="border-b text-center">
                   <td className="p-2 px-4">Toyota HiAce</td>
                   <td className="p-2">16</td>
+                  <td className="p-2">Makan Siang</td>
                   <td className="p-2 flex flex-row items-center justify-center gap-4">
-                    <Button text={'edit'} className={"h-8"} icon={<FaRegPenToSquare />} />
-                    <Button text={'delete'} className={"h-8"} color="red" icon={<FaTrash />} />
+                    <Button
+                      text={"edit"}
+                      className={"h-8"}
+                      icon={<FaRegPenToSquare />}
+                    />
+                    <Button
+                      text={"delete"}
+                      className={"h-8"}
+                      color="red"
+                      icon={<FaTrash />}
+                    />
                   </td>
                 </tr>
               ))}

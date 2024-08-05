@@ -1,8 +1,8 @@
-import Button from 'components/Button';
-import { Breadcrumb, Select } from 'flowbite-react';
-import { Link } from 'react-router-dom';
-import InputText from 'components/InputText';
-import InputTime from 'components/InputTime';
+import Button from "elements/Button";
+import { Breadcrumb, Select } from "flowbite-react";
+import { Link } from "react-router-dom";
+import InputText from "elements/InputText";
+import InputTime from "elements/InputTime";
 
 const TambahRute = () => {
   return (
@@ -18,8 +18,8 @@ const TambahRute = () => {
       <div className="p-10 mt-10 bg-white">
         <form>
           <div className="grid grid-cols-2 gap-6">
-            <InputText label="Dari" placeholder='Masukan Asal' />
-            <InputText label="Ke" placeholder='Masukan Tujuan' />
+            <InputText label="Dari" placeholder="Masukan Asal" />
+            <InputText label="Ke" placeholder="Masukan Tujuan" />
             <InputTime label="Jam Berangkat" />
             <InputTime label="Jam Berangkat" />
           </div>

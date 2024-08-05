@@ -1,8 +1,8 @@
-import SearchInput from "components/Search";
-import Button from "components/Button";
+import SearchInput from "elements/Search";
+import Button from "elements/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Loading from "components/Loading";
+import Loading from "elements/Loading";
 import { getAllRute } from "service/api";
 import { FaRegPenToSquare, FaTrash } from "react-icons/fa6";
 

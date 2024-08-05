@@ -1,8 +1,8 @@
-import SearchInput from "../../components/Search";
-import Button from "../../components/Button";
+import SearchInput from "../../elements/Search";
+import Button from "../../elements/Button";
 import { Breadcrumb, Checkbox, Label, Select } from "flowbite-react";
 import { Link } from "react-router-dom";
-import InputText from "components/InputText";
+import InputText from "elements/InputText";
 
 const TambahSupir = () => {
   return (

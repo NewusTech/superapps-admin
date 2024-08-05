@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import SearchInput from "../../components/Search";
-import Button from "../../components/Button";
-import Switch from "../../components/Switch";
+import SearchInput from "../../elements/Search";
+import Button from "../../elements/Button";
+import Switch from "../../elements/Switch";
 
 const Kursi = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -75,15 +75,13 @@ const Kursi = () => {
               <h2 className="text-xl">Setting Kursi</h2>
               <button
                 onClick={togglePopup}
-                className="text-gray-500 hover:text-gray-700"
-              >
+                className="text-gray-500 hover:text-gray-700">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-6 w-6"
                   fill="none"
                   viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
+                  stroke="currentColor">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -105,7 +103,11 @@ const Kursi = () => {
                   <span className="w-28 text-center">Mobil</span>
                   <span className="w-36 text-center">Jumlah Kursi</span>
                   <div className="w-36 flex items-center justify-center">
-                    <input type="text" className="border rounded-md w-8 h-8 text-center" inputMode="numeric" />
+                    <input
+                      type="text"
+                      className="border rounded-md w-8 h-8 text-center"
+                      inputMode="numeric"
+                    />
                   </div>
                   <span className="w-36 text-center">Kursi Tersedia</span>
                 </div>

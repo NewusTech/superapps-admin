@@ -9,16 +9,18 @@ export const axiosJwt = axios.create({
   },
 });
 
-export const getAllPesanan = async () => {
-  const response = await fetch(`${apiUrl}/pesanan/pesanan`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-      "Content-Type": "application/json",
-    },
-    method: "GET",
-  });
-  const data = await response.json();
-  return data;
+export const getAllPesanan = async (status, startDate, endDate) => {
+  const response = await fetch(
+    `${apiUrl}/pesanan/pesanan?status=${status}&start_date=${startDate}&end_date=${endDate}`,
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+    }
+  );
+  return await response.json();
 };
 
 export const getAllRute = async () => {

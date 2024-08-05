@@ -1,8 +1,8 @@
-import { Breadcrumb, Checkbox, Label } from 'flowbite-react';
-import React from 'react';
-import { Link } from 'react-router-dom';
-import Button from '../../components/Button';
-import InputText from 'components/InputText';
+import { Breadcrumb, Checkbox, Label } from "flowbite-react";
+import React from "react";
+import { Link } from "react-router-dom";
+import Button from "../../elements/Button";
+import InputText from "elements/InputText";
 
 const TambahCabang = () => {
   return (
@@ -18,7 +18,7 @@ const TambahCabang = () => {
       </Breadcrumb>
       <div className="bg-white w-full xl:w-1/2 mt-10">
         <form className="p-10">
-          <InputText placeholder='Tambah Cabang' label="Cabang" />
+          <InputText placeholder="Tambah Cabang" label="Cabang" />
           <div className="pt-8 w-full">
             <Button text="Tambah" type="Tambah" height="48" />
           </div>

@@ -1,5 +1,5 @@
-import Button from "components/Button";
-import SearchInput from "components/Search";
+import Button from "elements/Button";
+import SearchInput from "elements/Search";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { FaRegPenToSquare, FaTrash } from "react-icons/fa6";

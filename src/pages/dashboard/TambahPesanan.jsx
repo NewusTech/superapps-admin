@@ -1,9 +1,9 @@
-import Button from "components/Button";
-import DateComponent from "components/DateComponent";
-import InputSelect from "components/InputSelect";
-import InputText from "components/InputText";
-import SearchInput from "components/Search";
-import TicketComponent from "components/TicketComponent";
+import Button from "elements/Button";
+import DateComponent from "elements/DateComponent";
+import InputSelect from "elements/InputSelect";
+import InputText from "elements/InputText";
+import SearchInput from "elements/Search";
+import TicketComponent from "elements/TicketComponent";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -48,5 +48,6 @@ export default function TambahPesanan() {
         </div>
         <Button text={"Buat Pesanan"} className={"my-4 ml-auto"} />
       </div>
-    </>)
+    </>
+  );
 }
