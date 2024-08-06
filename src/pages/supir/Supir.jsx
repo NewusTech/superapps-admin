@@ -24,6 +24,9 @@ const Supir = () => {
   useEffect(() => {
     getSupir();
   }, []);
+
+  console.log(supir, "supir");
+
   return (
     <section className="min-h-screen">
       <div>
@@ -38,17 +41,19 @@ const Supir = () => {
         {isLoading ? (
           <Loading />
         ) : (
-          <div className="mt-10 border rounded-md bg-white w-full xl:w-1/2">
+          <div className="mt-10 border rounded-md bg-white w-full xl:w-full">
             <table className="w-full rounded-xl">
               <thead>
                 <tr className="text-center bg-gray-100 border-b h-14">
                   <th className="p-3 font-bold">Nama Supir</th>
+                  <th className="p-3 font-bold">NIK</th>
                   <th className="p-3 font-bold">Nomor Telepon</th>
+                  <th className="p-3 font-bold">Tanggal Bergabung</th>
                   <th className="py-3 w-56">Action</th>
                 </tr>
               </thead>
               <tbody>
-                {supir.length === 0 ? (
+                {supir && supir?.length === 0 ? (
                   <tr>
                     <td colSpan={10}>
                       <p className="text-lg mt-5 font-light text-center">
@@ -57,10 +62,13 @@ const Supir = () => {
                     </td>
                   </tr>
                 ) : (
-                  supir.map((item, index) => (
+                  supir &&
+                  supir?.map((item, index) => (
                     <tr key={index} className="border-b text-center">
-                      <td className="px-4 py-1">{item.nama}</td>
-                      <td className="px-4 py-1">{item.no_telp}</td>
+                      <td className="px-4 py-1">{item?.nama}</td>
+                      <td className="px-4 py-1">{item?.nik}</td>
+                      <td className="px-4 py-1">{item?.no_telp}</td>
+                      <td className="px-4 py-1">{item?.tanggal_bergabung}</td>
                       <td className="p-2 flex flex-row items-center justify-center gap-4">
                         <Button
                           text={"edit"}

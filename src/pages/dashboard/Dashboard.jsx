@@ -10,16 +10,22 @@ import Select from "react-select";
 import { columns, dataFilters } from "constants/constants";
 import { formatLongDate, formatTime } from "helpers";
 import { getAllPesanan } from "service/api";
+import { useDebounce } from "hooks/useDebounce";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [selectedColumns, setSelectedColumns] = useState([]);
   const [order, setOrder] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [search, setSearch] = useState("");
+  const debounceSearch = useDebounce(search, 500);
   const [filterStatus, setFilterStatus] = useState("");
   const [filterDateStart, setFilterDateStart] = useState("");
   const [filterDateEnd, setFilterDateEnd] = useState("");
-  const [filter, setFilter] = useState("");
-  const navigate = useNavigate();
+  const now = new Date();
+  const firstDayOfMonth = new Date(now.getFullYear(), 0, 1);
+  const [startDate, setStartDate] = useState(firstDayOfMonth);
+  const [endDate, setEndDate] = useState(new Date());
 
   const handleColumnSelect = (selectedOptions) => {
     setSelectedColumns(selectedOptions.map((option) => option.value));
@@ -30,10 +36,10 @@ const Dashboard = () => {
     label: col.label,
   }));
 
-  const pesanan = async (status, startDate, endDate) => {
+  const pesanan = async (search, status, startDate, endDate) => {
     setIsLoading(true);
     try {
-      const response = await getAllPesanan(status, startDate, endDate);
+      const response = await getAllPesanan(search, status, startDate, endDate);
       setOrder(response);
     } catch (error) {
       console.log(error.name);
@@ -42,25 +48,28 @@ const Dashboard = () => {
     }
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setSearch(e.target.value);
+  };
+
   const handleOnTambahPesanan = () => {
     navigate("/pesanan/tambah");
   };
 
   const handleOnFilterClear = () => {
     setFilterStatus("");
-    setFilter("");
     setFilterDateStart(null);
     setFilterDateEnd(null);
   };
 
   const handleOnSetFilter = (value) => {
-    setFilter(value);
     setFilterStatus(value !== "" ? value : "");
   };
 
   useEffect(() => {
-    pesanan(filterStatus, filterDateStart, filterDateEnd);
-  }, [filterStatus, filterDateStart, filterDateEnd]);
+    pesanan(debounceSearch, filterStatus, filterDateStart, filterDateEnd);
+  }, [debounceSearch, filterStatus, filterDateStart, filterDateEnd]);
 
   const displayedColumns =
     selectedColumns.length > 0
@@ -70,7 +79,7 @@ const Dashboard = () => {
   return (
     <>
       <div className="">
-        <SearchInput />
+        <SearchInput name="search" value={search} handleSearch={handleSearch} />
         <div className="pt-[29px]">
           <Button
             text="+ Tambah Pesanan"
@@ -109,7 +118,7 @@ const Dashboard = () => {
               value={columnOptions.filter((option) =>
                 selectedColumns.includes(option.value)
               )}
-              className="basic-multi-select border border-main rounded-md"
+              className="basic-multi-select border border-main outline-none text-primary-700 rounded-md"
               classNamePrefix="select"
             />
           </div>
@@ -157,7 +166,7 @@ const Dashboard = () => {
                   </tr>
                 ) : (
                   order &&
-                  order.data.length > 0 &&
+                  order?.data?.length > 0 &&
                   order?.data?.map((item, index) => {
                     const date = formatLongDate(item?.tanggal_berangkat);
                     const time = formatTime(item?.jam_berangkat);

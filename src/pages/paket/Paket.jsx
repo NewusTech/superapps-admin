@@ -21,7 +21,7 @@ const Paket = () => {
             type="button"
             width="195"
             height="48"
-            onButoonClick={handleNewPaket}
+            onButonClick={handleNewPaket}
           />
         </div>
         <div className="flex justify-between">

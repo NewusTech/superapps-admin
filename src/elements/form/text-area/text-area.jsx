@@ -1,3 +1,4 @@
+import { Textarea } from "@/components/ui/textarea";
 import React from "react";
 
 export default function FormTextArea({
@@ -10,7 +11,7 @@ export default function FormTextArea({
 }) {
   return (
     <>
-      <textarea
+      <Textarea
         name={name}
         value={value}
         id={id}

@@ -15,7 +15,7 @@ export default function PeranPengguna() {
         <SearchInput />
       </div>
       <div className="mt-20">
-        <Button text={"+ Tambah Peran"} onButoonClick={handleOnAddUser} />
+        <Button text={"+ Tambah Peran"} onButonClick={handleOnAddUser} />
         <div className="bg-white rounded-md border my-5 w-full xl:w-1/2">
           <table className="table-auto w-full text-xs">
             <thead>

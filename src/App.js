@@ -30,6 +30,7 @@ import Supir from "pages/supir/Supir";
 import TambahSupir from "pages/supir/TambahSupir";
 import TambahCabang from "pages/cabang/TambahCabang";
 import TambahTitik from "pages/titik-lokasi/TambahTitik";
+import Cookies from "js-cookie";
 
 const App = () => {
   return (
@@ -154,22 +155,10 @@ const App = () => {
   );
 };
 
-const isTokenValid = (token) => {
-  if (!token) return false;
-
-  try {
-    const payload = JSON.parse(atob(token.split(".")[1]));
-    const expiry = payload.exp * 1000;
-    return expiry > Date.now();
-  } catch (e) {
-    return false;
-  }
-};
-
 const ProtectedRoute = ({ element }) => {
-  const token = localStorage.getItem("token");
+  const token = Cookies.get("token");
 
-  if (!token || !isTokenValid(token)) {
+  if (!token) {
     return (
       <Navigate to="/login" replace state={{ message: "Token invalid" }} />
     );

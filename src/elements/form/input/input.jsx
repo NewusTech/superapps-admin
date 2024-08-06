@@ -1,6 +1,8 @@
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import React from "react";
 
-export default function FormInputText({
+export default function FormInput({
   type,
   placeholder,
   className,
@@ -8,10 +10,16 @@ export default function FormInputText({
   onChange,
   value,
   name,
+  htmlFor,
+  label,
+  classLabel,
 }) {
   return (
-    <>
-      <input
+    <div className="flex flex-col gap-y-3">
+      <Label className={classLabel} htmlFor={htmlFor}>
+        {label}
+      </Label>
+      <Input
         type={type}
         placeholder={placeholder}
         className={className}
@@ -20,6 +28,6 @@ export default function FormInputText({
         value={value}
         name={name}
       />
-    </>
+    </div>
   );
 }

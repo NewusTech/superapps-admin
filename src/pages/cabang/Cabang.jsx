@@ -42,7 +42,7 @@ const Cabang = () => {
             type="button"
             width="195"
             height="48"
-            onButoonClick={handleTambahCabang}
+            onButonClick={handleTambahCabang}
           />
         </div>
       </div>
@@ -50,7 +50,7 @@ const Cabang = () => {
         {isLoading ? (
           <Loading />
         ) : (
-          <div className="bg-white rounded-md border w-full xl:w-1/2">
+          <div className="bg-white rounded-md border w-full">
             <table className="w-full text-xs">
               <thead className="border-b">
                 <tr className="text-center h-12 bg-gray-100">

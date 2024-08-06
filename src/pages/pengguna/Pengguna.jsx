@@ -16,7 +16,7 @@ export default function Pengguna() {
         <SearchInput />
       </div>
       <div className="mt-20">
-        <Button text={"+ Tambah Pengguna"} onButoonClick={handleOnAddUser} />
+        <Button text={"+ Tambah Pengguna"} onButonClick={handleOnAddUser} />
         <div className="bg-white rounded-md border my-5">
           <table className="table-auto w-full text-xs">
             <thead>

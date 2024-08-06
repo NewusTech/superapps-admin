@@ -3,7 +3,13 @@ import "react-datepicker/dist/react-datepicker.css";
 import DateComponent from "elements/DateComponent";
 import { FiPrinter } from "react-icons/fi";
 
-const DatePrintFilter = ({ startDate, setStartDate, endDate, setEndDate }) => {
+const DatePrintFilter = ({
+  startDate,
+  setStartDate,
+  endDate,
+  setEndDate,
+  onChange,
+}) => {
   return (
     <div className="flex items-center space-x-2">
       <DateComponent

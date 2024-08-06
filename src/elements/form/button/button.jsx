@@ -1,10 +1,21 @@
+import { Button } from "@/components/ui/button";
 import { Loader } from "lucide-react";
 import React from "react";
 
-export default function Buttons({ className, onClick, name, isLoading }) {
+export default function Buttons({
+  className,
+  onClick,
+  name,
+  isLoading,
+  disables,
+}) {
   return (
-    <button type="submit" className={className} onClick={onClick}>
+    <Button
+      disabled={disables}
+      type="submit"
+      className={className}
+      onClick={onClick}>
       {isLoading ? <Loader className="animate-spin" /> : name}
-    </button>
+    </Button>
   );
 }
