@@ -21,14 +21,15 @@ const Rute = () => {
       setIsLoading(false);
     }
   };
-  console.log(rute);
 
   const handleTambahRute = () => {
     navigate("/rute/tambah");
   };
+
   useEffect(() => {
     getRute();
   }, []);
+
   return (
     <section className="min-h-screen">
       <div className="">
@@ -39,7 +40,7 @@ const Rute = () => {
             type="button"
             width="195"
             height="48"
-            onButoonClick={handleTambahRute}
+            onButonClick={handleTambahRute}
           />
         </div>
       </div>
@@ -67,7 +68,8 @@ const Rute = () => {
                     </td>
                   </tr>
                 ) : (
-                  rute.map((item, index) => (
+                  rute &&
+                  rute?.map((item, index) => (
                     <tr key={index} className="border-b text-center">
                       <td className="p-3 px-4">{item.kota_asal}</td>
                       <td className="p-3">{item.kota_tujuan}</td>

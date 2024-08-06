@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import SearchInput from "../../elements/Search";
 import Button from "../../elements/Button";
-import Switch from "../../elements/Switch";
+import Buttons from "elements/form/button/button";
+import { Switch } from "@/components/ui/switch";
 
 const Kursi = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -59,7 +60,7 @@ const Kursi = () => {
                   <td className="px-3 py-1">Toyota HiAce</td>
                   <td className="px-3 py-1">10</td>
                   <td className="px-3 py-1">
-                    <Switch />
+                    <Switch className="bg-primary-700" />
                   </td>
                 </tr>
               ))}
@@ -94,47 +95,20 @@ const Kursi = () => {
             <div className="mb-4">
               <div className="my-4 border rounded-md overflow-hidden">
                 <div className="flex flex-row gap-4 justify-around border-b items-center h-10 bg-gray-50 py-6 font-bold">
-                  <span className="w-28 text-center">Mobil</span>
                   <span className="w-36 text-center">Jumlah Kursi</span>
-                  <span className="w-36 text-center">Kursi Terisi</span>
-                  <span className="w-36 text-center">Kursi Tersedia</span>
+                  <span className="w-36 text-center">Aksi</span>
                 </div>
                 <div className="flex flex-row gap-4 justify-around items-center h-10 my-4">
-                  <span className="w-28 text-center">Mobil</span>
-                  <span className="w-36 text-center">Jumlah Kursi</span>
-                  <div className="w-36 flex items-center justify-center">
-                    <input
-                      type="text"
-                      className="border rounded-md w-8 h-8 text-center"
-                      inputMode="numeric"
-                    />
-                  </div>
-                  <span className="w-36 text-center">Kursi Tersedia</span>
+                  <span className="w-36 text-center">Kursi 1</span>
+                  <Switch className="bg-primary-700" />
                 </div>
               </div>
               <div className="flex justify-end">
-                <Button
-                  text="Simpan"
-                  type="button"
-                  width="100"
-                  height="48"
-                  onClick={togglePopup}
+                <Buttons
+                  type="submit"
+                  className="w-full bg-main hover:bg-primary-600 text-paper py-2 rounded-md"
+                  name="Simpan"
                 />
-              </div>
-            </div>
-            <div className="flex space-x-4 mb-4">
-              <div className="flex gap-3 items-center w-[40%]">
-                <select className="w-full border rounded p-2">
-                  <option>Toyota HiAce</option>
-                </select>
-              </div>
-              <div className="flex gap-3 items-center w-[40%]">
-                <input type="date" className="border rounded p-2 w-full" />
-                <p>to</p>
-                <input type="date" className="border rounded p-2 w-full" />
-              </div>
-              <div className="flex justify-center items-center w-[20%] pl-4">
-                <Button text={"Cari"} className={"w-full h-10"} outline />
               </div>
             </div>
           </div>

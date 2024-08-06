@@ -1,10 +1,17 @@
-import Button from "elements/Button";
-import { Breadcrumb, Select } from "flowbite-react";
+import { Breadcrumb } from "flowbite-react";
 import { Link } from "react-router-dom";
-import InputText from "elements/InputText";
-import InputTime from "elements/InputTime";
+import FormSelect from "elements/form/select/select";
+import FormInput from "elements/form/input/input";
+import { useState } from "react";
+import Buttons from "elements/form/button/button";
 
 const TambahRute = () => {
+  const [form, setForm] = useState({
+    dari: "",
+    ke: "",
+    time: "",
+    harga: "",
+  });
   return (
     <section className="p-5 min-h-screen">
       <Breadcrumb>
@@ -17,14 +24,47 @@ const TambahRute = () => {
       </Breadcrumb>
       <div className="p-10 mt-10 bg-white">
         <form>
-          <div className="grid grid-cols-2 gap-6">
-            <InputText label="Dari" placeholder="Masukan Asal" />
-            <InputText label="Ke" placeholder="Masukan Tujuan" />
-            <InputTime label="Jam Berangkat" />
-            <InputTime label="Jam Berangkat" />
+          <div className="w-full flex flex-col gap-y-8">
+            <div className="grid grid-cols-2 gap-x-3">
+              <FormSelect htmlFor="dari" label="Dari" classLabel="w-full" />
+
+              <FormSelect htmlFor="ke" label="Ke" classLabel="w-full" />
+            </div>
+
+            <div className="grid grid-cols-2 gap-x-3">
+              <FormInput
+                type="time"
+                className="w-full border block border-outlineBorder rounded-md h-[40px] pl-3"
+                id="time"
+                name="time"
+                value={form.time}
+                onChange={(e) => setForm({ ...form, time: e.target.value })}
+                label="Waktu Berangkat"
+                htmlFor="time"
+                placeholder="Waktu Berangkat"
+                classLabel="w-full"
+              />
+
+              <FormInput
+                type="number"
+                className="w-full border border-outlineBorder rounded-md h-[40px] pl-3"
+                id="harga"
+                name="harga"
+                value={form.harga}
+                onChange={(e) => setForm({ ...form, harga: e.target.value })}
+                label="Harga"
+                htmlFor="harga"
+                placeholder="Harga"
+                classLabel="w-full"
+              />
+            </div>
           </div>
           <div className="pt-10 w-full">
-            <Button text="Tambah" type="Tambah" height="48" />
+            <Buttons
+              type="submit"
+              className="w-full bg-main hover:bg-primary-600 text-paper py-2 rounded-md"
+              name="Tambah"
+            />
           </div>
         </form>
       </div>

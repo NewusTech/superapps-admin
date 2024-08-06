@@ -1,20 +1,35 @@
 import SearchInput from "../../elements/Search";
 import Button from "../../elements/Button";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaRegPenToSquare, FaTrash } from "react-icons/fa6";
+import { getAllMobil } from "service/api";
+import Pagination from "elements/pagination/pagination";
 
 const Mobil = () => {
-  const [mobil, setMobil] = useState([]);
-  const [isLoading, setIsLoading] = useState([]);
   const navigate = useNavigate();
+  const [mobil, setMobil] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   const getMobil = async () => {
-    setIsLoading(true);
-
     try {
-    } catch (error) {}
+      const cars = await getAllMobil();
+      setMobil(cars?.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  useEffect(() => {
+    getMobil();
+  }, []);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = mobil.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(mobil.length / itemsPerPage);
 
   const handleAddMobil = () => {
     navigate("/mobil/tambah");
@@ -39,6 +54,7 @@ const Mobil = () => {
           <table className="table-auto w-full">
             <thead>
               <tr className="text-center font-semibold bg-gray-100">
+                <th className="py-3">No</th>
                 <th className="py-3">Tipe Mobil</th>
                 <th className="py-3">Jumlah Kursi</th>
                 <th className="py-3 w-56">Fasilitas</th>
@@ -46,28 +62,39 @@ const Mobil = () => {
               </tr>
             </thead>
             <tbody>
-              {[...Array(4)].map((_, index) => (
-                <tr key={index} className="border-b text-center">
-                  <td className="p-2 px-4">Toyota HiAce</td>
-                  <td className="p-2">16</td>
-                  <td className="p-2">Makan Siang</td>
-                  <td className="p-2 flex flex-row items-center justify-center gap-4">
-                    <Button
-                      text={"edit"}
-                      className={"h-8"}
-                      icon={<FaRegPenToSquare />}
-                    />
-                    <Button
-                      text={"delete"}
-                      className={"h-8"}
-                      color="red"
-                      icon={<FaTrash />}
-                    />
-                  </td>
-                </tr>
-              ))}
+              {mobil &&
+                currentItems?.map((car, i) => {
+                  return (
+                    <tr key={i} className="border-b text-center">
+                      <td className="p-2">{indexOfFirstItem + i + 1}</td>
+                      <td className="p-2 px-4">{car?.type}</td>
+                      <td className="p-2">{car?.jumlah_kursi}</td>
+                      <td className="p-2">Makan Siang</td>
+                      <td className="p-2 flex flex-row items-center justify-center gap-4">
+                        <Button
+                          text={"edit"}
+                          className={"h-8"}
+                          icon={<FaRegPenToSquare />}
+                        />
+                        <Button
+                          text={"delete"}
+                          className={"h-8"}
+                          color="red"
+                          icon={<FaTrash />}
+                        />
+                      </td>
+                    </tr>
+                  );
+                })}
             </tbody>
           </table>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            itemsPerPage={itemsPerPage}
+            onPageChange={setCurrentPage}
+            onItemsPerPageChange={setItemsPerPage}
+          />
         </div>
       </div>
     </section>
