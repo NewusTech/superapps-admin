@@ -67,3 +67,22 @@
     @apply bg-background text-foreground;
   }
 }
+
+.verticalScroll {
+  width: 100%;
+  overflow-y: scroll;
+  scrollbar-color: transparent transparent;
+}
+
+.verticalScroll::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

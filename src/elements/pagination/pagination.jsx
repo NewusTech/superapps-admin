@@ -35,7 +35,7 @@ const Pagination = ({
       <select
         value={itemsPerPage}
         onChange={(e) => onItemsPerPageChange(Number(e.target.value))}
-        className="mr-4 px-4 py-2 border appearance-none rounded-md">
+        className="mr-4 px-4 py-2 border appearance-none rounded-md cursor-pointer">
         {[10, 20, 30, 40, 50]?.map((num, i) => (
           <option key={i} value={num}>
             {num} items per page
@@ -46,13 +46,13 @@ const Pagination = ({
       <button
         onClick={handleFirstPage}
         disabled={currentPage === 1}
-        className="text-neutral-700 rounded-md">
+        className="text-neutral-700 rounded-md cursor-pointer">
         <ChevronsLeft />
       </button>
       <button
         onClick={handlePreviousPage}
         disabled={currentPage === 1}
-        className="text-neutral-700 rounded-md">
+        className="text-neutral-700 rounded-md cursor-pointer">
         <ChevronLeft />
       </button>
       {pageNumbers.map((number) => (
@@ -68,13 +68,13 @@ const Pagination = ({
       <button
         onClick={handleNextPage}
         disabled={currentPage === totalPages}
-        className="text-neutral-700 rounded-md">
+        className="text-neutral-700 rounded-md cursor-pointer">
         <ChevronRight />
       </button>
       <button
         onClick={handleLastPage}
         disabled={currentPage === totalPages}
-        className="text-neutral-700 rounded-md">
+        className="text-neutral-700 rounded-md cursor-pointer">
         <ChevronsRight />
       </button>
     </div>
