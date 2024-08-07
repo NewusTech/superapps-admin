@@ -31,6 +31,7 @@ import TambahSupir from "pages/supir/TambahSupir";
 import TambahCabang from "pages/cabang/TambahCabang";
 import TambahTitik from "pages/titik-lokasi/TambahTitik";
 import Cookies from "js-cookie";
+import Article from "pages/artikel/artikel";
 
 const App = () => {
   return (
@@ -46,10 +47,10 @@ const App = () => {
               path="/dashboard"
               element={<ProtectedRoute element={<Dashboard />} />}
             />
-            <Route
+            {/* <Route
               path="/paket"
               element={<ProtectedRoute element={<Paket />} />}
-            />
+            /> */}
             <Route
               path="/riwayat-pesanan"
               element={<ProtectedRoute element={<RiwayatPesanan />} />}
@@ -142,7 +143,12 @@ const App = () => {
               path="/paket/tambah"
               element={<ProtectedRoute element={<TambahPaket />} />}
             />
+            <Route
+              path="/artikel"
+              element={<ProtectedRoute element={<Article />} />}
+            />
           </Route>
+
           <Route element={<NoSidebarLayout />}>
             <Route
               path="/pesanan/status-pembayaran"

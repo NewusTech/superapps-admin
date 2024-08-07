@@ -14,7 +14,7 @@ function SidebarItem({
   if (dropdown) {
     return (
       <div className="mb-4" onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-        <div className={`flex  items-center justify-between`}>
+        <div className={`flex items-center justify-between`}>
           <div className={`flex items-center ${space}`}>
             {menuIcon}
             <button className="text-sm text-textSecondary">{text}</button>
@@ -45,17 +45,19 @@ function SidebarItem({
     );
   } else {
     return (
-      <div className={`flex ${space}`}>
+      <div className={`flex items-center group ${space}`}>
         {menuIcon}
-        <li className="mb-[10px]">
+        <div className="">
           <Link
             to={link}
-            className={`text-sm ${
-              active ? "text-main" : "text-textSecondary"
-            } `}>
+            className={`text-sm text-center ${
+              active
+                ? "text-main hover:text-secondary"
+                : "text-textSecondary hover:text-main"
+            }`}>
             {text}
           </Link>
-        </li>
+        </div>
       </div>
     );
   }

@@ -1,14 +1,21 @@
 import SearchInput from "../../elements/Search";
 import Button from "../../elements/Button";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { getAllSupir } from "../../service/api";
+import { Link, useNavigate } from "react-router-dom";
+import { deleteDriver, getAllSupir } from "../../service/api";
 import Loading from "../../elements/Loading";
 import { FaRegPenToSquare, FaTrash } from "react-icons/fa6";
+import Pagination from "elements/pagination/pagination";
+import { formatLongDate } from "helpers";
+import Swal from "sweetalert2";
 
 const Supir = () => {
+  const navigate = useNavigate();
   const [supir, setSupir] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+
   const getSupir = async () => {
     setIsLoading(true);
     try {
@@ -25,7 +32,45 @@ const Supir = () => {
     getSupir();
   }, []);
 
-  console.log(supir, "supir");
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = supir.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(supir.length / itemsPerPage);
+
+  const handleTambahSupir = () => {
+    navigate("/supir/tambah");
+  };
+
+  const handleDeleteDriver = async (id) => {
+    try {
+      const result = await Swal.fire({
+        title: "Apakah anda yakin menghapus data supir?",
+        text: "Data supir yang telah dihapus tidak dapat dipulihkan!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#0000FF",
+        cancelButtonColor: "#EE3F62",
+        confirmButtonText: "Delete",
+      });
+
+      if (result.isConfirmed) {
+        const response = await deleteDriver(id);
+
+        if (response.success === true) {
+          await Swal.fire({
+            icon: "success",
+            title: `${response?.data?.nama} berhasil dihapus!`,
+            timer: 2000,
+            position: "center",
+          });
+          getSupir();
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <section className="min-h-screen">
@@ -33,7 +78,13 @@ const Supir = () => {
         <SearchInput />
         <div className="pt-[29px]">
           <Link to="/supir/tambah">
-            <Button text="+ Tambah" type="button" width="195" height="48" />
+            <Button
+              text="+ Tambah Supir"
+              type="button"
+              width="195"
+              height="48"
+              onButonClick={handleTambahSupir}
+            />
           </Link>
         </div>
       </div>
@@ -41,10 +92,11 @@ const Supir = () => {
         {isLoading ? (
           <Loading />
         ) : (
-          <div className="mt-10 border rounded-md bg-white w-full xl:w-full">
+          <div className="mt-10 border rounded-md bg-white w-full pb-4">
             <table className="w-full rounded-xl">
               <thead>
                 <tr className="text-center bg-gray-100 border-b h-14">
+                  <th className="p-3 font-bold">No</th>
                   <th className="p-3 font-bold">Nama Supir</th>
                   <th className="p-3 font-bold">NIK</th>
                   <th className="p-3 font-bold">Nomor Telepon</th>
@@ -63,30 +115,48 @@ const Supir = () => {
                   </tr>
                 ) : (
                   supir &&
-                  supir?.map((item, index) => (
-                    <tr key={index} className="border-b text-center">
-                      <td className="px-4 py-1">{item?.nama}</td>
-                      <td className="px-4 py-1">{item?.nik}</td>
-                      <td className="px-4 py-1">{item?.no_telp}</td>
-                      <td className="px-4 py-1">{item?.tanggal_bergabung}</td>
-                      <td className="p-2 flex flex-row items-center justify-center gap-4">
-                        <Button
-                          text={"edit"}
-                          className={"h-8"}
-                          icon={<FaRegPenToSquare />}
-                        />
-                        <Button
-                          text={"delete"}
-                          className={"h-8"}
-                          color="red"
-                          icon={<FaTrash />}
-                        />
-                      </td>
-                    </tr>
-                  ))
+                  currentItems?.map((item, index) => {
+                    let date;
+                    if (item.tanggal_bergabung) {
+                      date = formatLongDate(item?.tanggal_bergabung);
+                    }
+
+                    return (
+                      <tr key={index} className="border-b text-center">
+                        <td className="px-4 py-1">{index + 1}</td>
+                        <td className="px-4 py-1">{item?.nama}</td>
+                        <td className="px-4 py-1">{item?.nik}</td>
+                        <td className="px-4 py-1">{item?.no_telp}</td>
+                        <td className="px-4 py-1">{date}</td>
+                        <td className="p-2 flex flex-row items-center justify-center gap-4">
+                          <Button
+                            text={"edit"}
+                            className={"h-8"}
+                            icon={<FaRegPenToSquare />}
+                          />
+                          <Button
+                            text={"delete"}
+                            className={"h-8"}
+                            color="red"
+                            onButonClick={() => handleDeleteDriver(item?.id)}
+                            icon={<FaTrash />}
+                          />
+                        </td>
+                      </tr>
+                    );
+                  })
                 )}
               </tbody>
             </table>
+            <div className="flex justify-end pr-4">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                itemsPerPage={itemsPerPage}
+                onPageChange={setCurrentPage}
+                onItemsPerPageChange={setItemsPerPage}
+              />
+            </div>
           </div>
         )}
       </div>

@@ -49,6 +49,7 @@ const Kursi = () => {
           <table className="table-auto w-full">
             <thead>
               <tr className="text-center bg-gray-100 border-b h-14">
+                <th className="p-3">No</th>
                 <th className="p-3">Mobil</th>
                 <th className="p-3">Jumlah Kursi Tersedia</th>
                 <th className="p-3">Out of Order</th>
@@ -57,6 +58,7 @@ const Kursi = () => {
             <tbody>
               {[...Array(5)].map((_, index) => (
                 <tr key={index} className="border-b text-center">
+                  <td className="px-3 py-1">{index + 1}</td>
                   <td className="px-3 py-1">Toyota HiAce</td>
                   <td className="px-3 py-1">10</td>
                   <td className="px-3 py-1">

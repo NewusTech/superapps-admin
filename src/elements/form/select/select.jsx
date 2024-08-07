@@ -8,21 +8,35 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export default function FormSelect({ htmlFor, label, classLabel }) {
+export default function FormSelect({
+  htmlFor,
+  label,
+  classLabel,
+  data,
+  change,
+  name,
+  value,
+  ...props
+}) {
   return (
     <div className="flex flex-col gap-y-3">
       <Label className={classLabel} htmlFor={htmlFor}>
         {label}
       </Label>
 
-      <Select>
+      <Select name={name} onValueChange={change} value={value}>
         <SelectTrigger className="w-full">
-          <SelectValue placeholder="Theme" />
+          <SelectValue placeholder="Pilih..." />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="light">Light</SelectItem>
-          <SelectItem value="dark">Dark</SelectItem>
-          <SelectItem value="system">System</SelectItem>
+          {data &&
+            data?.map((item, i) => {
+              return (
+                <SelectItem key={i} value={String(item?.id)}>
+                  {item?.nama || item?.type || item?.rute}
+                </SelectItem>
+              );
+            })}
         </SelectContent>
       </Select>
     </div>
