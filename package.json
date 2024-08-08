@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@radix-ui/react-alert-dialog": "^1.1.1",
     "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-popover": "^1.1.1",
     "@radix-ui/react-select": "^2.1.1",
@@ -16,6 +17,7 @@
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "flowbite-react": "^0.10.1",
+    "html-react-parser": "^5.1.12",
     "js-cookie": "^3.0.5",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.424.0",

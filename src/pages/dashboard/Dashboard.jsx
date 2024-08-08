@@ -94,7 +94,7 @@ const Dashboard = () => {
   const totalPages = Math.ceil(order?.data?.length / itemsPerPage);
 
   return (
-    <>
+    <div className="flex flex-col h-full">
       <div className="">
         <SearchInput name="search" value={search} handleSearch={handleSearch} />
         <div className="pt-[29px]">
@@ -285,7 +285,7 @@ const Dashboard = () => {
           </>
         )}
       </div>
-    </>
+    </div>
   );
 };
 

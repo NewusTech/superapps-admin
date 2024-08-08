@@ -4,15 +4,33 @@ import InputSelect from "elements/InputSelect";
 import InputText from "elements/InputText";
 import SearchInput from "elements/Search";
 import TicketComponent from "elements/TicketComponent";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { formatLongDate } from "helpers";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { getAllSchedules } from "service/api";
 
 export default function TambahPesanan() {
+  const naviagate = useNavigate();
+  const [bookings, setBookings] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+
+  const fetchBookings = async () => {
+    try {
+      const response = await getAllSchedules();
+
+      setBookings(response?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchBookings();
+  }, []);
+
   return (
-    <>
-      <div className="my-5">.</div>
+    <div className="flex flex-col w-full h-full">
       <div className="my-5">
         <div>
           <Link to={"/"} className="text-main">
@@ -21,7 +39,7 @@ export default function TambahPesanan() {
           &gt; Tambah Pesanan
         </div>
       </div>
-      <div className="bg-white p-4 flex flex-col gap-4">
+      <div className="bg-neutral-50 p-4 flex flex-col gap-4">
         <div className="flex flex-row gap-4">
           <SearchInput className={"w-full"} />
           <div className="flex flex-row items-center gap-2 ml-auto">
@@ -33,21 +51,13 @@ export default function TambahPesanan() {
             />
           </div>
         </div>
-        <div className="my-2 flex flex-col gap-4 max-h-96 overflow-y-auto">
-          <TicketComponent />
-          <TicketComponent />
-          <TicketComponent />
+        <div className="my-2 flex flex-col gap-4 max-h-screen hide-scrollbar overflow-y-auto">
+          {bookings &&
+            bookings?.map((item, i) => {
+              return <TicketComponent key={i} data={item} />;
+            })}
         </div>
       </div>
-      <div className="bg-white my-2 p-4 w-full flex flex-col">
-        <div className="grid grid-cols-2 gap-6">
-          <InputText label={"Nama"} placeholder="nama..." />
-          <InputText label={"Nomor Telepon"} placeholder="nomor Telepon" />
-          <InputSelect label={"Kursi"} placeholder="Pilih Kursi" />
-          <InputSelect label={"Status"} placeholder="Pilih Status" />
-        </div>
-        <Button text={"Buat Pesanan"} className={"my-4 ml-auto"} />
-      </div>
-    </>
+    </div>
   );
 }
