@@ -25,7 +25,9 @@ jobs:
     - name : pull
       run: |
           cd /home/newus-admin-superapps/htdocs/admin-superapps.newus.id
+          git stash
           git pull
+          git stash pop
     - name : Run NPM
       run: npm ci
     - name : Run build
