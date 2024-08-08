@@ -4,7 +4,7 @@ import Buttons from "elements/form/button/button";
 import FormInput from "elements/form/input/input";
 import FormSelect from "elements/form/select/select";
 import Pagination from "elements/pagination/pagination";
-import { formatDate, formatTime } from "helpers";
+import { formatDate, formatDateInput, formatTime } from "helpers";
 import {
   ChevronLeft,
   ChevronRight,
@@ -30,26 +30,17 @@ export default function Jadwal() {
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [jadwalForm, setJadwalForm] = useState({
-    master_rute_id: "",
-    waktu_keberangkatan: "",
-    tanggal_berangkat: "",
-    master_mobil_id: "",
-    master_supir_id: "",
-    ketersediaan: "",
-  });
   const [forms, setForms] = useState([
     {
       master_rute_id: "",
       waktu_keberangkatan: "",
       master_mobil_id: "",
       master_supir_id: "",
-      ketersediaan: "",
-      tanggal_berangkat: "",
+      ketersediaan: "Tersedia",
+      tanggal_berangkat: localStorage.getItem("tanggal_berangkat"),
     },
   ]);
   const [selectedDate, setSelectedDate] = useState(null);
-  const [newSchedule, setNewSchedule] = useState("");
   const [schedules, setSchedules] = useState({});
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const today = new Date();
@@ -93,15 +84,7 @@ export default function Jadwal() {
         ketersediaan: "Tersedia",
       }));
 
-      console.log(forms, "ini formsss");
-
       const response = await createNewSchedule(schedulesToCreate);
-
-      // const response = await createNewSchedule({
-      //   ...jadwalForm,
-      //   tanggal_berangkat: localStorage.getItem("tanggal_berangkat"),
-      //   ketersediaan: "Tersedia",
-      // });
 
       if (response.success === true) {
         setIsLoading(false);
@@ -113,11 +96,12 @@ export default function Jadwal() {
           position: "center",
         });
         localStorage.clear();
+        setSelectedDate(null);
         navigate("/jadwal");
       } else {
         Swal.fire({
           icon: "error",
-          title: response.error,
+          title: response.message,
           timer: 2000,
           showConfirmButton: false,
           position: "center",
@@ -158,20 +142,7 @@ export default function Jadwal() {
 
   const handleDateClick = (date) => {
     setSelectedDate(date);
-    localStorage.setItem("tanggal_berangkat", formatDate(date));
-  };
-
-  const handleAddSchedule = () => {
-    if (newSchedule.trim() === "") return;
-
-    const dateKey = selectedDate.toISOString().split("T")[0];
-
-    setSchedules((prevSchedules) => ({
-      ...prevSchedules,
-      [dateKey]: [...(prevSchedules[dateKey] || []), newSchedule],
-    }));
-    setNewSchedule("");
-    setSelectedDate(null);
+    localStorage.setItem("tanggal_berangkat", formatDateInput(date));
   };
 
   const renderSchedules = (date) => {
@@ -376,12 +347,6 @@ export default function Jadwal() {
                             change={(e) =>
                               handleInputChange(index, "master_rute_id", e)
                             }
-                            // onChange={(e) =>
-                            //   setJadwalForm({
-                            //     ...jadwalForm,
-                            //     master_rute_id: e.target.value,
-                            //   })
-                            // }
                             name="master_rute_id"
                             value={form?.master_rute_id}
                           />
@@ -401,12 +366,6 @@ export default function Jadwal() {
                                   e.target.value
                                 )
                               }
-                              // onChange={(e) =>
-                              //   setJadwalForm({
-                              //     ...jadwalForm,
-                              //     waktu_keberangkatan: e.target.value,
-                              //   })
-                              // }
                               htmlFor="waktu_berangkat"
                               label="Waktu Berangkat"
                               classLabel="w-full"
@@ -423,12 +382,6 @@ export default function Jadwal() {
                             change={(e) =>
                               handleInputChange(index, "master_mobil_id", e)
                             }
-                            // onChange={(e) =>
-                            //   setJadwalForm({
-                            //     ...jadwalForm,
-                            //     master_mobil_id: e.target.value,
-                            //   })
-                            // }
                             name="master_mobil_id"
                             value={form?.master_mobil_id}
                           />
@@ -441,12 +394,6 @@ export default function Jadwal() {
                             change={(e) =>
                               handleInputChange(index, "master_supir_id", e)
                             }
-                            // onChange={(e) =>
-                            //   setJadwalForm({
-                            //     ...jadwalForm,
-                            //     master_supir_id: e.target.value,
-                            //   })
-                            // }
                             name="master_supir_id"
                             value={form?.master_supir_id}
                           />
@@ -462,16 +409,6 @@ export default function Jadwal() {
                           </Btn>
                         )}
                       </div>
-                      {/* <div className="flex justify-end space-x-2 mt-10">
-                    <Buttons
-                      onClick={handleNewSchedule}
-                      isLoading={isLoading}
-                      disables={isLoading ? true : false}
-                      type="submit"
-                      className="w-full bg-main hover:bg-primary-600 text-paper py-2 rounded-md"
-                      name="Simpan"
-                    />
-                  </div> */}
                     </form>
                   ))}
               </div>

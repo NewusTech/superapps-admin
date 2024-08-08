@@ -61,7 +61,7 @@ const TambahMobil = () => {
           <p className="ml-3">Tambah Mobil</p>
         </Breadcrumb.Item>
       </Breadcrumb>
-      <div className="bg-white mt-10">
+      <div className="bg-neutral-50 mt-10">
         <form onSubmit={handleNewCar} className="p-10">
           <div className="flex flex-col w-full gap-y-6">
             <div className="grid grid-cols-2 w-full gap-6">

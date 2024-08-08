@@ -3,7 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Dashboard from "pages/dashboard/Dashboard";
 import RiwayatPesanan from "pages/riwayat-pesanan/RiwayatPesanan";
 import ListPenumpang from "pages/list-penumpang/ListPenumpang";
-import Paket from "pages/paket/Paket";
+// import Paket from "pages/paket/Paket";
 import Layout from "layouts/Layout";
 import DatabaseKonsumen from "pages/database-konsumen/DatabaseKonsumen";
 import Login from "pages/auth/Login";
@@ -32,6 +32,7 @@ import TambahCabang from "pages/cabang/TambahCabang";
 import TambahTitik from "pages/titik-lokasi/TambahTitik";
 import Cookies from "js-cookie";
 import Article from "pages/artikel/artikel";
+import TambahKursi from "pages/dashboard/tambahKursi";
 
 const App = () => {
   return (
@@ -136,7 +137,11 @@ const App = () => {
               element={<ProtectedRoute element={<TambahPesanan />} />}
             />
             <Route
-              path="/pesanan/pembayaran"
+              path="/pesanan/kursi/:id"
+              element={<ProtectedRoute element={<TambahKursi />} />}
+            />
+            <Route
+              path="/pesanan/pembayaran/:kodePesanan"
               element={<ProtectedRoute element={<Pembayaran />} />}
             />
             <Route

@@ -18,6 +18,19 @@ export const getAllPesanan = async (search, status, startDate, endDate) => {
   return await response.json();
 };
 
+export const createNewPesanan = async (data) => {
+  const response = await fetch(`${apiUrl}/pesanan/pesanan`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    body: JSON.stringify(data),
+    cache: "no-store",
+  });
+  return await response.json();
+};
+
 export const deletePesanan = async (id) => {
   const response = await fetch(`${apiUrl}/pesanan/pesanan/${id}`, {
     headers: {
@@ -253,6 +266,72 @@ export const createNewSchedule = async (data) => {
     },
     method: "POST",
     body: JSON.stringify(data),
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
+export const getSeatsByCar = async (id) => {
+  const response = await fetch(`${apiUrl}/kursi/kursi_by_mobil/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
+export const updateStatusSeats = async (id, data) => {
+  const response = await fetch(`${apiUrl}/kursi/${id}/update-status`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    method: "PUT",
+    body: JSON.stringify(data),
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
+export const getScheduleDetail = async (id) => {
+  const response = await fetch(`${apiUrl}/jadwal/jadwal/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
+export const getAllArticles = async () => {
+  const response = await fetch(`${apiUrl}/artikel/artikel`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
+export const getHistoriPesananByKodePesanan = async (kode) => {
+  const response = await fetch(`${apiUrl}/pesanan/pesanan/${kode}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    method: "GET",
     cache: "no-store",
   });
 
