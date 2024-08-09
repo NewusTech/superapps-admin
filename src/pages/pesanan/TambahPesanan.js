@@ -6,7 +6,7 @@ const TambahPesanan = () => {
   return (
     <section className="p-5 min-h-screen">
       <Breadcrumb>
-        <Link to="/dashboard" className="flex pr-3 items-center text-[#0705EC]">
+        <Link to="/" className="flex pr-3 items-center text-[#0705EC]">
           <p>Rute</p>
         </Link>
         <Breadcrumb.Item active="true" className="">

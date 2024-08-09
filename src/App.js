@@ -43,7 +43,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
         </Route>
         <Route>
-          {/* <Route index element={<Navigate to="/dashboard" />} /> */}
+          {/* <Route index element={<Navigate to="/" />} /> */}
           <Route element={<Layout />}>
             <Route
               index
