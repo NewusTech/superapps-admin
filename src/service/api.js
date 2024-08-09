@@ -272,6 +272,19 @@ export const createNewSchedule = async (data) => {
   return await response.json();
 };
 
+export const deleteSchedule = async (id) => {
+  const response = await fetch(`${apiUrl}/jadwal/jadwal/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    method: "DELETE",
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
 export const getSeatsByCar = async (id) => {
   const response = await fetch(`${apiUrl}/kursi/kursi_by_mobil/${id}`, {
     headers: {
@@ -325,6 +338,20 @@ export const getAllArticles = async () => {
   return await response.json();
 };
 
+export const createNewArticle = async (data) => {
+  const response = await fetch(`${apiUrl}/artikel/artikel`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      // "Content-Type": "multipart/form-data",
+    },
+    method: "POST",
+    body: data,
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
 export const getHistoriPesananByKodePesanan = async (kode) => {
   const response = await fetch(`${apiUrl}/pesanan/pesanan/${kode}`, {
     headers: {
@@ -332,6 +359,33 @@ export const getHistoriPesananByKodePesanan = async (kode) => {
       "Content-Type": "application/json",
     },
     method: "GET",
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
+export const getAllPaymentMethods = async () => {
+  const response = await fetch(`${apiUrl}/pembayaran/metode-pembayaran`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
+export const makingPayment = async (data) => {
+  const response = await fetch(`${apiUrl}/pembayaran/proses_pembayaran`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    body: JSON.stringify(data),
     cache: "no-store",
   });
 

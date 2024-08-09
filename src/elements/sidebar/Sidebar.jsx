@@ -27,7 +27,7 @@ const { colorActive, colorDactive } = {
 const transsactionRute = [
   {
     name: "Pesanan",
-    link: "/dashboard",
+    link: "/",
     space: "space-x-1",
     iconA: <IconPesanan stroke={colorActive} />,
     iconD: <IconPesanan stroke={colorDactive} />,

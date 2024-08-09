@@ -33,6 +33,7 @@ import TambahTitik from "pages/titik-lokasi/TambahTitik";
 import Cookies from "js-cookie";
 import Article from "pages/artikel/artikel";
 import TambahKursi from "pages/dashboard/tambahKursi";
+import NewArticle from "pages/artikel/newArticle";
 
 const App = () => {
   return (
@@ -42,10 +43,11 @@ const App = () => {
           <Route path="/login" element={<Login />} />
         </Route>
         <Route>
-          <Route index element={<Navigate to="/dashboard" />} />
+          {/* <Route index element={<Navigate to="/dashboard" />} /> */}
           <Route element={<Layout />}>
             <Route
-              path="/dashboard"
+              index
+              path="/"
               element={<ProtectedRoute element={<Dashboard />} />}
             />
             {/* <Route
@@ -151,6 +153,10 @@ const App = () => {
             <Route
               path="/artikel"
               element={<ProtectedRoute element={<Article />} />}
+            />
+            <Route
+              path="/artikel/added"
+              element={<ProtectedRoute element={<NewArticle />} />}
             />
           </Route>
 

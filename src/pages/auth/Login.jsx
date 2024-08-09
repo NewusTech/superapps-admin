@@ -41,7 +41,7 @@ const Login = () => {
           showConfirmButton: false,
           position: "center",
         });
-        navigate("/dashboard");
+        navigate("/");
       } else {
         console.error("Login failed");
       }

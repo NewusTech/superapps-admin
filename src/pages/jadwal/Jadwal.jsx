@@ -4,7 +4,12 @@ import Buttons from "elements/form/button/button";
 import FormInput from "elements/form/input/input";
 import FormSelect from "elements/form/select/select";
 import Pagination from "elements/pagination/pagination";
-import { formatDate, formatDateInput, formatTime } from "helpers";
+import {
+  formatDate,
+  formatDateInput,
+  formatTanggalPanjang,
+  formatTime,
+} from "helpers";
 import {
   ChevronLeft,
   ChevronRight,
@@ -18,6 +23,7 @@ import { FaRegPenToSquare, FaTrash } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import {
   createNewSchedule,
+  deleteSchedule,
   getAllSchedules,
   getScheduleSelect,
 } from "service/api";
@@ -97,6 +103,7 @@ export default function Jadwal() {
         });
         localStorage.clear();
         setSelectedDate(null);
+        getSchedules();
         navigate("/jadwal");
       } else {
         Swal.fire({
@@ -256,6 +263,40 @@ export default function Jadwal() {
   const currentItems = Jadwals.slice(indexOfFirstItem, indexOfLastItem);
 
   const totalPages = Math.ceil(Jadwals.length / itemsPerPage);
+
+  const handleDeleteSchedule = async (id) => {
+    try {
+      const result = await Swal.fire({
+        title: "Apakah anda yakin menghapus jadwal?",
+        text: "Jadwal yang telah dihapus tidak dapat dipulihkan!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#0000FF",
+        cancelButtonColor: "#EE3F62",
+        confirmButtonText: "Delete",
+      });
+
+      if (result.isConfirmed) {
+        const response = await deleteSchedule(id);
+
+        console.log(response, "ini res");
+
+        const date = formatTanggalPanjang(response?.tanggal_berangkat);
+
+        if (response.success === true) {
+          await Swal.fire({
+            icon: "success",
+            title: `Jadwal berhasil dihapus!`,
+            timer: 2000,
+            position: "center",
+          });
+          getSchedules();
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="container mx-auto flex flex-col pb-10">
@@ -477,7 +518,7 @@ export default function Jadwal() {
                         text={"delete"}
                         className={"h-8"}
                         color="red"
-                        onButonClick={() => handleDeleteCabang(item?.id)}
+                        onButonClick={() => handleDeleteSchedule(item?.id)}
                         icon={<FaTrash />}
                       />
                     </td>
