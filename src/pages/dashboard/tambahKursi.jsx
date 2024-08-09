@@ -87,8 +87,6 @@ export default function TambahKursi() {
 
       const response = await createNewPesanan(payload);
 
-      console.log(response, "ini res");
-
       if (response.success === true) {
         setIsLoading(false);
         localStorage.clear();
@@ -119,9 +117,9 @@ export default function TambahKursi() {
   const handleSeatChange = (seat) => {
     if (seat.status !== "terisi") {
       setSelectedSeats((prev) =>
-        prev.includes(seat.id)
-          ? prev.filter((num) => num !== seat.id)
-          : [...prev, seat.id]
+        prev.includes(seat.numor_kursi)
+          ? prev.filter((num) => num !== seat.nomor_kursi)
+          : [...prev, seat.nomor_kursi]
       );
     }
   };
@@ -129,24 +127,38 @@ export default function TambahKursi() {
   const handleSwitchChange = () => {
     setCopyToPassenger((prev) => !prev);
     if (!copyToPassenger) {
-      const updatedPassengers = selectedSeats.map((seatId) => ({
-        nama: data.nama,
-        nik: data.nik,
-        email: data.email,
-        no_telp: data.no_telp,
-        no_kursi: seatId,
-      }));
+      // Copy details only for the first passenger
+      const updatedPassengers = selectedSeats.map((seatId, index) => {
+        if (index === 0) {
+          return {
+            nama: data.nama,
+            nik: data.nik,
+            email: data.email,
+            no_telp: data.no_telp,
+            no_kursi: seatId,
+          };
+        } else {
+          // Return an empty object for other passengers
+          return {
+            nama: "",
+            nik: "",
+            email: "",
+            no_telp: "",
+            no_kursi: seatId,
+          };
+        }
+      });
       setData((prev) => ({ ...prev, penumpang: updatedPassengers }));
     } else {
-      // Clear passenger data if switch is off
+      // Clear the first passenger's data if switch is off
       setData((prev) => ({
         ...prev,
-        penumpang: prev.penumpang.map((p) => ({
+        penumpang: prev.penumpang.map((p, index) => ({
           ...p,
-          nama: "",
-          nik: "",
-          email: "",
-          no_telp: "",
+          nama: index === 0 ? "" : p.nama,
+          nik: index === 0 ? "" : p.nik,
+          email: index === 0 ? "" : p.email,
+          no_telp: index === 0 ? "" : p.no_telp,
         })),
       }));
     }
@@ -169,129 +181,132 @@ export default function TambahKursi() {
         key={seat.id}
         seat={seat}
         onChange={handleSeatChange}
-        isSelected={selectedSeats.includes(seat.id)}
+        isSelected={selectedSeats.includes(seat.nomor_kursi)}
       />
     );
   };
 
-  const renderFormInputs = (seatId, index) => (
-    <div
-      key={seatId}
-      className="flex flex-col w-full bg-neutral-50 pb-8 rounded-md shadow-md p-4 gap-y-4">
-      <h3 className="text-[18px] font-semibold text-neutral-700">
-        Detail Penumpang {index + 1}
-      </h3>
+  const renderFormInputs = (seatId, index) => {
+    const selectedSeat = seats?.find((s) => s.nomor_kursi === seatId);
 
-      <div className="flex flex-col w-full gap-y-4">
-        <div className="grid grid-cols-2 w-full gap-x-5">
-          <div className="flex flex-col w-full gap-y-3">
-            <FormInput
-              type="text"
-              placeholder="Nama"
-              className="w-full border border-outlineBorder rounded-md h-[40px] pl-3"
-              id={`nama-${seatId}`}
-              name={`nama-${seatId}`}
-              value={data.penumpang[index]?.nama || ""}
-              onChange={(e) =>
-                handlePassengerInputChange(index, "nama", e.target.value)
-              }
-              htmlFor={`nama-${seatId}`}
-              label="Nama"
-              classLabel="w-full"
-            />
-          </div>
+    return (
+      <div
+        key={seatId}
+        className="flex flex-col w-full bg-neutral-50 pb-8 rounded-md shadow-md p-4 gap-y-4">
+        <h3 className="text-[18px] font-semibold text-neutral-700">
+          Detail Penumpang {index + 1}
+        </h3>
 
-          <div className="flex flex-col w-full gap-y-3">
-            <FormInput
-              type="text"
-              placeholder="NIK"
-              className="w-full border border-outlineBorder rounded-md h-[40px] pl-3"
-              id={`nik-${seatId}`}
-              name={`nik-${seatId}`}
-              value={data.penumpang[index]?.nik || ""}
-              onChange={(e) =>
-                handlePassengerInputChange(index, "nik", e.target.value)
-              }
-              htmlFor={`nik-${seatId}`}
-              label="NIK"
-              classLabel="w-full"
-            />
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 w-full gap-x-5">
-          <div className="flex flex-col w-full gap-y-3">
-            <FormInput
-              type="text"
-              placeholder="Email"
-              className="w-full border border-outlineBorder rounded-md h-[40px] pl-3"
-              id={`email-${seatId}`}
-              name={`email-${seatId}`}
-              value={data.penumpang[index]?.email || ""}
-              onChange={(e) =>
-                handlePassengerInputChange(index, "email", e.target.value)
-              }
-              htmlFor={`email-${seatId}`}
-              label="Email"
-              classLabel="w-full"
-            />
-          </div>
-
-          <div className="flex flex-col w-full gap-y-3">
-            <FormInput
-              type="text"
-              placeholder="Nomor Telepon"
-              className="w-full border border-outlineBorder rounded-md h-[40px] pl-3"
-              id={`telepon-${seatId}`}
-              name={`telepon-${seatId}`}
-              value={data.penumpang[index]?.no_telp || ""}
-              onChange={(e) =>
-                handlePassengerInputChange(index, "no_telp", e.target.value)
-              }
-              htmlFor={`telepon-${seatId}`}
-              label="Telepon"
-              classLabel="w-full"
-            />
-          </div>
-        </div>
-
-        <div className="flex flex-row w-full gap-x-5">
-          <div className="flex flex-col w-full gap-y-3">
-            <FormInput
-              type="number"
-              placeholder="Nomor Kursi"
-              className="w-full border border-outlineBorder rounded-md h-[40px] pl-3"
-              id={`nomor-kursi-${seatId}`}
-              name={`telepon_kursi-${seatId}`}
-              value={seatId}
-              // value={data.penumpang[index]?.no_kursi || ""}
-              onChange={(e) => {
-                const updatedPenumpang = [...data.penumpang];
-                updatedPenumpang[index] = {
-                  ...updatedPenumpang[index],
-                  no_kursi: e.target.value,
-                };
-                setData((prev) => ({ ...prev, penumpang: updatedPenumpang }));
-              }}
-              htmlFor={`nomor-kursi-${seatId}`}
-              label="Nomor Kursi"
-              classLabel="w-full"
-            />
-          </div>
-
-          {index === 0 && (
-            <div className="flex flex-row justify-end items-center pt-6 w-full gap-y-3 gap-x-3">
-              <p>Sama dengan pemesan</p>
-              <SwitchInput
-                checked={copyToPassenger}
-                onChange={handleSwitchChange}
+        <div className="flex flex-col w-full gap-y-4">
+          <div className="grid grid-cols-2 w-full gap-x-5">
+            <div className="flex flex-col w-full gap-y-3">
+              <FormInput
+                type="text"
+                placeholder="Nama"
+                className="w-full border border-outlineBorder rounded-md h-[40px] pl-3"
+                id={`nama-${seatId}`}
+                name={`nama-${seatId}`}
+                value={data.penumpang[index]?.nama || ""}
+                onChange={(e) =>
+                  handlePassengerInputChange(index, "nama", e.target.value)
+                }
+                htmlFor={`nama-${seatId}`}
+                label="Nama"
+                classLabel="w-full"
               />
             </div>
-          )}
+
+            <div className="flex flex-col w-full gap-y-3">
+              <FormInput
+                type="text"
+                placeholder="NIK"
+                className="w-full border border-outlineBorder rounded-md h-[40px] pl-3"
+                id={`nik-${seatId}`}
+                name={`nik-${seatId}`}
+                value={data.penumpang[index]?.nik || ""}
+                onChange={(e) =>
+                  handlePassengerInputChange(index, "nik", e.target.value)
+                }
+                htmlFor={`nik-${seatId}`}
+                label="NIK"
+                classLabel="w-full"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 w-full gap-x-5">
+            <div className="flex flex-col w-full gap-y-3">
+              <FormInput
+                type="text"
+                placeholder="Email"
+                className="w-full border border-outlineBorder rounded-md h-[40px] pl-3"
+                id={`email-${seatId}`}
+                name={`email-${seatId}`}
+                value={data.penumpang[index]?.email || ""}
+                onChange={(e) =>
+                  handlePassengerInputChange(index, "email", e.target.value)
+                }
+                htmlFor={`email-${seatId}`}
+                label="Email"
+                classLabel="w-full"
+              />
+            </div>
+
+            <div className="flex flex-col w-full gap-y-3">
+              <FormInput
+                type="text"
+                placeholder="Nomor Telepon"
+                className="w-full border border-outlineBorder rounded-md h-[40px] pl-3"
+                id={`telepon-${seatId}`}
+                name={`telepon-${seatId}`}
+                value={data.penumpang[index]?.no_telp || ""}
+                onChange={(e) =>
+                  handlePassengerInputChange(index, "no_telp", e.target.value)
+                }
+                htmlFor={`telepon-${seatId}`}
+                label="Telepon"
+                classLabel="w-full"
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-row w-full gap-x-5">
+            <div className="flex flex-col w-full gap-y-3">
+              <FormInput
+                type="number"
+                placeholder="Nomor Kursi"
+                className="w-full border border-outlineBorder rounded-md h-[40px] pl-3"
+                id={`nomor-kursi-${seatId}`}
+                name={`nomor_kursi-${seatId}`}
+                value={selectedSeat?.nomor_kursi}
+                onChange={(e) => {
+                  const updatedPenumpang = [...data.penumpang];
+                  updatedPenumpang[index] = {
+                    ...updatedPenumpang[index],
+                    no_kursi: e.target.value,
+                  };
+                  setData((prev) => ({ ...prev, penumpang: updatedPenumpang }));
+                }}
+                htmlFor={`nomor-kursi-${seatId}`}
+                label="Nomor Kursi"
+                classLabel="w-full"
+              />
+            </div>
+
+            {index === 0 && (
+              <div className="flex flex-row justify-end items-center pt-6 w-full gap-y-3 gap-x-3">
+                <p>Sama dengan pemesan</p>
+                <SwitchInput
+                  checked={copyToPassenger}
+                  onChange={handleSwitchChange}
+                />
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <section className="min-h-screen pt-20 px-4">
@@ -336,7 +351,7 @@ export default function TambahKursi() {
 
             <div className="flex flex-col w-full bg-neutral-50 rounded-md shadow-md p-4 gap-y-4 pb-8">
               <h3 className="text-[18px] font-semibold text-neutral-700">
-                Kotak Pemesan
+                Kontak Pemesan
               </h3>
 
               <div className="flex flex-col w-full gap-y-4">

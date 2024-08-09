@@ -190,6 +190,7 @@ const Dashboard = () => {
                   ) : (
                     order &&
                     order?.data?.length > 0 &&
+                    currentItems &&
                     currentItems?.map((item, index) => {
                       const date = formatLongDate(item?.tanggal_berangkat);
                       const time = formatTime(item?.jam_berangkat);

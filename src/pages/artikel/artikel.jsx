@@ -15,6 +15,8 @@ import { FaRegPenToSquare, FaTrash } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { getAllArticles } from "service/api";
 import parse from "html-react-parser";
+import SearchInput from "elements/Search";
+import { Plus } from "lucide-react";
 
 const Article = () => {
   const navigate = useNavigate();
@@ -47,10 +49,23 @@ const Article = () => {
 
   const totalPages = Math.ceil(articles.length / itemsPerPage);
 
-  console.log(articles, "articles");
+  console.log(currentItems, "ini djag");
+  const handleOnTambahArticle = () => {
+    navigate("/artikel/added");
+  };
 
   return (
-    <section>
+    <section className="flex flex-col w-full">
+      <div className="flex flex-row w-full gap-x-4">
+        <SearchInput name="search" className="w-full" />
+
+        <Button
+          onButonClick={handleOnTambahArticle}
+          text={"Tambah"}
+          className={"h-11"}
+          icon={<Plus />}
+        />
+      </div>
       {isLoading ? (
         <Loading />
       ) : (

@@ -86,3 +86,65 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+.payment-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.payment-method {
+  background-color: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.payment-method-header {
+  padding: 1rem;
+  font-weight: bold;
+  font-size: 1.1rem;
+  background-color: #f9f9f9;
+}
+
+.payment-method-header:hover {
+  background-color: #f0f0f0;
+}
+
+.payment-method-options {
+  padding: 1rem;
+  background-color: #fff;
+}
+
+.payment-method-options label {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #e5e5e5;
+  border-radius: 0.5rem;
+  transition: border-color 0.3s;
+}
+
+.payment-method-options label:hover {
+  border-color: #007bff;
+}
+
+.payment-method-options input[type="radio"]:checked + img {
+  border: 2px solid #007bff;
+}
+
+.payment-method-options img {
+  height: 48px;
+  width: 48px;
+  object-fit: contain;
+  border-radius: 0.25rem;
+  transition: border-color 0.3s;
+  border: 2px solid #ccc;
+}
+
+.payment-method-options span {
+  font-size: 1rem;
+  font-weight: normal;
+  color: #333;
+}
