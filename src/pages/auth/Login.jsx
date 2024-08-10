@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { Loader } from "lucide-react";
 import Swal from "sweetalert2";
+import { LoginApi } from "service/api";
 const Login = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const [message, setMessage] = useState(location.state?.message || "");
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -18,21 +17,12 @@ const Login = () => {
     e.preventDefault();
     try {
       setIsLoading(true);
-      const response = await fetch(
-        "https://backend-superapps.newus.id/api/auth/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(user),
-        }
-      );
+      const response = await LoginApi(user);
 
-      if (response.ok) {
-        const data = await response.json();
-        const { token } = data?.data;
-        Cookies.set("token", token, { expires: 1 });
+      console.log(response, "ini res");
+
+      if (response.success === true) {
+        Cookies.set("token", response?.data?.token, { expires: 1 });
         setIsLoading(false);
         Swal.fire({
           icon: "success",
@@ -43,7 +33,13 @@ const Login = () => {
         });
         navigate("/");
       } else {
-        console.error("Login failed");
+        Swal.fire({
+          icon: "error",
+          title: `${response?.message}`,
+          timer: 2000,
+          showConfirmButton: false,
+          position: "center",
+        });
       }
     } catch (error) {
       console.error("An error occurred during login:", error);
@@ -52,15 +48,6 @@ const Login = () => {
     }
   };
 
-  useEffect(() => {
-    if (message) {
-      const timer = setTimeout(() => {
-        setMessage("");
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [message]);
-
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
@@ -68,7 +55,6 @@ const Login = () => {
   return (
     <div className="flex items-center justify-center min-w-[360px]">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        {{ message } && <p className="text-red-500 text-center">{message}</p>}
         <h2 className="text-2xl font-bold text-center">Login</h2>
         <h2 className="text-lg font-bold mb-6 text-center">Admin Ramatranz</h2>
         <form className="space-y-6">
