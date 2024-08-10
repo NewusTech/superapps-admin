@@ -1,4 +1,4 @@
-import { createHashRouter, redirect } from "react-router-dom";
+import { createBrowserRouter, redirect } from "react-router-dom";
 import Cookies from "js-cookie";
 import AuthLayout from "layouts/AuthLayout";
 import Layout from "layouts/Layout";
@@ -32,7 +32,7 @@ import TambahTitik from "pages/titik-lokasi/TambahTitik";
 import TitikLokasi from "pages/titik-lokasi/TitikLokasi";
 import Dashboard from "pages/dashboard/Dashboard";
 
-const router = createHashRouter([
+const router = createBrowserRouter([
   {
     path: "/login",
     element: <AuthLayout />,
