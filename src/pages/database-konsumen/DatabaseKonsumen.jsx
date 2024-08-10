@@ -3,7 +3,7 @@ import SearchInput from "elements/Search";
 import DatePrintFilter from "elements/DatePrintFilter";
 import DatabaseKonsumenItem from "elements/DatabaseKonsumenItem";
 
-const DatabaseKonsumen = () => {
+export default function DatabaseKonsumen() {
   return (
     <>
       <div>
@@ -37,6 +37,4 @@ const DatabaseKonsumen = () => {
       </div>
     </>
   );
-};
-
-export default DatabaseKonsumen;
+}

@@ -1,7 +1,7 @@
 import React from "react";
 import "@bitnoi.se/react-scheduler/dist/style.css";
 
-const CalendarComponent = () => {
+export default function CalendarComponent() {
   const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
   const dates = [
     // Dummy data for dates, in a real scenario, generate based on the month/year
@@ -47,6 +47,4 @@ const CalendarComponent = () => {
       </div>
     </div>
   );
-};
-
-export default CalendarComponent;
+}

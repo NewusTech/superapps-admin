@@ -8,7 +8,7 @@ import Pagination from "elements/pagination/pagination";
 import Loading from "elements/Loading";
 import Swal from "sweetalert2";
 
-const Mobil = () => {
+export default function Mobil() {
   const navigate = useNavigate();
   const [mobil, setMobil] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -143,6 +143,4 @@ const Mobil = () => {
       )}
     </section>
   );
-};
-
-export default Mobil;
+}

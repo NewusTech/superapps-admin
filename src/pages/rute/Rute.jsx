@@ -8,7 +8,7 @@ import { FaRegPenToSquare, FaTrash } from "react-icons/fa6";
 import Pagination from "elements/pagination/pagination";
 import Swal from "sweetalert2";
 
-const Rute = () => {
+export default function Rute() {
   const navigate = useNavigate();
   const [rute, setRute] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -154,6 +154,4 @@ const Rute = () => {
       </div>
     </section>
   );
-};
-
-export default Rute;
+}

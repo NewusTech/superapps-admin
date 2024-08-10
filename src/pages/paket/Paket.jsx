@@ -5,7 +5,7 @@ import { ReactComponent as IconPrint } from "../../assets/icons/Print.svg";
 import DatePrintFilter from "../../elements/DatePrintFilter";
 import { useNavigate } from "react-router-dom";
 
-const Paket = () => {
+export default function Paket() {
   const navigate = useNavigate();
 
   const handleNewPaket = () => {
@@ -77,6 +77,4 @@ const Paket = () => {
       </div>
     </>
   );
-};
-
-export default Paket;
+}

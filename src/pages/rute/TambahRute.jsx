@@ -13,7 +13,7 @@ import Buttons from "elements/form/button/button";
 import { createNewRute } from "service/api";
 import Swal from "sweetalert2";
 
-const TambahRute = () => {
+export default function TambahRute() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [form, setForm] = useState({
@@ -147,6 +147,4 @@ const TambahRute = () => {
       </div>
     </section>
   );
-};
-
-export default TambahRute;
+}

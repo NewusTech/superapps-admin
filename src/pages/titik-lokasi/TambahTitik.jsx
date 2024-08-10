@@ -15,7 +15,7 @@ import Buttons from "elements/form/button/button";
 import { createNewTitikLokasi, getAllCabang } from "service/api";
 import Swal from "sweetalert2";
 
-const TambahTitik = () => {
+export default function TambahTitik() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [form, setForm] = useState({
@@ -132,6 +132,4 @@ const TambahTitik = () => {
       </div>
     </section>
   );
-};
-
-export default TambahTitik;
+}

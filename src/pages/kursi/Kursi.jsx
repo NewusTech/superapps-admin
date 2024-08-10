@@ -15,7 +15,7 @@ import SwitchInput from "elements/form/switchInput/switchInput";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
-const Kursi = () => {
+export default function Kursi() {
   const navigate = useNavigate();
   const [cars, setCars] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -250,6 +250,4 @@ const Kursi = () => {
       </div>
     </section>
   );
-};
-
-export default Kursi;
+}

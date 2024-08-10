@@ -15,7 +15,7 @@ import Buttons from "elements/form/button/button";
 import { createNewDriver } from "service/api";
 import Swal from "sweetalert2";
 
-const TambahSupir = () => {
+export default function TambahSupir() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [form, setForm] = useState({
@@ -159,6 +159,4 @@ const TambahSupir = () => {
       </div>
     </section>
   );
-};
-
-export default TambahSupir;
+}

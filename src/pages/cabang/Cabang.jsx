@@ -8,7 +8,7 @@ import { FaRegPenToSquare, FaTrash } from "react-icons/fa6";
 import Pagination from "elements/pagination/pagination";
 import Swal from "sweetalert2";
 
-const Cabang = () => {
+export default function Cabang() {
   const navigate = useNavigate();
   const [cabang, setCabang] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -148,6 +148,4 @@ const Cabang = () => {
       </div>
     </section>
   );
-};
-
-export default Cabang;
+}

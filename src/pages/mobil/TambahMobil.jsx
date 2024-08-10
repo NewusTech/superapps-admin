@@ -15,7 +15,7 @@ import FormInput from "elements/form/input/input";
 import { createNewCar } from "service/api";
 import Swal from "sweetalert2";
 
-const TambahMobil = () => {
+export default function TambahMobil() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [carsForm, setCarsForm] = useState({
@@ -162,6 +162,4 @@ const TambahMobil = () => {
       </div>
     </section>
   );
-};
-
-export default TambahMobil;
+}

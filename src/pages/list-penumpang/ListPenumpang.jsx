@@ -3,7 +3,7 @@ import SearchInput from "../../elements/Search";
 import Filter from "../../elements/Filter";
 import { ReactComponent as IconPrint } from "../../assets/icons/Print.svg";
 import DatePrintFilter from "../../elements/DatePrintFilter";
-const ListPenumpang = () => {
+export default function ListPenumpang() {
   return (
     <>
       <div>
@@ -52,5 +52,4 @@ const ListPenumpang = () => {
       </div>
     </>
   );
-};
-export default ListPenumpang;
+}

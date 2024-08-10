@@ -19,7 +19,7 @@ import SearchInput from "elements/Search";
 import { Plus } from "lucide-react";
 import Swal from "sweetalert2";
 
-const Article = () => {
+export default function Article() {
   const navigate = useNavigate();
   const popupRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -214,6 +214,4 @@ const Article = () => {
       )}
     </section>
   );
-};
-
-export default Article;
+}
