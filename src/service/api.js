@@ -1,7 +1,6 @@
 import Cookies from "js-cookie";
 
 const apiUrl = process.env.REACT_APP_API_URL_LOCAL;
-const token = Cookies.get("token");
 
 export const LoginApi = async (data) => {
   const response = await fetch(`${apiUrl}/auth/login`, {
@@ -35,7 +34,7 @@ export const getAllPesanan = async (search, status, startDate, endDate) => {
 export const createNewPesanan = async (data) => {
   const response = await fetch(`${apiUrl}/pesanan/pesanan`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",
     },
     method: "POST",
@@ -48,7 +47,7 @@ export const createNewPesanan = async (data) => {
 export const deletePesanan = async (id) => {
   const response = await fetch(`${apiUrl}/pesanan/pesanan/${id}`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",
     },
     method: "DELETE",
@@ -60,7 +59,7 @@ export const deletePesanan = async (id) => {
 export const getAllRute = async () => {
   const response = await fetch(`${apiUrl}/rute/master_rute`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",
     },
     method: "GET",
@@ -72,7 +71,7 @@ export const getAllRute = async () => {
 export const createNewRute = async (data) => {
   const response = await fetch(`${apiUrl}/rute/master_rute`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",
     },
     method: "POST",
@@ -85,7 +84,7 @@ export const createNewRute = async (data) => {
 export const deleteRute = async (id) => {
   const response = await fetch(`${apiUrl}/rute/master_rute/${id}`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",
     },
     method: "DELETE",
@@ -97,7 +96,7 @@ export const deleteRute = async (id) => {
 export const getAllCabang = async () => {
   const response = await fetch(`${apiUrl}/cabang/master_cabang`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",
     },
     method: "GET",
@@ -109,7 +108,7 @@ export const getAllCabang = async () => {
 export const createNewCabang = async (data) => {
   const response = await fetch(`${apiUrl}/cabang/master_cabang`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",
     },
     method: "POST",
@@ -122,7 +121,7 @@ export const createNewCabang = async (data) => {
 export const deleteCabang = async (id) => {
   const response = await fetch(`${apiUrl}/cabang/master_cabang/${id}`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",
     },
     method: "DELETE",
@@ -134,7 +133,7 @@ export const deleteCabang = async (id) => {
 export const getAllTitikLokasi = async () => {
   const response = await fetch(`${apiUrl}/titik_jemput/master_titik_jemput`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",
     },
     method: "GET",
@@ -146,7 +145,7 @@ export const getAllTitikLokasi = async () => {
 export const createNewTitikLokasi = async (data) => {
   const response = await fetch(`${apiUrl}/titik_jemput/master_titik_jemput`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",
     },
     method: "POST",
@@ -161,7 +160,7 @@ export const deleteTitikLokasi = async (id) => {
     `${apiUrl}/titik_jemput/master_titik_jemput/${id}`,
     {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${Cookies.get("token")}`,
         "Content-Type": "application/json",
       },
       method: "DELETE",
@@ -174,7 +173,7 @@ export const deleteTitikLokasi = async (id) => {
 export const getAllSupir = async () => {
   const response = await fetch(`${apiUrl}/supir/master_supir`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",
     },
     method: "GET",
@@ -186,7 +185,7 @@ export const getAllSupir = async () => {
 export const getAllMobil = async () => {
   const response = await fetch(`${apiUrl}/mobil/master_mobil`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",
     },
     method: "GET",
@@ -199,7 +198,7 @@ export const getAllMobil = async () => {
 export const createNewCar = async (data) => {
   const response = await fetch(`${apiUrl}/mobil/master_mobil`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",
     },
     method: "POST",
@@ -212,7 +211,7 @@ export const createNewCar = async (data) => {
 export const deleteCar = async (id) => {
   const response = await fetch(`${apiUrl}/mobil/master_mobil/${id}`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",
     },
     method: "DELETE",
@@ -224,7 +223,7 @@ export const deleteCar = async (id) => {
 export const createNewDriver = async (data) => {
   const response = await fetch(`${apiUrl}/supir/master_supir`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",
     },
     method: "POST",
@@ -237,7 +236,7 @@ export const createNewDriver = async (data) => {
 export const deleteDriver = async (id) => {
   const response = await fetch(`${apiUrl}/supir/master_supir/${id}`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",
     },
     method: "DELETE",
@@ -249,7 +248,7 @@ export const deleteDriver = async (id) => {
 export const getAllSchedules = async () => {
   const response = await fetch(`${apiUrl}/jadwal/jadwal`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",
     },
     method: "GET",
@@ -262,7 +261,7 @@ export const getAllSchedules = async () => {
 export const getScheduleSelect = async () => {
   const response = await fetch(`${apiUrl}/jadwal/dropdown-jadwal`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",
     },
     method: "GET",
@@ -275,7 +274,7 @@ export const getScheduleSelect = async () => {
 export const createNewSchedule = async (data) => {
   const response = await fetch(`${apiUrl}/jadwal/jadwal`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",
     },
     method: "POST",
@@ -289,7 +288,7 @@ export const createNewSchedule = async (data) => {
 export const deleteSchedule = async (id) => {
   const response = await fetch(`${apiUrl}/jadwal/jadwal/${id}`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",
     },
     method: "DELETE",
@@ -302,7 +301,7 @@ export const deleteSchedule = async (id) => {
 export const getSeatsByCar = async (id) => {
   const response = await fetch(`${apiUrl}/kursi/kursi_by_mobil/${id}`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",
     },
     method: "GET",
@@ -315,7 +314,7 @@ export const getSeatsByCar = async (id) => {
 export const updateStatusSeats = async (id, data) => {
   const response = await fetch(`${apiUrl}/kursi/${id}/update-status`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",
     },
     method: "PUT",
@@ -329,7 +328,7 @@ export const updateStatusSeats = async (id, data) => {
 export const getScheduleDetail = async (id) => {
   const response = await fetch(`${apiUrl}/jadwal/jadwal/${id}`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",
     },
     method: "GET",
@@ -342,7 +341,7 @@ export const getScheduleDetail = async (id) => {
 export const getAllArticles = async () => {
   const response = await fetch(`${apiUrl}/artikel/artikel`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",
     },
     method: "GET",
@@ -355,7 +354,7 @@ export const getAllArticles = async () => {
 export const createNewArticle = async (data) => {
   const response = await fetch(`${apiUrl}/artikel/artikel`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${Cookies.get("token")}`,
     },
     method: "POST",
     body: data,
@@ -368,7 +367,7 @@ export const createNewArticle = async (data) => {
 export const deleteArticle = async (id) => {
   const response = await fetch(`${apiUrl}/artikel/artikel/${id}`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",
     },
     method: "DELETE",
@@ -381,7 +380,7 @@ export const deleteArticle = async (id) => {
 export const getHistoriPesananByKodePesanan = async (kode) => {
   const response = await fetch(`${apiUrl}/pesanan/pesanan/${kode}`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",
     },
     method: "GET",
@@ -394,7 +393,7 @@ export const getHistoriPesananByKodePesanan = async (kode) => {
 export const getAllPaymentMethods = async () => {
   const response = await fetch(`${apiUrl}/pembayaran/metode-pembayaran`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",
     },
     method: "GET",
@@ -407,7 +406,7 @@ export const getAllPaymentMethods = async () => {
 export const makingPayment = async (data) => {
   const response = await fetch(`${apiUrl}/pembayaran/proses_pembayaran`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",
     },
     method: "POST",
