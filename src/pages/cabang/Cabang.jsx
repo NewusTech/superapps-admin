@@ -37,7 +37,10 @@ export default function Cabang() {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = cabang.slice(indexOfFirstItem, indexOfLastItem);
+  let currentItems = [];
+  if (cabang) {
+    currentItems = cabang.slice(indexOfFirstItem, indexOfLastItem);
+  }
 
   const totalPages = Math.ceil(cabang.length / itemsPerPage);
 
@@ -110,6 +113,7 @@ export default function Cabang() {
                   </tr>
                 ) : (
                   cabang &&
+                  currentItems &&
                   currentItems?.map((item, index) => (
                     <tr key={index} className="text-center border-b">
                       <td className="p-3 px-4">{index + 1}</td>

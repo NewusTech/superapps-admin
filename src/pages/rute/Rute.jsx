@@ -37,7 +37,10 @@ export default function Rute() {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = rute.slice(indexOfFirstItem, indexOfLastItem);
+  let currentItems = [];
+  if (rute) {
+    currentItems = rute.slice(indexOfFirstItem, indexOfLastItem);
+  }
 
   const totalPages = Math.ceil(rute.length / itemsPerPage);
 
@@ -112,6 +115,7 @@ export default function Rute() {
                   </tr>
                 ) : (
                   rute &&
+                  currentItems &&
                   currentItems?.map((item, index) => (
                     <tr key={index} className="border-b text-center">
                       <td className="p-3 px-4">{index + 1}</td>

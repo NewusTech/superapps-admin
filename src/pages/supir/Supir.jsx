@@ -34,7 +34,10 @@ export default function Supir() {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = supir.slice(indexOfFirstItem, indexOfLastItem);
+  let currentItems = [];
+  if (supir) {
+    currentItems = supir.slice(indexOfFirstItem, indexOfLastItem);
+  }
 
   const totalPages = Math.ceil(supir.length / itemsPerPage);
 
@@ -115,6 +118,7 @@ export default function Supir() {
                   </tr>
                 ) : (
                   supir &&
+                  currentItems &&
                   currentItems?.map((item, index) => {
                     let date;
                     if (item.tanggal_bergabung) {

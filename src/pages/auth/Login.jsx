@@ -20,8 +20,6 @@ export default function Login() {
       setIsLoading(true);
       const response = await LoginApi(user);
 
-      console.log(response, "ini res");
-
       if (response.success === true) {
         Cookies.set("token", response?.data?.token, { expires: 1 });
         setIsLoading(false);

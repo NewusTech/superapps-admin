@@ -63,7 +63,10 @@ export default function RiwayatPesanan() {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = order?.data?.slice(indexOfFirstItem, indexOfLastItem);
+  let currentItems = [];
+  if (order?.data) {
+    currentItems = order?.data?.slice(indexOfFirstItem, indexOfLastItem);
+  }
 
   const totalPages = Math.ceil(order?.data?.length / itemsPerPage);
 
@@ -132,6 +135,7 @@ export default function RiwayatPesanan() {
                   ) : (
                     order &&
                     order?.data?.length > 0 &&
+                    currentItems &&
                     currentItems?.map((item, index) => {
                       const date = formatLongDate(item?.tanggal_berangkat);
                       const time = formatTime(item?.jam_berangkat);

@@ -46,7 +46,10 @@ export default function Article() {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = articles.slice(indexOfFirstItem, indexOfLastItem);
+  let currentItems = [];
+  if (articles) {
+    currentItems = articles.slice(indexOfFirstItem, indexOfLastItem);
+  }
 
   const totalPages = Math.ceil(articles.length / itemsPerPage);
 
@@ -122,6 +125,7 @@ export default function Article() {
                 </tr>
               ) : (
                 articles &&
+                currentItems &&
                 currentItems?.map((item, index) => {
                   let time = "";
                   if (item?.created_at) {

@@ -12,6 +12,7 @@ export const LoginApi = async (data) => {
     body: JSON.stringify(data),
     cache: "no-store",
   });
+
   return await response.json();
 };
 
@@ -20,13 +21,14 @@ export const getAllPesanan = async (search, status, startDate, endDate) => {
     `${apiUrl}/pesanan/pesanan?search=${search}&status=${status}&start_date=${startDate}&end_date=${endDate}`,
     {
       headers: {
-        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
+        Authorization: `Bearer ${Cookies.get("token")}`,
       },
       method: "GET",
       cache: "no-store",
     }
   );
+
   return await response.json();
 };
 
