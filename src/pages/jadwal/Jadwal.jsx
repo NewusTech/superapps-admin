@@ -4,12 +4,7 @@ import Buttons from "elements/form/button/button";
 import FormInput from "elements/form/input/input";
 import FormSelect from "elements/form/select/select";
 import Pagination from "elements/pagination/pagination";
-import {
-  formatDate,
-  formatDateInput,
-  formatTanggalPanjang,
-  formatTime,
-} from "helpers";
+import { formatDateInput, formatTanggalPanjang, formatTime } from "helpers";
 import {
   ChevronLeft,
   ChevronRight,
@@ -104,7 +99,7 @@ export default function Jadwal() {
         localStorage.clear();
         setSelectedDate(null);
         getSchedules();
-        navigate("/jadwal");
+        navigate("/schedule");
       } else {
         Swal.fire({
           icon: "error",

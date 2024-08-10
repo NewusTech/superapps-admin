@@ -1,5 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Breadcrumb } from "flowbite-react";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import { Link, useNavigate } from "react-router-dom";
 import FormInput from "elements/form/input/input";
 import { useQuill } from "react-quilljs";
@@ -105,7 +112,7 @@ export default function NewArticle() {
           showConfirmButton: false,
           position: "center",
         });
-        navigate("/artikel");
+        navigate("/article");
       } else {
         Swal.fire({
           icon: "error",
@@ -125,12 +132,15 @@ export default function NewArticle() {
   return (
     <section className="min-h-screen pt-20 px-4">
       <Breadcrumb>
-        <Link to="/artikel" className="flex pr-3 items-center text-[#0705EC]">
-          <p>Artikel</p>
-        </Link>
-        <Breadcrumb.Item active="true" className="">
-          <p className="ml-3 text-[16px]">Artikel Baru</p>
-        </Breadcrumb.Item>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/article">Artikel</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>Tambah Artikel</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
       </Breadcrumb>
 
       <div className="bg-white mt-10 rounded-md p-4">

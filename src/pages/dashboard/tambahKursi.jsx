@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Breadcrumb } from "flowbite-react";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
 import FormInput from "elements/form/input/input";
@@ -97,7 +104,7 @@ export default function TambahKursi() {
           showConfirmButton: false,
           position: "center",
         });
-        navigate(`/pesanan/pembayaran/${response?.data?.kode_pesanan}`);
+        navigate(`/order/payment-step/${response?.data?.kode_pesanan}`);
       } else {
         Swal.fire({
           icon: "error",
@@ -311,19 +318,23 @@ export default function TambahKursi() {
   return (
     <section className="min-h-screen pt-20 px-4">
       <Breadcrumb>
-        <Link to="/" className="flex pr-3 items-center text-[#0705EC]">
-          <p>Pesanan</p>
-        </Link>
-        <ChevronRight className="w-5 h-5 mr-3" />
-        <Link
-          to="/pesanan/tambah"
-          className="flex pr-3 items-center text-[#0705EC]">
-          <p>Tambah Pesanan</p>
-        </Link>
-        <Breadcrumb.Item active="true" className="">
-          <p className="ml-3 text-[16px]">Tambah Kursi</p>
-        </Breadcrumb.Item>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/">Pesanan</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/order/choosing-car">
+              Pesanan Mobil
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>Form Pesanan</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
       </Breadcrumb>
+
       <div className="flex flex-col w-full bg-neutral-50 mt-10 gap-y-5">
         <div className="flex flex-row w-full gap-x-3">
           <div className="flex flex-col w-full gap-y-3">

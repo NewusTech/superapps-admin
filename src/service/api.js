@@ -342,10 +342,22 @@ export const createNewArticle = async (data) => {
   const response = await fetch(`${apiUrl}/artikel/artikel`, {
     headers: {
       Authorization: `Bearer ${token}`,
-      // "Content-Type": "multipart/form-data",
     },
     method: "POST",
     body: data,
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
+export const deleteArticle = async (id) => {
+  const response = await fetch(`${apiUrl}/artikel/artikel/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    method: "DELETE",
     cache: "no-store",
   });
 

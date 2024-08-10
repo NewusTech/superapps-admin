@@ -39,7 +39,7 @@ const Supir = () => {
   const totalPages = Math.ceil(supir.length / itemsPerPage);
 
   const handleTambahSupir = () => {
-    navigate("/supir/tambah");
+    navigate("/driver/new-driver");
   };
 
   const handleDeleteDriver = async (id) => {
@@ -77,7 +77,7 @@ const Supir = () => {
       <div>
         <SearchInput />
         <div className="pt-[29px]">
-          <Link to="/supir/tambah">
+          <Link to="/driver/new-driver">
             <Button
               text="+ Tambah Supir"
               type="button"

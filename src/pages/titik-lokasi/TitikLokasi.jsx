@@ -38,7 +38,7 @@ const TitikLokasi = () => {
   const totalPages = Math.ceil(location.length / itemsPerPage);
 
   const handleAddTitik = () => {
-    navigate("/titik-lokasi/tambah");
+    navigate("/location-point/new-location-point");
   };
 
   const handleDeleteTitikLokasi = async (id) => {
@@ -78,7 +78,7 @@ const TitikLokasi = () => {
           <SearchInput />
         </div>
         <div className="pt-[29px]">
-          <Link to="/titik-lokasi/tambah">
+          <Link to="/location-point/new-location-point">
             <Button
               text="+ Tambah Titik"
               type="button"

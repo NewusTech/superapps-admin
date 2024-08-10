@@ -13,10 +13,11 @@ import { formatTanggalPanjang, truncateText } from "helpers";
 import { useEffect, useRef, useState } from "react";
 import { FaRegPenToSquare, FaTrash } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
-import { getAllArticles } from "service/api";
+import { deleteArticle, getAllArticles } from "service/api";
 import parse from "html-react-parser";
 import SearchInput from "elements/Search";
 import { Plus } from "lucide-react";
+import Swal from "sweetalert2";
 
 const Article = () => {
   const navigate = useNavigate();
@@ -49,9 +50,38 @@ const Article = () => {
 
   const totalPages = Math.ceil(articles.length / itemsPerPage);
 
-  console.log(currentItems, "ini djag");
   const handleOnTambahArticle = () => {
-    navigate("/artikel/added");
+    navigate("/article/new-article");
+  };
+
+  const handleDeleteArticle = async (id) => {
+    try {
+      const result = await Swal.fire({
+        title: "Apakah anda yakin menghapus artikel?",
+        text: "Artikel yang telah dihapus tidak dapat dipulihkan!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#0000FF",
+        cancelButtonColor: "#EE3F62",
+        confirmButtonText: "Delete",
+      });
+
+      if (result.isConfirmed) {
+        const response = await deleteArticle(id);
+
+        if (response.success === true) {
+          await Swal.fire({
+            icon: "success",
+            title: `${response?.data?.judul} berhasil dihapus!`,
+            timer: 2000,
+            position: "center",
+          });
+          fetchAllArticles();
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -161,7 +191,7 @@ const Article = () => {
                           text={"delete"}
                           className={"h-8"}
                           color="red"
-                          onButonClick={() => handleDeleteCabang(item?.id)}
+                          onButonClick={() => handleDeleteArticle(item?.id)}
                           icon={<FaTrash />}
                         />
                       </td>

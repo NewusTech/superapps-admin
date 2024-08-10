@@ -1,6 +1,5 @@
 import Button from "elements/Button";
 import SearchInput from "elements/Search";
-import { VscKebabVertical } from "react-icons/vsc";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { FaRegPenToSquare, FaTrash } from "react-icons/fa6";
@@ -8,7 +7,7 @@ import { FaRegPenToSquare, FaTrash } from "react-icons/fa6";
 export default function Pengguna() {
   const navigate = useNavigate();
   const handleOnAddUser = () => {
-    navigate("/pengguna/tambah");
+    navigate("/user/new-user");
   };
   return (
     <>

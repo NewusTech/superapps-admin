@@ -3,7 +3,6 @@ import SearchInput from "elements/Search";
 import Button from "elements/Button";
 import Filter from "elements/Filter";
 import { ReactComponent as IconPrint } from "assets/icons/Print.svg";
-import DatePrintFilter from "elements/DatePrintFilter";
 import { useNavigate } from "react-router-dom";
 import { NumericFormat } from "react-number-format";
 import Select from "react-select";
@@ -58,7 +57,7 @@ const Dashboard = () => {
   };
 
   const handleOnTambahPesanan = () => {
-    navigate("/pesanan/tambah");
+    navigate("/order/choosing-car");
   };
 
   const handleOnFilterClear = () => {

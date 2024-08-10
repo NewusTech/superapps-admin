@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import SidebarItem from "elements/sidebar/SidebarItem";
 import { ReactComponent as IconPesanan } from "assets/icons/ic-clipboard.svg";
-import { ReactComponent as IconPaket } from "assets/icons/ph_package.svg";
 import { ReactComponent as IconRiwayatPesanan } from "assets/icons/icon-park-outline_history-query.svg";
 import { ReactComponent as IconListPenumpang } from "assets/icons/carbon_list-checked-mirror.svg";
 import { ReactComponent as IconDatabase } from "assets/icons/ic_database.svg";
@@ -41,28 +40,28 @@ const transsactionRute = [
   // },
   {
     name: "Riwayat Pesanan",
-    link: "/riwayat-pesanan",
+    link: "/order-history",
     space: "space-x-2",
     iconA: <IconRiwayatPesanan stroke={colorActive} />,
     iconD: <IconRiwayatPesanan stroke={colorDactive} />,
   },
   {
     name: "List Penumpang",
-    link: "/list-penumpang",
+    link: "/passenger-list",
     space: "space-x-2",
     iconA: <IconListPenumpang fill={colorActive} />,
     iconD: <IconListPenumpang fill={colorDactive} />,
   },
   {
     name: "Database Konsumen",
-    link: "/database-konsumen",
+    link: "/consument-list",
     space: "space-x-3",
     iconA: <IconDatabase fill={colorActive} />,
     iconD: <IconDatabase fill={colorDactive} />,
   },
   {
     name: "Laporan",
-    link: "/laporan",
+    link: "/report",
     space: "space-x-3",
     iconA: <IconLaporan fill={colorActive} />,
     iconD: <IconLaporan fill={colorDactive} />,
@@ -72,49 +71,49 @@ const transsactionRute = [
 const keloraTravelRute = [
   {
     name: "Jadwal",
-    link: "/jadwal",
+    link: "/schedule",
     space: "space-x-3",
     iconA: <IconJadwal fill={colorActive} />,
     iconD: <IconJadwal fill={colorDactive} />,
   },
   {
     name: "Mobil",
-    link: "/mobil",
+    link: "/travel-car",
     space: "space-x-3",
     iconA: <IconMobil fill={colorActive} />,
     iconD: <IconMobil fill={colorDactive} />,
   },
   {
     name: "Kursi",
-    link: "/kursi",
+    link: "/seat",
     space: "space-x-3",
     iconA: <IconKursi fill={colorActive} />,
     iconD: <IconKursi fill={colorDactive} />,
   },
   {
     name: "Supir",
-    link: "/supir",
+    link: "/driver",
     space: "space-x-3",
     iconA: <IconSupir fill={colorActive} />,
     iconD: <IconSupir fill={colorDactive} />,
   },
   {
     name: "Rute",
-    link: "/rute",
+    link: "/route",
     space: "space-x-3",
     iconA: <IconRute fill={colorActive} />,
     iconD: <IconRute fill={colorDactive} />,
   },
   {
     name: "Cabang",
-    link: "/cabang",
+    link: "/branch",
     space: "space-x-3",
     iconA: <IconCabang fill={colorActive} />,
     iconD: <IconCabang fill={colorDactive} />,
   },
   {
     name: "Titik Lokasi",
-    link: "/titik-lokasi",
+    link: "/location-point",
     space: "space-x-2",
     iconA: <IconTitikLokasi fill={colorActive} />,
     iconD: <IconTitikLokasi fill={colorDactive} />,
@@ -124,7 +123,7 @@ const keloraTravelRute = [
 const kelolaArtikelRute = [
   {
     name: "Artikel",
-    link: "/artikel",
+    link: "/article",
     space: "space-x-3",
     iconA: <IconJadwal fill={colorActive} />,
     iconD: <IconJadwal fill={colorDactive} />,
@@ -133,14 +132,14 @@ const kelolaArtikelRute = [
 const kelolapenggunaRute = [
   {
     name: "Pengguna",
-    link: "/pengguna",
+    link: "/user",
     space: "space-x-3",
     iconA: <IconUser fill={colorActive} />,
     iconD: <IconUser fill={colorDactive} />,
   },
   {
     name: "Peran Pengguna",
-    link: "/peran-pengguna",
+    link: "/user/user-role",
     space: "space-x-3",
     iconA: <IconUser fill={colorActive} />,
     iconD: <IconUser fill={colorDactive} />,

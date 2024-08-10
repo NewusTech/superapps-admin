@@ -1,5 +1,12 @@
-import { Breadcrumb } from "flowbite-react";
-import { Link, useNavigate } from "react-router-dom";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { useNavigate } from "react-router-dom";
 import FormInput from "elements/form/input/input";
 import { useState } from "react";
 import FormLabel from "elements/form/label/label";
@@ -35,7 +42,7 @@ const TambahSupir = () => {
           showConfirmButton: false,
           position: "center",
         });
-        navigate("/supir");
+        navigate("/driver");
       } else {
         Swal.fire({
           icon: "error",
@@ -55,12 +62,15 @@ const TambahSupir = () => {
   return (
     <section className="min-h-screen pt-20 px-4">
       <Breadcrumb>
-        <Link to="/supir" className="flex pr-3 items-center text-[#0705EC]">
-          <p>Supir</p>
-        </Link>
-        <Breadcrumb.Item active="true" className="">
-          <p className="ml-3">Tambah Supir</p>
-        </Breadcrumb.Item>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/driver">Sopir</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>Tambah Sopir</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
       </Breadcrumb>
       <div className="bg-white mt-10 w-full">
         <form onSubmit={handleNewDriver} className="p-10">

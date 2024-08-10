@@ -38,7 +38,7 @@ const Mobil = () => {
   const totalPages = Math.ceil(mobil.length / itemsPerPage);
 
   const handleAddMobil = () => {
-    navigate("/mobil/tambah");
+    navigate("/travel-car/new-travel-car");
   };
 
   const handleDeleteCar = async (id) => {

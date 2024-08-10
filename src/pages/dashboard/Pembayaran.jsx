@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+  BreadcrumbEllipsis,
+} from "@/components/ui/breadcrumb";
 import {
   getAllPaymentMethods,
   getHistoriPesananByKodePesanan,
@@ -90,20 +99,27 @@ export default function Pembayaran() {
   return (
     <section className="min-h-screen pt-20 px-4">
       <div className="my-5">
-        <div>
-          <Link to={"/"} className="text-main">
-            Pesanan
-          </Link>{" "}
-          &gt;{" "}
-          <Link to={"/pesanan/tambah"} className="text-main">
-            Tambah Pesanan
-          </Link>{" "}
-          &gt;{" "}
-          <Link to={"/pesanan/kursi"} className="text-main">
-            Tambah Kursi
-          </Link>{" "}
-          &gt; Pembayaran
-        </div>
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/">Pesanan</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/order/choosing-car">
+                Form Pesanan
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbEllipsis />
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Pembayaran Pesanan</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
       </div>
       <div className="flex flex-col w-full gap-y-3">
         <div className="bg-white flex flex-col w-full p-8 gap-y-4">

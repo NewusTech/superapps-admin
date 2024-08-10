@@ -1,6 +1,6 @@
 import SearchInput from "elements/Search";
 import Button from "elements/Button";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Loading from "elements/Loading";
 import { deleteRute, getAllRute } from "service/api";
@@ -28,7 +28,7 @@ const Rute = () => {
   };
 
   const handleTambahRute = () => {
-    navigate("/rute/tambah");
+    navigate("/route/new-route");
   };
 
   useEffect(() => {
