@@ -84,7 +84,7 @@ export default function Dashboard() {
   console.log(order, "ini pesanan");
 
   const displayedColumns =
-    selectedColumns.length > 0
+    selectedColumns?.length > 0
       ? selectedColumns
       : columns?.map((col) => col?.key);
 
@@ -95,7 +95,10 @@ export default function Dashboard() {
     currentItems = order?.data?.slice(indexOfFirstItem, indexOfLastItem);
   }
 
-  const totalPages = Math.ceil(order?.data?.length / itemsPerPage);
+  let totalPages;
+  if (order?.data) {
+    totalPages = Math?.ceil(order?.data?.length / itemsPerPage);
+  }
 
   return (
     <div className="flex flex-col h-full">
@@ -136,8 +139,8 @@ export default function Dashboard() {
               hideSelectedOptions={false}
               onChange={handleColumnSelect}
               placeholder="Select Columns"
-              value={columnOptions.filter((option) =>
-                selectedColumns.includes(option.value)
+              value={columnOptions?.filter((option) =>
+                selectedColumns?.includes(option?.value)
               )}
               className="basic-multi-select border border-main outline-none text-primary-700 rounded-md"
               classNamePrefix="select"
@@ -172,7 +175,7 @@ export default function Dashboard() {
                 <thead>
                   <tr className="text-left bg-gray-100 border-b">
                     {columns
-                      ?.filter((col) => displayedColumns?.includes(col.key))
+                      ?.filter((col) => displayedColumns?.includes(col?.key))
                       ?.map((col) => (
                         <th
                           key={col.key}
@@ -192,13 +195,17 @@ export default function Dashboard() {
                       </td>
                     </tr>
                   ) : (
-                    order &&
-                    order?.data?.length > 0 &&
                     currentItems &&
                     currentItems?.length > 0 &&
                     currentItems?.map((item, index) => {
-                      const date = formatLongDate(item?.tanggal_berangkat);
-                      const time = formatTime(item?.jam_berangkat);
+                      let date;
+                      if (item?.tanggal_berangkat) {
+                        date = formatLongDate(item?.tanggal_berangkat);
+                      }
+                      let time;
+                      if (item?.jam_berangkat) {
+                        time = formatTime(item?.jam_berangkat);
+                      }
 
                       return (
                         <tr key={item?.kode_pesanan} className="border-b">
