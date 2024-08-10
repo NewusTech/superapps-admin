@@ -1,4 +1,6 @@
 import Cookies from "js-cookie";
+import NoSidebarLayout from "layouts/NoSidebarLayout";
+import Login from "pages/auth/Login";
 const { createBrowserRouter, redirect } = require("react-router-dom");
 const { default: AuthLayout } = require("layouts/AuthLayout");
 const { default: Layout } = require("layouts/Layout");
@@ -43,6 +45,23 @@ const { default: TambahTitik } = require("pages/titik-lokasi/TambahTitik");
 const { default: TitikLokasi } = require("pages/titik-lokasi/TitikLokasi");
 
 const router = createBrowserRouter([
+  {
+    path: "/login",
+    element: <AuthLayout />,
+    children: [
+      {
+        index: true,
+        path: "/login",
+        element: <Login />,
+        loader: () => {
+          if (Cookies.get("token")) {
+            redirect("/");
+          }
+          return null;
+        },
+      },
+    ],
+  },
   {
     path: "/",
     element: <Layout />,
@@ -321,24 +340,21 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/login",
-    element: <AuthLayout />,
-    loader: () => {
-      if (Cookies.get("token")) {
-        redirect("/");
-      }
-      return null;
-    },
-  },
-  {
     path: "/pesanan/status-pembayaran",
-    element: <StatusPembayaran />,
-    loader: () => {
-      if (!Cookies.get("token")) {
-        redirect("/login");
-      }
-      return null;
-    },
+    element: <NoSidebarLayout />,
+    children: [
+      {
+        index: true,
+        path: "/pesanan/status-pembayaran",
+        element: <StatusPembayaran />,
+        loader: () => {
+          if (!Cookies.get("token")) {
+            redirect("/login");
+          }
+          return null;
+        },
+      },
+    ],
   },
 ]);
 

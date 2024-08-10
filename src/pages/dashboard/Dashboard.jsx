@@ -81,6 +81,8 @@ const Dashboard = () => {
     pesanan(debounceSearch, filterStatus, startDateFormatted, endDateFormatted);
   }, [debounceSearch, filterStatus, startDateFormatted, endDateFormatted]);
 
+  console.log(order, "ini pesanan");
+
   const displayedColumns =
     selectedColumns.length > 0
       ? selectedColumns
@@ -167,8 +169,8 @@ const Dashboard = () => {
                 <thead>
                   <tr className="text-left bg-gray-100 border-b">
                     {columns
-                      .filter((col) => displayedColumns?.includes(col.key))
-                      .map((col) => (
+                      ?.filter((col) => displayedColumns?.includes(col.key))
+                      ?.map((col) => (
                         <th
                           key={col.key}
                           className="p-3 text-center font-extrabold">
@@ -190,6 +192,7 @@ const Dashboard = () => {
                     order &&
                     order?.data?.length > 0 &&
                     currentItems &&
+                    currentItems?.length > 0 &&
                     currentItems?.map((item, index) => {
                       const date = formatLongDate(item?.tanggal_berangkat);
                       const time = formatTime(item?.jam_berangkat);

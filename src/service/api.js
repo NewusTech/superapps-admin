@@ -3,6 +3,18 @@ import Cookies from "js-cookie";
 const apiUrl = process.env.REACT_APP_API_URL_LOCAL;
 const token = Cookies.get("token");
 
+export const LoginApi = async (data) => {
+  const response = await fetch(`${apiUrl}/auth/login`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    body: JSON.stringify(data),
+    cache: "no-store",
+  });
+  return await response.json();
+};
+
 export const getAllPesanan = async (search, status, startDate, endDate) => {
   const response = await fetch(
     `${apiUrl}/pesanan/pesanan?search=${search}&status=${status}&start_date=${startDate}&end_date=${endDate}`,
