@@ -1,6 +1,6 @@
 import SearchInput from "elements/Search";
 import Button from "elements/Button";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { deleteCabang, getAllCabang } from "service/api";
 import { useEffect, useState } from "react";
 import Loading from "elements/Loading";
@@ -28,7 +28,7 @@ const Cabang = () => {
   };
 
   const handleTambahCabang = () => {
-    navigate("/cabang/tambah");
+    navigate("/branch/new-branch");
   };
 
   useEffect(() => {

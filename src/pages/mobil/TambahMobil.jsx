@@ -1,5 +1,12 @@
-import { Breadcrumb } from "flowbite-react";
-import { Link, useNavigate } from "react-router-dom";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { useNavigate } from "react-router-dom";
 import FormLabel from "elements/form/label/label";
 import { useState } from "react";
 import FormTextArea from "elements/form/text-area/text-area";
@@ -34,7 +41,7 @@ const TambahMobil = () => {
           showConfirmButton: false,
           position: "center",
         });
-        navigate("/mobil");
+        navigate("/travel-car");
       } else {
         Swal.fire({
           icon: "error",
@@ -54,12 +61,15 @@ const TambahMobil = () => {
   return (
     <section className="min-h-screen pt-20 px-4">
       <Breadcrumb>
-        <Link to="/mobil" className="flex pr-3 items-center text-[#0705EC]">
-          <p>Mobil</p>
-        </Link>
-        <Breadcrumb.Item active="true" className="">
-          <p className="ml-3">Tambah Mobil</p>
-        </Breadcrumb.Item>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/travel-car">Mobil</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>Tambah Mobil</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
       </Breadcrumb>
       <div className="bg-neutral-50 mt-10">
         <form onSubmit={handleNewCar} className="p-10">

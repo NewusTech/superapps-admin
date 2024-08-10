@@ -1,5 +1,12 @@
-import { Breadcrumb } from "flowbite-react";
-import { Link, useNavigate } from "react-router-dom";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { useNavigate } from "react-router-dom";
 import FormSelect from "elements/form/select/select";
 import FormTextArea from "elements/form/text-area/text-area";
 import FormLabel from "elements/form/label/label";
@@ -46,7 +53,7 @@ const TambahTitik = () => {
           showConfirmButton: false,
           position: "center",
         });
-        navigate("/titik-lokasi");
+        navigate("/location-point");
       } else {
         Swal.fire({
           icon: "error",
@@ -71,14 +78,15 @@ const TambahTitik = () => {
     <section className="p-5 min-h-screen">
       <div className="my-5">.</div>
       <Breadcrumb>
-        <Link
-          to="/titik-lokasi"
-          className="flex pr-3 items-center text-[#0705EC]">
-          <p>Titik Lokasi</p>
-        </Link>
-        <Breadcrumb.Item active="true" className="">
-          <p className="ml-3">Tambah Titik Lokasi</p>
-        </Breadcrumb.Item>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/location-point">Titik Lokasi</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>Tambah Titik Lokasi</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
       </Breadcrumb>
       <div className="p-10 mt-10 bg-white w-full">
         <form onSubmit={handleNewLocation}>

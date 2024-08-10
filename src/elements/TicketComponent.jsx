@@ -15,7 +15,7 @@ export default function TicketComponent({ data }) {
 
   return (
     <Link
-      to={`/pesanan/kursi/${data?.id}`}
+      to={`/order/order-seat-form/${data?.id}`}
       className="border rounded-md p-4 bg-white hover:bg-gray-50">
       <div className="flex flex-row items-center">
         <p className="text-main font-bold">{data?.master_mobil?.type}</p>

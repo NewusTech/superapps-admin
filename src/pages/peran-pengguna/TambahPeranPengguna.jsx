@@ -1,18 +1,32 @@
 import Button from "elements/Button";
 import InputText from "elements/InputText";
 import React from "react";
-import { Link } from "react-router-dom";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 export default function TambahPeranPengguna() {
   return (
     <>
       <div className="mt-20">
-        <div>
-          <Link to={"/peran-pengguna"} className="text-main">
-            Peran Pengguna
-          </Link>{" "}
-          &gt; Tambah Peran Pengguna
-        </div>
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/user/user-role">
+                Peran Pengguna
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Tambah Peran Pengguna</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
       </div>
       <div className="mt-14 bg-white w-1/3 p-4 shadow-sm">
         <div className="flex flex-col gap-8">

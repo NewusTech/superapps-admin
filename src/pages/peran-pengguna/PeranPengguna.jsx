@@ -7,7 +7,7 @@ import { FaRegPenToSquare, FaTrash } from "react-icons/fa6";
 export default function PeranPengguna() {
   const navigate = useNavigate();
   const handleOnAddUser = () => {
-    navigate("/tambah-peran-pengguna");
+    navigate("/user/new-user-role");
   };
   return (
     <>

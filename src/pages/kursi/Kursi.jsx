@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import SearchInput from "../../elements/Search";
-import Button from "../../elements/Button";
-import { Button as Btn } from "@/components/ui/button";
 import Buttons from "elements/form/button/button";
 import { getAllMobil, getSeatsByCar, updateStatusSeats } from "service/api";
 import Pagination from "elements/pagination/pagination";
@@ -14,17 +12,19 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import SwitchInput from "elements/form/switchInput/switchInput";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const Kursi = () => {
+  const navigate = useNavigate();
   const [cars, setCars] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [selectedCarId, setSelectedCarId] = useState(null);
   const [seats, setSeats] = useState([]);
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const popupRef = useRef(null);
   const [updateSeats, setUpdateSeats] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const fetchAllCars = async () => {
     try {
@@ -51,14 +51,13 @@ const Kursi = () => {
       const response = await getSeatsByCar(id);
 
       setSeats(response?.data);
-      setSelectedCarId(id);
-      setIsPopupOpen(true);
       setUpdateSeats(
         response?.data?.map((seat) => ({
           id: seat.id,
           status: seat.status,
         }))
       );
+      setIsDialogOpen(true);
     } catch (error) {
       console.log(error);
     }
@@ -76,32 +75,47 @@ const Kursi = () => {
   };
 
   const handleSave = async () => {
+    setIsLoading(true);
+
+    const formattedSeats = updateSeats.filter((seat, index) => {
+      return seat.status !== seats[index].status;
+    });
+
+    if (formattedSeats.length === 0) {
+      setIsLoading(false);
+      return;
+    }
+
     try {
-      setIsLoading(true);
-
-      const formattedSeats = updateSeats.map((seat) => ({
-        id: seat.id,
-        status: seat.status,
-      }));
-
-      console.log("Formatted Seats:", formattedSeats);
-
+      let response;
       for (const seat of formattedSeats) {
-        try {
-          const response = await updateStatusSeats(seat.id, formattedSeats);
-
-          if (!response.ok) {
-            throw new Error(`Failed to update seat ${seat.id}`);
-          }
-        } catch (error) {
-          console.error("Error updating seat status:", error);
-        }
+        response = await updateStatusSeats(seat.id, formattedSeats);
       }
 
-      setIsPopupOpen(false);
-      fetchAllCars();
+      if (response.success === true) {
+        setIsLoading(false);
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil mengupdate kursi!",
+          timer: 2000,
+          showConfirmButton: false,
+          position: "center",
+        });
+
+        fetchAllCars();
+        setIsDialogOpen(false);
+        navigate("/seat");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: response.message,
+          timer: 2000,
+          showConfirmButton: false,
+          position: "center",
+        });
+      }
     } catch (error) {
-      console.log(error);
+      console.error("Error updating seat status:", error);
     } finally {
       setIsLoading(false);
     }
@@ -130,10 +144,12 @@ const Kursi = () => {
                     <tr key={index} className="border-b text-center">
                       <td className="px-3 py-1">{index + 1}</td>
                       <td className="px-3 py-1">
-                        <AlertDialog>
+                        <AlertDialog
+                          open={isDialogOpen}
+                          onOpenChange={setIsDialogOpen}>
                           <AlertDialogTrigger
                             onClick={() => handleClickCar(car.id)}
-                            className="hover:underline">
+                            className="hover:underline hover:text-secondary">
                             {car?.type}
                           </AlertDialogTrigger>
                           <AlertDialogContent className="overflow-y-scroll hide-scrollbar w-full max-h-[600px]">

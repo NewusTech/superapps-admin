@@ -1,7 +1,13 @@
-import { Breadcrumb } from "flowbite-react";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import FormSelect from "elements/form/select/select";
+import { useNavigate } from "react-router-dom";
 import FormTextArea from "elements/form/text-area/text-area";
 import FormLabel from "elements/form/label/label";
 import Buttons from "elements/form/button/button";
@@ -32,7 +38,7 @@ const TambahCabang = () => {
           showConfirmButton: false,
           position: "center",
         });
-        navigate("/cabang");
+        navigate("/branch");
       } else {
         Swal.fire({
           icon: "error",
@@ -53,12 +59,15 @@ const TambahCabang = () => {
     <section className="min-h-screen">
       <div className="my-5">.</div>
       <Breadcrumb>
-        <Link to="/cabang" className="flex pr-3 items-center text-[#0705EC]">
-          <p>Cabang</p>
-        </Link>
-        <Breadcrumb.Item active="true" className="">
-          <p className="ml-3">Tambah Cabang</p>
-        </Breadcrumb.Item>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/branch">Cabang</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>Tambah Cabang</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
       </Breadcrumb>
       <div className="bg-white w-full mt-10">
         <form onSubmit={handleNewCabang} className="p-10">

@@ -1,5 +1,12 @@
-import { Breadcrumb } from "flowbite-react";
-import { Link, useNavigate } from "react-router-dom";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { useNavigate } from "react-router-dom";
 import FormInput from "elements/form/input/input";
 import { useState } from "react";
 import Buttons from "elements/form/button/button";
@@ -32,7 +39,7 @@ const TambahRute = () => {
           showConfirmButton: false,
           position: "center",
         });
-        navigate("/rute");
+        navigate("/route");
       } else {
         Swal.fire({
           icon: "error",
@@ -52,12 +59,15 @@ const TambahRute = () => {
   return (
     <section className="p-5 min-h-screen">
       <Breadcrumb>
-        <Link to="/rute" className="flex pr-3 items-center text-[#0705EC]">
-          <p>Rute</p>
-        </Link>
-        <Breadcrumb.Item active="true" className="">
-          <p className="ml-3">Tambah Rute</p>
-        </Breadcrumb.Item>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/route">Rute</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>Tambah Rute</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
       </Breadcrumb>
       <div className="p-10 mt-10 bg-white">
         <form onSubmit={handleCreateRute}>
