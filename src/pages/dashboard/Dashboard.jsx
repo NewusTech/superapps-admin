@@ -51,6 +51,36 @@ export default function Dashboard() {
     }
   };
 
+  const startDateFormatted = startDate
+    ? formatDateArrange(new Date(startDate))
+    : undefined;
+  const endDateFormatted = endDate
+    ? formatDateArrange(new Date(endDate))
+    : undefined;
+
+  useEffect(() => {
+    pesanan(debounceSearch, filterStatus, startDateFormatted, endDateFormatted);
+  }, [debounceSearch, filterStatus, startDateFormatted, endDateFormatted]);
+
+  const displayedColumns =
+    selectedColumns?.length > 0
+      ? selectedColumns
+      : columns?.map((col) => col?.key);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  let currentItems;
+  if (order?.data) {
+    currentItems = order?.data?.slice(indexOfFirstItem, indexOfLastItem);
+  }
+
+  let totalPages;
+  if (order?.data) {
+    totalPages = Math?.ceil(order?.data?.length / itemsPerPage);
+  }
+
+  console.log(order, "ini pesanan");
+
   const handleSearch = (e) => {
     e.preventDefault();
     setSearch(e.target.value);
@@ -69,36 +99,6 @@ export default function Dashboard() {
   const handleOnSetFilter = (value) => {
     setFilterStatus(value !== "" ? value : "");
   };
-
-  const startDateFormatted = startDate
-    ? formatDateArrange(new Date(startDate))
-    : undefined;
-  const endDateFormatted = endDate
-    ? formatDateArrange(new Date(endDate))
-    : undefined;
-
-  useEffect(() => {
-    pesanan(debounceSearch, filterStatus, startDateFormatted, endDateFormatted);
-  }, [debounceSearch, filterStatus, startDateFormatted, endDateFormatted]);
-
-  console.log(order, "ini pesanan");
-
-  const displayedColumns =
-    selectedColumns?.length > 0
-      ? selectedColumns
-      : columns?.map((col) => col?.key);
-
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  let currentItems;
-  if (order?.data) {
-    currentItems = order?.data?.slice(indexOfFirstItem, indexOfLastItem);
-  }
-
-  let totalPages;
-  if (order?.data) {
-    totalPages = Math?.ceil(order?.data?.length / itemsPerPage);
-  }
 
   return (
     <div className="flex flex-col h-full">
