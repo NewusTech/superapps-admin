@@ -33,7 +33,10 @@ export default function TitikLokasi() {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = location.slice(indexOfFirstItem, indexOfLastItem);
+  let currentItems = [];
+  if (location) {
+    currentItems = location.slice(indexOfFirstItem, indexOfLastItem);
+  }
 
   const totalPages = Math.ceil(location.length / itemsPerPage);
 
@@ -114,6 +117,7 @@ export default function TitikLokasi() {
                   </tr>
                 ) : (
                   location &&
+                  currentItems &&
                   currentItems?.map((item, index) => (
                     <tr key={index} className="border-b text-center">
                       <td className="p-4 px-4">{index + 1}</td>

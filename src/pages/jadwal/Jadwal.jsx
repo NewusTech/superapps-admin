@@ -255,7 +255,10 @@ export default function Jadwal() {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = Jadwals.slice(indexOfFirstItem, indexOfLastItem);
+  let currentItems = [];
+  if (Jadwals) {
+    currentItems = Jadwals.slice(indexOfFirstItem, indexOfLastItem);
+  }
 
   const totalPages = Math.ceil(Jadwals.length / itemsPerPage);
 
@@ -487,6 +490,7 @@ export default function Jadwal() {
               </tr>
             ) : (
               Jadwals &&
+              currentItems &&
               currentItems?.map((item, index) => {
                 let time = "";
                 if (item?.waktu_keberangkatan) {

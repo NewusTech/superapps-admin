@@ -33,7 +33,10 @@ export default function Mobil() {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = mobil.slice(indexOfFirstItem, indexOfLastItem);
+  let currentItems = [];
+  if (mobil) {
+    currentItems = mobil.slice(indexOfFirstItem, indexOfLastItem);
+  }
 
   const totalPages = Math.ceil(mobil.length / itemsPerPage);
 
@@ -102,6 +105,7 @@ export default function Mobil() {
               </thead>
               <tbody>
                 {mobil &&
+                  currentItems &&
                   currentItems?.map((car, i) => {
                     return (
                       <tr key={i} className="border-b text-center">

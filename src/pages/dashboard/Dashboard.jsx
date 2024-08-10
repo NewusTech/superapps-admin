@@ -58,10 +58,6 @@ export default function Dashboard() {
     ? formatDateArrange(new Date(endDate))
     : undefined;
 
-  useEffect(() => {
-    pesanan(debounceSearch, filterStatus, startDateFormatted, endDateFormatted);
-  }, [debounceSearch, filterStatus, startDateFormatted, endDateFormatted]);
-
   const displayedColumns =
     selectedColumns?.length > 0
       ? selectedColumns
@@ -69,17 +65,17 @@ export default function Dashboard() {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  let currentItems;
+
+  let currentItems = [];
   if (order?.data) {
     currentItems = order?.data?.slice(indexOfFirstItem, indexOfLastItem);
   }
 
-  let totalPages;
-  if (order?.data) {
-    totalPages = Math?.ceil(order?.data?.length / itemsPerPage);
-  }
+  const totalPages = Math?.ceil(order?.data?.length / itemsPerPage);
 
-  console.log(order, "ini pesanan");
+  useEffect(() => {
+    pesanan(debounceSearch, filterStatus, startDateFormatted, endDateFormatted);
+  }, [debounceSearch, filterStatus, startDateFormatted, endDateFormatted]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -195,6 +191,8 @@ export default function Dashboard() {
                       </td>
                     </tr>
                   ) : (
+                    order &&
+                    order?.data?.length > 0 &&
                     currentItems &&
                     currentItems?.length > 0 &&
                     currentItems?.map((item, index) => {

@@ -42,7 +42,10 @@ export default function Kursi() {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = cars.slice(indexOfFirstItem, indexOfLastItem);
+  let currentItems = [];
+  if (cars) {
+    currentItems = cars.slice(indexOfFirstItem, indexOfLastItem);
+  }
 
   const totalPages = Math.ceil(cars.length / itemsPerPage);
 
@@ -139,7 +142,8 @@ export default function Kursi() {
             </thead>
             <tbody>
               {cars &&
-                currentItems.map((car, index) => {
+                currentItems &&
+                currentItems?.map((car, index) => {
                   return (
                     <tr key={index} className="border-b text-center">
                       <td className="px-3 py-1">{index + 1}</td>
