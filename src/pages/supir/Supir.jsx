@@ -9,7 +9,7 @@ import Pagination from "elements/pagination/pagination";
 import { formatLongDate } from "helpers";
 import Swal from "sweetalert2";
 
-const Supir = () => {
+export default function Supir() {
   const navigate = useNavigate();
   const [supir, setSupir] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -162,6 +162,4 @@ const Supir = () => {
       </div>
     </section>
   );
-};
-
-export default Supir;
+}

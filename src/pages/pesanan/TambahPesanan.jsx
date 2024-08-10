@@ -2,7 +2,7 @@ import Button from "../../elements/Button";
 import { Breadcrumb } from "flowbite-react";
 import { Link } from "react-router-dom";
 
-const TambahPesanan = () => {
+export default function TambahPesananNO() {
   return (
     <section className="p-5 min-h-screen">
       <Breadcrumb>
@@ -63,6 +63,4 @@ const TambahPesanan = () => {
       </div>
     </section>
   );
-};
-
-export default TambahPesanan;
+}

@@ -15,7 +15,7 @@ import FormInput from "elements/form/input/input";
 import { createNewCabang } from "service/api";
 import Swal from "sweetalert2";
 
-const TambahCabang = () => {
+export default function TambahCabang() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [form, setForm] = useState({
@@ -112,6 +112,4 @@ const TambahCabang = () => {
       </div>
     </section>
   );
-};
-
-export default TambahCabang;
+}

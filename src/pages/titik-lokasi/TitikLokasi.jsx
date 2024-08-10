@@ -8,7 +8,7 @@ import Loading from "elements/Loading";
 import Pagination from "elements/pagination/pagination";
 import Swal from "sweetalert2";
 
-const TitikLokasi = () => {
+export default function TitikLokasi() {
   const navigate = useNavigate();
   const [location, setLocation] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -152,6 +152,4 @@ const TitikLokasi = () => {
       </div>
     </section>
   );
-};
-
-export default TitikLokasi;
+}

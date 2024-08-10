@@ -11,7 +11,7 @@ import Pagination from "elements/pagination/pagination";
 import { getAllPesanan } from "service/api";
 import { formatLongDate, formatTime } from "helpers";
 
-const RiwayatPesanan = () => {
+export default function RiwayatPesanan() {
   const [selectedColumns, setSelectedColumns] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [order, setOrder] = useState();
@@ -221,6 +221,4 @@ const RiwayatPesanan = () => {
       </div>
     </>
   );
-};
-
-export default RiwayatPesanan;
+}

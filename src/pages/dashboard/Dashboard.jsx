@@ -13,7 +13,7 @@ import { useDebounce } from "hooks/useDebounce";
 import Pagination from "elements/pagination/pagination";
 import ArrangeDate from "elements/filterArrangeDate/arrangeDate";
 
-const Dashboard = () => {
+export default function Dashboard() {
   const navigate = useNavigate();
   const [selectedColumns, setSelectedColumns] = useState([]);
   const [order, setOrder] = useState();
@@ -90,7 +90,10 @@ const Dashboard = () => {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = order?.data?.slice(indexOfFirstItem, indexOfLastItem);
+  let currentItems;
+  if (order?.data) {
+    currentItems = order?.data?.slice(indexOfFirstItem, indexOfLastItem);
+  }
 
   const totalPages = Math.ceil(order?.data?.length / itemsPerPage);
 
@@ -290,6 +293,4 @@ const Dashboard = () => {
       </div>
     </div>
   );
-};
-
-export default Dashboard;
+}

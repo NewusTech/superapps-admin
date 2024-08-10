@@ -5,7 +5,8 @@ import Cookies from "js-cookie";
 import { Loader } from "lucide-react";
 import Swal from "sweetalert2";
 import { LoginApi } from "service/api";
-const Login = () => {
+
+export default function Login() {
   const navigate = useNavigate();
   const [user, setUser] = useState({
     email: "",
@@ -109,6 +110,4 @@ const Login = () => {
       </div>
     </div>
   );
-};
-
-export default Login;
+}

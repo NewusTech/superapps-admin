@@ -1,48 +1,36 @@
+import { createBrowserRouter, redirect } from "react-router-dom";
 import Cookies from "js-cookie";
+import AuthLayout from "layouts/AuthLayout";
+import Layout from "layouts/Layout";
 import NoSidebarLayout from "layouts/NoSidebarLayout";
+import Article from "pages/artikel/artikel";
+import NewArticle from "pages/artikel/newArticle";
 import Login from "pages/auth/Login";
-const { createBrowserRouter, redirect } = require("react-router-dom");
-const { default: AuthLayout } = require("layouts/AuthLayout");
-const { default: Layout } = require("layouts/Layout");
-const { default: Article } = require("pages/artikel/artikel");
-const { default: NewArticle } = require("pages/artikel/newArticle");
-const { default: Cabang } = require("pages/cabang/Cabang");
-const { default: TambahCabang } = require("pages/cabang/TambahCabang");
-const { default: Dashboard } = require("pages/dashboard/Dashboard");
-const { default: Pembayaran } = require("pages/dashboard/Pembayaran");
-const {
-  default: StatusPembayaran,
-} = require("pages/dashboard/StatusPembayaran");
-const { default: TambahKursi } = require("pages/dashboard/tambahKursi");
-const { default: TambahPesanan } = require("pages/dashboard/TambahPesanan");
-const {
-  default: DatabaseKonsumen,
-} = require("pages/database-konsumen/DatabaseKonsumen");
-const { default: Jadwal } = require("pages/jadwal/Jadwal");
-const { default: Kursi } = require("pages/kursi/Kursi");
-const { default: Laporan } = require("pages/laporan/Laporan");
-const {
-  default: ListPenumpang,
-} = require("pages/list-penumpang/ListPenumpang");
-const { default: Mobil } = require("pages/mobil/Mobil");
-const { default: TambahMobil } = require("pages/mobil/TambahMobil");
-const { default: Pengguna } = require("pages/pengguna/Pengguna");
-const { default: TambahPengguna } = require("pages/pengguna/TambahPengguna");
-const {
-  default: PeranPengguna,
-} = require("pages/peran-pengguna/PeranPengguna");
-const {
-  default: TambahPeranPengguna,
-} = require("pages/peran-pengguna/TambahPeranPengguna");
-const {
-  default: RiwayatPesanan,
-} = require("pages/riwayat-pesanan/RiwayatPesanan");
-const { default: Rute } = require("pages/rute/Rute");
-const { default: TambahRute } = require("pages/rute/TambahRute");
-const { default: Supir } = require("pages/supir/Supir");
-const { default: TambahSupir } = require("pages/supir/TambahSupir");
-const { default: TambahTitik } = require("pages/titik-lokasi/TambahTitik");
-const { default: TitikLokasi } = require("pages/titik-lokasi/TitikLokasi");
+import Cabang from "pages/cabang/Cabang";
+import TambahCabang from "pages/cabang/TambahCabang";
+import Pembayaran from "pages/dashboard/Pembayaran";
+import StatusPembayaran from "pages/dashboard/StatusPembayaran";
+import TambahKursi from "pages/dashboard/tambahKursi";
+import TambahPesanan from "pages/dashboard/TambahPesanan";
+import DatabaseKonsumen from "pages/database-konsumen/DatabaseKonsumen";
+import Jadwal from "pages/jadwal/Jadwal";
+import Kursi from "pages/kursi/Kursi";
+import Laporan from "pages/laporan/Laporan";
+import ListPenumpang from "pages/list-penumpang/ListPenumpang";
+import Mobil from "pages/mobil/Mobil";
+import TambahMobil from "pages/mobil/TambahMobil";
+import Pengguna from "pages/pengguna/Pengguna";
+import TambahPengguna from "pages/pengguna/TambahPengguna";
+import PeranPengguna from "pages/peran-pengguna/PeranPengguna";
+import TambahPeranPengguna from "pages/peran-pengguna/TambahPeranPengguna";
+import RiwayatPesanan from "pages/riwayat-pesanan/RiwayatPesanan";
+import Rute from "pages/rute/Rute";
+import TambahRute from "pages/rute/TambahRute";
+import Supir from "pages/supir/Supir";
+import TambahSupir from "pages/supir/TambahSupir";
+import TambahTitik from "pages/titik-lokasi/TambahTitik";
+import TitikLokasi from "pages/titik-lokasi/TitikLokasi";
+import Dashboard from "pages/dashboard/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -55,7 +43,7 @@ const router = createBrowserRouter([
         element: <Login />,
         loader: () => {
           if (Cookies.get("token")) {
-            redirect("/");
+            return redirect("/");
           }
           return null;
         },
@@ -72,7 +60,7 @@ const router = createBrowserRouter([
         element: <Dashboard />,
         loader: () => {
           if (!Cookies.get("token")) {
-            redirect("/login");
+            return redirect("/login");
           }
           return null;
         },
@@ -82,7 +70,7 @@ const router = createBrowserRouter([
         element: <TambahPesanan />,
         loader: () => {
           if (!Cookies.get("token")) {
-            redirect("/login");
+            return redirect("/login");
           }
           return null;
         },
@@ -92,7 +80,7 @@ const router = createBrowserRouter([
         element: <TambahKursi />,
         loader: () => {
           if (!Cookies.get("token")) {
-            redirect("/login");
+            return redirect("/login");
           }
           return null;
         },
@@ -102,7 +90,7 @@ const router = createBrowserRouter([
         element: <Pembayaran />,
         loader: () => {
           if (!Cookies.get("token")) {
-            redirect("/login");
+            return redirect("/login");
           }
           return null;
         },
@@ -112,7 +100,7 @@ const router = createBrowserRouter([
         element: <RiwayatPesanan />,
         loader: () => {
           if (!Cookies.get("token")) {
-            redirect("/login");
+            return redirect("/login");
           }
           return null;
         },
@@ -122,7 +110,7 @@ const router = createBrowserRouter([
         element: <ListPenumpang />,
         loader: () => {
           if (!Cookies.get("token")) {
-            redirect("/login");
+            return redirect("/login");
           }
           return null;
         },
@@ -132,7 +120,7 @@ const router = createBrowserRouter([
         element: <Jadwal />,
         loader: () => {
           if (!Cookies.get("token")) {
-            redirect("/login");
+            return redirect("/login");
           }
           return null;
         },
@@ -142,7 +130,7 @@ const router = createBrowserRouter([
         element: <Mobil />,
         loader: () => {
           if (!Cookies.get("token")) {
-            redirect("/login");
+            return redirect("/login");
           }
           return null;
         },
@@ -152,7 +140,7 @@ const router = createBrowserRouter([
         element: <DatabaseKonsumen />,
         loader: () => {
           if (!Cookies.get("token")) {
-            redirect("/login");
+            return redirect("/login");
           }
           return null;
         },
@@ -162,7 +150,7 @@ const router = createBrowserRouter([
         element: <TambahMobil />,
         loader: () => {
           if (!Cookies.get("token")) {
-            redirect("/login");
+            return redirect("/login");
           }
           return null;
         },
@@ -172,7 +160,7 @@ const router = createBrowserRouter([
         element: <Rute />,
         loader: () => {
           if (!Cookies.get("token")) {
-            redirect("/login");
+            return redirect("/login");
           }
           return null;
         },
@@ -182,7 +170,7 @@ const router = createBrowserRouter([
         element: <TambahRute />,
         loader: () => {
           if (!Cookies.get("token")) {
-            redirect("/login");
+            return redirect("/login");
           }
           return null;
         },
@@ -192,7 +180,7 @@ const router = createBrowserRouter([
         element: <Cabang />,
         loader: () => {
           if (!Cookies.get("token")) {
-            redirect("/login");
+            return redirect("/login");
           }
           return null;
         },
@@ -202,7 +190,7 @@ const router = createBrowserRouter([
         element: <TambahCabang />,
         loader: () => {
           if (!Cookies.get("token")) {
-            redirect("/login");
+            return redirect("/login");
           }
           return null;
         },
@@ -212,7 +200,7 @@ const router = createBrowserRouter([
         element: <TitikLokasi />,
         loader: () => {
           if (!Cookies.get("token")) {
-            redirect("/login");
+            return redirect("/login");
           }
           return null;
         },
@@ -222,7 +210,7 @@ const router = createBrowserRouter([
         element: <TambahTitik />,
         loader: () => {
           if (!Cookies.get("token")) {
-            redirect("/login");
+            return redirect("/login");
           }
           return null;
         },
@@ -232,7 +220,7 @@ const router = createBrowserRouter([
         element: <Kursi />,
         loader: () => {
           if (!Cookies.get("token")) {
-            redirect("/login");
+            return redirect("/login");
           }
           return null;
         },
@@ -242,7 +230,7 @@ const router = createBrowserRouter([
         element: <TambahKursi />,
         loader: () => {
           if (!Cookies.get("token")) {
-            redirect("/login");
+            return redirect("/login");
           }
           return null;
         },
@@ -252,7 +240,7 @@ const router = createBrowserRouter([
         element: <Supir />,
         loader: () => {
           if (!Cookies.get("token")) {
-            redirect("/login");
+            return redirect("/login");
           }
           return null;
         },
@@ -262,7 +250,7 @@ const router = createBrowserRouter([
         element: <TambahSupir />,
         loader: () => {
           if (!Cookies.get("token")) {
-            redirect("/login");
+            return redirect("/login");
           }
           return null;
         },
@@ -272,7 +260,7 @@ const router = createBrowserRouter([
         element: <Laporan />,
         loader: () => {
           if (!Cookies.get("token")) {
-            redirect("/login");
+            return redirect("/login");
           }
           return null;
         },
@@ -282,7 +270,7 @@ const router = createBrowserRouter([
         element: <Pengguna />,
         loader: () => {
           if (!Cookies.get("token")) {
-            redirect("/login");
+            return redirect("/login");
           }
           return null;
         },
@@ -292,7 +280,7 @@ const router = createBrowserRouter([
         element: <TambahPengguna />,
         loader: () => {
           if (!Cookies.get("token")) {
-            redirect("/login");
+            return redirect("/login");
           }
           return null;
         },
@@ -302,7 +290,7 @@ const router = createBrowserRouter([
         element: <PeranPengguna />,
         loader: () => {
           if (!Cookies.get("token")) {
-            redirect("/login");
+            return redirect("/login");
           }
           return null;
         },
@@ -312,27 +300,27 @@ const router = createBrowserRouter([
         element: <TambahPeranPengguna />,
         loader: () => {
           if (!Cookies.get("token")) {
-            redirect("/login");
+            return redirect("/login");
           }
           return null;
         },
       },
       {
-        path: "article",
+        path: "/article",
         element: <Article />,
         loader: () => {
           if (!Cookies.get("token")) {
-            redirect("/login");
+            return redirect("/login");
           }
           return null;
         },
       },
       {
-        path: "article/new-article",
+        path: "/article/new-article",
         element: <NewArticle />,
         loader: () => {
           if (!Cookies.get("token")) {
-            redirect("/login");
+            return redirect("/login");
           }
           return null;
         },
@@ -340,16 +328,16 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/pesanan/status-pembayaran",
+    path: "/order/payment-status",
     element: <NoSidebarLayout />,
     children: [
       {
         index: true,
-        path: "/pesanan/status-pembayaran",
+        path: "/order/payment-status",
         element: <StatusPembayaran />,
         loader: () => {
           if (!Cookies.get("token")) {
-            redirect("/login");
+            return redirect("/login");
           }
           return null;
         },
