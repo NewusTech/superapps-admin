@@ -7,8 +7,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { ChevronRight } from "lucide-react";
+import { useNavigate, useParams } from "react-router-dom";
 import FormInput from "elements/form/input/input";
 import { ReactComponent as IconSupir } from "assets/icons/healthicons_truck-driver.svg";
 import Buttons from "elements/form/button/button";
@@ -123,11 +122,20 @@ export default function TambahKursi() {
 
   const handleSeatChange = (seat) => {
     if (seat.status !== "terisi") {
-      setSelectedSeats((prev) =>
-        prev.includes(seat.numor_kursi)
-          ? prev.filter((num) => num !== seat.nomor_kursi)
-          : [...prev, seat.nomor_kursi]
-      );
+      setSelectedSeats((prev) => {
+        if (prev.includes(seat.nomor_kursi)) {
+          const updatedSeats = prev.filter((num) => num !== seat.nomor_kursi);
+          setData((prevData) => ({
+            ...prevData,
+            penumpang: prevData.penumpang.filter(
+              (p) => p.no_kursi !== seat.nomor_kursi
+            ),
+          }));
+          return updatedSeats;
+        } else {
+          return [...prev, seat.nomor_kursi];
+        }
+      });
     }
   };
 

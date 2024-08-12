@@ -17,7 +17,7 @@ export const LoginApi = async (data) => {
 
 export const getAllPesanan = async (search, status, startDate, endDate) => {
   const response = await fetch(
-    `${apiUrl}/pesanan/pesanan?search=${search}&status=${status}&start_date=${startDate}&end_date=${endDate}`,
+    `${apiUrl}/pesanan/pesanan?search=${search}&status=${status}&startDate=${startDate}&endDate=${endDate}`,
     {
       headers: {
         "Content-Type": "application/json",
@@ -51,6 +51,18 @@ export const deletePesanan = async (id) => {
       "Content-Type": "application/json",
     },
     method: "DELETE",
+    cache: "no-store",
+  });
+  return await response.json();
+};
+
+export const getOrderHistoryByOrderCode = async (kodePesanan) => {
+  const response = await fetch(`${apiUrl}/pesanan/pesanan/${kodePesanan}`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    method: "GET",
     cache: "no-store",
   });
   return await response.json();
@@ -411,6 +423,35 @@ export const makingPayment = async (data) => {
     },
     method: "POST",
     body: JSON.stringify(data),
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
+export const updatePaymentStatus = async (kodePesanan) => {
+  const response = await fetch(
+    `${apiUrl}/pembayaran/update-status/${kodePesanan}`,
+    {
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "Content-Type": "application/json",
+      },
+      method: "PATCH",
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+export const getPaymentStatus = async (paymentCode) => {
+  const response = await fetch(`${apiUrl}/pembayaran/status/${paymentCode}`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    method: "GET",
     cache: "no-store",
   });
 

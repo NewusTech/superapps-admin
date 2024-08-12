@@ -56,8 +56,7 @@ export default function TambahCabang() {
   };
 
   return (
-    <section className="min-h-screen">
-      <div className="my-5">.</div>
+    <section className="min-h-screen mt-16">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
