@@ -75,8 +75,7 @@ export default function TambahTitik() {
   };
 
   return (
-    <section className="p-5 min-h-screen">
-      <div className="my-5">.</div>
+    <section className="p-5 min-h-screen mt-12">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>

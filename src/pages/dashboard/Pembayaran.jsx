@@ -12,10 +12,12 @@ import {
 import {
   getAllPaymentMethods,
   getHistoriPesananByKodePesanan,
+  makingPayment,
 } from "service/api";
 import DetailPemesan from "elements/cards/DetailPemesan";
 import PaymentMethods from "elements/cards/paymentMethods";
 import Buttons from "elements/form/button/button";
+import Swal from "sweetalert2";
 
 export default function Pembayaran() {
   const navigate = useNavigate();
@@ -63,37 +65,42 @@ export default function Pembayaran() {
   const handlePayment = async (e) => {
     e.preventDefault();
 
-    console.log(data, "ini data");
+    try {
+      setIsLoading(true);
 
-    // try {
-    //   setIsLoading(true);
+      const response = await makingPayment(data);
 
-    //   const response = await makingPayment(data);
+      console.log(response, "ini response payment");
 
-    //   if (response.success === true) {
-    //     setIsLoading(false);
-    //     Swal.fire({
-    //       icon: "success",
-    //       title: "Berhasil melanjutkan ke pembayaran!",
-    //       timer: 2000,
-    //       showConfirmButton: false,
-    //       position: "center",
-    //     });
-    //     navigate("/");
-    //   } else {
-    //     Swal.fire({
-    //       icon: "error",
-    //       title: response.message,
-    //       timer: 2000,
-    //       showConfirmButton: false,
-    //       position: "center",
-    //     });
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // } finally {
-    //   setIsLoading(false);
-    // }
+      if (response.success === true) {
+        setIsLoading(false);
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil melanjutkan ke pembayaran!",
+          timer: 2000,
+          showConfirmButton: false,
+          position: "center",
+        });
+        if (response?.data?.kode === 1) {
+          const paymentUrl = response?.data?.payment_url;
+          window.location.href = paymentUrl;
+        } else {
+          navigate(`/order/update-payment-status/${kodePesanan}`);
+        }
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: response.message,
+          timer: 2000,
+          showConfirmButton: false,
+          position: "center",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

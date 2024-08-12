@@ -39,10 +39,15 @@ export default function Dashboard() {
     label: col.label,
   }));
 
-  const pesanan = async (search, status, startDate, endDate) => {
+  const pesanan = async (search, status, startDates, endDates) => {
     setIsLoading(true);
     try {
-      const response = await getAllPesanan(search, status, startDate, endDate);
+      const response = await getAllPesanan(
+        search,
+        status,
+        startDates,
+        endDates
+      );
       setOrder(response);
     } catch (error) {
       console.log(error.name);
@@ -145,15 +150,9 @@ export default function Dashboard() {
 
           <div className="flex items-end gap-x-2">
             <div className="flex items-center space-x-2">
-              <ArrangeDate
-                date={startDate ?? null}
-                setDate={(e) => setStartDate(e ?? undefined)}
-              />
+              <ArrangeDate date={startDate} setDate={(e) => setStartDate(e)} />
               <p className="text-center">to</p>
-              <ArrangeDate
-                date={endDate ?? null}
-                setDate={(e) => setEndDate(e ?? undefined)}
-              />
+              <ArrangeDate date={endDate} setDate={(e) => setEndDate(e)} />
             </div>
           </div>
         </div>

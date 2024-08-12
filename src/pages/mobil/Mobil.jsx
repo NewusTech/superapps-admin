@@ -98,9 +98,11 @@ export default function Mobil() {
                 <tr className="text-center font-semibold bg-gray-100">
                   <th className="py-3">No</th>
                   <th className="py-3">Tipe Mobil</th>
+                  <th className="py-3">Nomor Polisi</th>
                   <th className="py-3">Jumlah Kursi</th>
-                  <th className="py-3 w-56">Fasilitas</th>
-                  <th className="py-3 w-56">Action</th>
+                  <th className="py-3">Fasilitas</th>
+                  <th className="py-3">Status</th>
+                  <th className="py-3">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -111,8 +113,10 @@ export default function Mobil() {
                       <tr key={i} className="border-b text-center">
                         <td className="p-2">{indexOfFirstItem + i + 1}</td>
                         <td className="p-2 px-4">{car?.type}</td>
+                        <td className="p-2 px-4">{car?.nopol}</td>
                         <td className="p-2">{car?.jumlah_kursi}</td>
-                        <td className="p-2">Makan Siang</td>
+                        <td className="p-2">{car?.fasilitas}</td>
+                        <td className="p-2">{car?.status}</td>
                         <td className="p-2 flex flex-row items-center justify-center gap-4">
                           <Button
                             text={"edit"}

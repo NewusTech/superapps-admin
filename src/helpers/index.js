@@ -63,7 +63,7 @@ export const formatDateArrange = (date) => {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
+  return `${day}-${month}-${year}`;
 };
 
 export function truncateText(title, maxLength = 35) {
@@ -72,4 +72,41 @@ export function truncateText(title, maxLength = 35) {
   } else {
     return title;
   }
+}
+
+export function formatRupiah(angka) {
+  let rupiah = angka.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+
+  rupiah = rupiah.replace(".", ",");
+
+  return `Rp. ${rupiah}`;
+}
+
+export function formatRupiahString(angkaStr) {
+  let angka = parseFloat(angkaStr.replace(/[^,\d]/g, ""));
+
+  let rupiah = angka.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&.");
+
+  rupiah = rupiah.replace(".", ",");
+
+  return `Rp. ${rupiah}`;
+}
+
+export function formatDecimalRupiah(angkaStr) {
+  if (typeof angkaStr !== "string") {
+    angkaStr = String(angkaStr);
+  }
+
+  let angka = parseFloat(angkaStr);
+
+  let [integerPart, decimalPart] = angka.toFixed(2).split(".");
+
+  let result = "";
+  while (integerPart.length > 3) {
+    result = "." + integerPart.slice(-3) + result;
+    integerPart = integerPart.slice(0, -3);
+  }
+  result = integerPart + result;
+
+  return `Rp. ${result},${decimalPart}`;
 }
