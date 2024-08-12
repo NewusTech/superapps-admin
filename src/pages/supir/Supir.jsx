@@ -6,7 +6,7 @@ import { deleteDriver, getAllSupir } from "../../service/api";
 import Loading from "../../elements/Loading";
 import { FaRegPenToSquare, FaTrash } from "react-icons/fa6";
 import Pagination from "elements/pagination/pagination";
-import { formatLongDate } from "helpers";
+import { formatTanggalPanjang } from "helpers";
 import Swal from "sweetalert2";
 
 export default function Supir() {
@@ -43,6 +43,10 @@ export default function Supir() {
 
   const handleTambahSupir = () => {
     navigate("/driver/new-driver");
+  };
+
+  const handleDriverUpdate = (id) => {
+    navigate(`/driver/update-driver/${id}`);
   };
 
   const handleDeleteDriver = async (id) => {
@@ -122,7 +126,7 @@ export default function Supir() {
                   currentItems?.map((item, index) => {
                     let date;
                     if (item.tanggal_bergabung) {
-                      date = formatLongDate(item?.tanggal_bergabung);
+                      date = formatTanggalPanjang(item?.tanggal_bergabung);
                     }
 
                     return (
@@ -137,6 +141,7 @@ export default function Supir() {
                             text={"edit"}
                             className={"h-8"}
                             icon={<FaRegPenToSquare />}
+                            onButonClick={() => handleDriverUpdate(item?.id)}
                           />
                           <Button
                             text={"delete"}

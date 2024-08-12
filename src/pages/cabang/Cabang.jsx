@@ -31,6 +31,10 @@ export default function Cabang() {
     navigate("/branch/new-branch");
   };
 
+  const handleBranchUpdate = (id) => {
+    navigate(`/branch/update-branch/${id}`);
+  };
+
   useEffect(() => {
     getCabang();
   }, []);
@@ -124,6 +128,7 @@ export default function Cabang() {
                           text={"edit"}
                           className={"h-8"}
                           icon={<FaRegPenToSquare />}
+                          onButonClick={() => handleBranchUpdate(item?.id)}
                         />
                         <Button
                           text={"delete"}

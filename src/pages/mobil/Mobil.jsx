@@ -44,6 +44,10 @@ export default function Mobil() {
     navigate("/travel-car/new-travel-car");
   };
 
+  const handleUpdateMobil = (id) => {
+    navigate(`/travel-car/update-travel-car/${id}`);
+  };
+
   const handleDeleteCar = async (id) => {
     try {
       const result = await Swal.fire({
@@ -122,6 +126,7 @@ export default function Mobil() {
                             text={"edit"}
                             className={"h-8"}
                             icon={<FaRegPenToSquare />}
+                            onButonClick={() => handleUpdateMobil(car?.id)}
                           />
                           <Button
                             text={"delete"}

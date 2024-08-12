@@ -93,6 +93,31 @@ export const createNewRute = async (data) => {
   return await response.json();
 };
 
+export const getRuteById = async (id) => {
+  const response = await fetch(`${apiUrl}/rute/master_rute/${id}`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+    cache: "no-store",
+  });
+  return await response.json();
+};
+
+export const updateRute = async (id, data) => {
+  const response = await fetch(`${apiUrl}/rute/master_rute/${id}`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    method: "PUT",
+    body: JSON.stringify(data),
+    cache: "no-store",
+  });
+  return await response.json();
+};
+
 export const deleteRute = async (id) => {
   const response = await fetch(`${apiUrl}/rute/master_rute/${id}`, {
     headers: {
@@ -124,6 +149,31 @@ export const createNewCabang = async (data) => {
       "Content-Type": "application/json",
     },
     method: "POST",
+    body: JSON.stringify(data),
+    cache: "no-store",
+  });
+  return await response.json();
+};
+
+export const getCabangById = async (id) => {
+  const response = await fetch(`${apiUrl}/cabang/master_cabang/${id}`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+    cache: "no-store",
+  });
+  return await response.json();
+};
+
+export const UpdateCabang = async (id, data) => {
+  const response = await fetch(`${apiUrl}/cabang/master_cabang/${id}`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    method: "PUT",
     body: JSON.stringify(data),
     cache: "no-store",
   });
@@ -167,6 +217,37 @@ export const createNewTitikLokasi = async (data) => {
   return await response.json();
 };
 
+export const getTitikLokasiByid = async (id) => {
+  const response = await fetch(
+    `${apiUrl}/titik_jemput/master_titik_jemput/${id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+      cache: "no-store",
+    }
+  );
+  return await response.json();
+};
+
+export const updateTitikLokasi = async (id, data) => {
+  const response = await fetch(
+    `${apiUrl}/titik_jemput/master_titik_jemput/${id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "Content-Type": "application/json",
+      },
+      method: "PUT",
+      body: JSON.stringify(data),
+      cache: "no-store",
+    }
+  );
+  return await response.json();
+};
+
 export const deleteTitikLokasi = async (id) => {
   const response = await fetch(
     `${apiUrl}/titik_jemput/master_titik_jemput/${id}`,
@@ -207,6 +288,33 @@ export const getAllMobil = async () => {
   return await response.json();
 };
 
+export const getMobilById = async (id) => {
+  const response = await fetch(`${apiUrl}/mobil/master_mobil/${id}`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
+export const updateTravelCar = async (id, data) => {
+  const response = await fetch(`${apiUrl}/mobil/master_mobil/${id}`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    method: "PUT",
+    body: JSON.stringify(data),
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
 export const createNewCar = async (data) => {
   const response = await fetch(`${apiUrl}/mobil/master_mobil`, {
     headers: {
@@ -239,6 +347,31 @@ export const createNewDriver = async (data) => {
       "Content-Type": "application/json",
     },
     method: "POST",
+    body: JSON.stringify(data),
+    cache: "no-store",
+  });
+  return await response.json();
+};
+
+export const getDriverById = async (id) => {
+  const response = await fetch(`${apiUrl}/supir/master_supir/${id}`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+    cache: "no-store",
+  });
+  return await response.json();
+};
+
+export const updateDriver = async (id, data) => {
+  const response = await fetch(`${apiUrl}/supir/master_supir/${id}`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    method: "PUT",
     body: JSON.stringify(data),
     cache: "no-store",
   });
@@ -290,6 +423,33 @@ export const createNewSchedule = async (data) => {
       "Content-Type": "application/json",
     },
     method: "POST",
+    body: JSON.stringify(data),
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
+export const getScheduleById = async (id) => {
+  const response = await fetch(`${apiUrl}/jadwal/jadwal/${id}/edit`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
+export const updateSchedule = async (id, data) => {
+  const response = await fetch(`${apiUrl}/jadwal/jadwal/${id}`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    method: "PUT",
     body: JSON.stringify(data),
     cache: "no-store",
   });

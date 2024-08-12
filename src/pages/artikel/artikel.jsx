@@ -57,6 +57,10 @@ export default function Article() {
     navigate("/article/new-article");
   };
 
+  const handleOnUpdateArticle = (id) => {
+    navigate(`/article/update-article/${id}`);
+  };
+
   const handleDeleteArticle = async (id) => {
     try {
       const result = await Swal.fire({
@@ -190,6 +194,7 @@ export default function Article() {
                           text={"edit"}
                           className={"h-8"}
                           icon={<FaRegPenToSquare />}
+                          onButonClick={() => handleOnUpdateArticle(item?.id)}
                         />
                         <Button
                           text={"delete"}

@@ -31,6 +31,13 @@ import TambahTitik from "pages/titik-lokasi/TambahTitik";
 import TitikLokasi from "pages/titik-lokasi/TitikLokasi";
 import Dashboard from "pages/dashboard/Dashboard";
 import UpdateStatusPembayaran from "pages/dashboard/updateStatusPembayaran";
+import TravelCarUpdate from "pages/mobil/travelCarUpdate";
+import DriverUpdate from "pages/supir/driverUpdate";
+import RouteUpdate from "pages/rute/routeUpdate";
+import BranchUpdate from "pages/cabang/BranchUpdate";
+import LocationPointUpdate from "pages/titik-lokasi/LocationPointUpdate";
+import UpdateArticle from "pages/artikel/updateArticle";
+import ScheduleUpdate from "pages/jadwal/ScheduleUpdate";
 
 const router = createBrowserRouter([
   {
@@ -146,6 +153,16 @@ const router = createBrowserRouter([
         },
       },
       {
+        path: "/schedule/update-schedule/:id",
+        element: <ScheduleUpdate />,
+        loader: () => {
+          if (!Cookies.get("token")) {
+            return redirect("/login");
+          }
+          return null;
+        },
+      },
+      {
         path: "/travel-car",
         element: <Mobil />,
         loader: () => {
@@ -176,6 +193,16 @@ const router = createBrowserRouter([
         },
       },
       {
+        path: "/travel-car/update-travel-car/:id",
+        element: <TravelCarUpdate />,
+        loader: () => {
+          if (!Cookies.get("token")) {
+            return redirect("/login");
+          }
+          return null;
+        },
+      },
+      {
         path: "/route",
         element: <Rute />,
         loader: () => {
@@ -188,6 +215,16 @@ const router = createBrowserRouter([
       {
         path: "/route/new-route",
         element: <TambahRute />,
+        loader: () => {
+          if (!Cookies.get("token")) {
+            return redirect("/login");
+          }
+          return null;
+        },
+      },
+      {
+        path: "/route/update-route/:id",
+        element: <RouteUpdate />,
         loader: () => {
           if (!Cookies.get("token")) {
             return redirect("/login");
@@ -216,6 +253,16 @@ const router = createBrowserRouter([
         },
       },
       {
+        path: "/branch/update-branch/:id",
+        element: <BranchUpdate />,
+        loader: () => {
+          if (!Cookies.get("token")) {
+            return redirect("/login");
+          }
+          return null;
+        },
+      },
+      {
         path: "/location-point",
         element: <TitikLokasi />,
         loader: () => {
@@ -228,6 +275,16 @@ const router = createBrowserRouter([
       {
         path: "/location-point/new-location-point",
         element: <TambahTitik />,
+        loader: () => {
+          if (!Cookies.get("token")) {
+            return redirect("/login");
+          }
+          return null;
+        },
+      },
+      {
+        path: "/location-point/update-location-point/:id",
+        element: <LocationPointUpdate />,
         loader: () => {
           if (!Cookies.get("token")) {
             return redirect("/login");
@@ -268,6 +325,16 @@ const router = createBrowserRouter([
       {
         path: "/driver/new-driver",
         element: <TambahSupir />,
+        loader: () => {
+          if (!Cookies.get("token")) {
+            return redirect("/login");
+          }
+          return null;
+        },
+      },
+      {
+        path: "/driver/update-driver/:id",
+        element: <DriverUpdate />,
         loader: () => {
           if (!Cookies.get("token")) {
             return redirect("/login");
@@ -338,6 +405,16 @@ const router = createBrowserRouter([
       {
         path: "/article/new-article",
         element: <NewArticle />,
+        loader: () => {
+          if (!Cookies.get("token")) {
+            return redirect("/login");
+          }
+          return null;
+        },
+      },
+      {
+        path: "/article/update-article/:id",
+        element: <UpdateArticle />,
         loader: () => {
           if (!Cookies.get("token")) {
             return redirect("/login");

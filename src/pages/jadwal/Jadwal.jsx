@@ -74,6 +74,10 @@ export default function Jadwal() {
     fetchScheduleSelect();
   }, []);
 
+  const handleScheduleUpdate = (id) => {
+    navigate(`/schedule/update-schedule/${id}`);
+  };
+
   const handleNewSchedule = async (e) => {
     e.preventDefault();
     try {
@@ -512,6 +516,7 @@ export default function Jadwal() {
                         text={"edit"}
                         className={"h-8"}
                         icon={<FaRegPenToSquare />}
+                        onButonClick={() => handleScheduleUpdate(item?.id)}
                       />
                       <Button
                         text={"delete"}

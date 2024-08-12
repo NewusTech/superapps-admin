@@ -7,6 +7,7 @@ import { deleteRute, getAllRute } from "service/api";
 import { FaRegPenToSquare, FaTrash } from "react-icons/fa6";
 import Pagination from "elements/pagination/pagination";
 import Swal from "sweetalert2";
+import { formatTime } from "helpers";
 
 export default function Rute() {
   const navigate = useNavigate();
@@ -29,6 +30,10 @@ export default function Rute() {
 
   const handleTambahRute = () => {
     navigate("/route/new-route");
+  };
+
+  const handleRouteUpdate = (id) => {
+    navigate(`/route/update-route/${id}`);
   };
 
   useEffect(() => {
@@ -116,31 +121,39 @@ export default function Rute() {
                 ) : (
                   rute &&
                   currentItems &&
-                  currentItems?.map((item, index) => (
-                    <tr key={index} className="border-b text-center">
-                      <td className="p-3 px-4">{index + 1}</td>
-                      <td className="p-3 px-4">{item.kota_asal}</td>
-                      <td className="p-3">{item.kota_tujuan}</td>
-                      <td className="p-3">{item.waktu_keberangkatan}</td>
-                      <td className="p-3">
-                        Rp.{item.harga?.toLocaleString("id-ID")}
-                      </td>
-                      <td className="p-2 flex flex-row items-center justify-center gap-4">
-                        <Button
-                          text={"edit"}
-                          className={"h-8"}
-                          icon={<FaRegPenToSquare />}
-                        />
-                        <Button
-                          text={"delete"}
-                          className={"h-8"}
-                          color="red"
-                          onButonClick={() => handleDeleteRute(item?.id)}
-                          icon={<FaTrash />}
-                        />
-                      </td>
-                    </tr>
-                  ))
+                  currentItems?.map((item, index) => {
+                    let time;
+                    if (item?.waktu_keberangkatan) {
+                      time = formatTime(item?.waktu_keberangkatan);
+                    }
+
+                    return (
+                      <tr key={index} className="border-b text-center">
+                        <td className="p-3 px-4">{index + 1}</td>
+                        <td className="p-3 px-4">{item.kota_asal}</td>
+                        <td className="p-3">{item.kota_tujuan}</td>
+                        <td className="p-3">{time}</td>
+                        <td className="p-3">
+                          Rp.{item.harga?.toLocaleString("id-ID")}
+                        </td>
+                        <td className="p-2 flex flex-row items-center justify-center gap-4">
+                          <Button
+                            text={"edit"}
+                            className={"h-8"}
+                            icon={<FaRegPenToSquare />}
+                            onButonClick={() => handleRouteUpdate(item?.id)}
+                          />
+                          <Button
+                            text={"delete"}
+                            className={"h-8"}
+                            color="red"
+                            onButonClick={() => handleDeleteRute(item?.id)}
+                            icon={<FaTrash />}
+                          />
+                        </td>
+                      </tr>
+                    );
+                  })
                 )}
               </tbody>
             </table>

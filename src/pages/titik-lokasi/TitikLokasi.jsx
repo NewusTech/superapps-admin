@@ -44,6 +44,10 @@ export default function TitikLokasi() {
     navigate("/location-point/new-location-point");
   };
 
+  const handleUpdateLocationPoint = (id) => {
+    navigate(`/location-point/update-location-point/${id}`);
+  };
+
   const handleDeleteTitikLokasi = async (id) => {
     try {
       const result = await Swal.fire({
@@ -128,6 +132,9 @@ export default function TitikLokasi() {
                           text={"edit"}
                           className={"h-8"}
                           icon={<FaRegPenToSquare />}
+                          onButonClick={() =>
+                            handleUpdateLocationPoint(item?.id)
+                          }
                         />
                         <Button
                           text={"delete"}
