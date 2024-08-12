@@ -1,4 +1,3 @@
-import React, { useEffect, useRef, useState } from "react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -7,17 +6,18 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import FormInput from "elements/form/input/input";
 import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
 import { Label } from "@/components/ui/label";
 import { Trash } from "lucide-react";
 import Buttons from "elements/form/button/button";
-import { createNewArticle } from "service/api";
-import Swal from "sweetalert2";
+import FormInput from "elements/form/input/input";
+import { useEffect, useRef, useState } from "react";
 
-export default function NewArticle() {
+export default function UpdateArticle() {
+  const { id } = useParams();
   const navigate = useNavigate();
   const { quill, quillRef } = useQuill();
   const dropRef = useRef(null);
@@ -29,6 +29,8 @@ export default function NewArticle() {
   const [fileImage, setFileImage] = useState(null);
   const [previewImage, setPreviewImage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  console.log(id, "ini id");
 
   useEffect(() => {
     if (quill) {
@@ -83,52 +85,6 @@ export default function NewArticle() {
     setData({ ...data, image_url: "" });
   };
 
-  const handleNewArticle = async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData();
-    formData.append("judul", data.judul);
-    formData.append("konten", data.konten);
-    if (fileImage) {
-      formData.append("image_url", fileImage);
-    }
-
-    console.log(fileImage, "ini image url");
-
-    formData.forEach((value, key) => {
-      console.log(`${key}: ${value}` + `ini data`);
-    });
-
-    try {
-      setIsLoading(true);
-      const response = await createNewArticle(formData);
-
-      if (response.success === true) {
-        setIsLoading(false);
-        Swal.fire({
-          icon: "success",
-          title: "Berhasil menambahkan Article!",
-          timer: 2000,
-          showConfirmButton: false,
-          position: "center",
-        });
-        navigate("/article");
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: response.message,
-          timer: 2000,
-          showConfirmButton: false,
-          position: "center",
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   return (
     <section className="min-h-screen pt-20 px-4">
       <Breadcrumb>
@@ -138,13 +94,13 @@ export default function NewArticle() {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>Tambah Artikel</BreadcrumbPage>
+            <BreadcrumbPage>Update Artikel</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
 
       <div className="bg-white mt-10 rounded-md p-4">
-        <form onSubmit={handleNewArticle}>
+        <form>
           <div className="flex flex-col w-full gap-y-5">
             <div className="flex flex-col w-full gap-y-3">
               <FormInput
@@ -153,8 +109,8 @@ export default function NewArticle() {
                 className="w-full border border-outlineBorder rounded-md h-[40px] pl-3"
                 id="judul-artikel"
                 name="judul"
-                value={data?.judul}
-                onChange={(e) => setData({ ...data, judul: e.target.value })}
+                // value={data?.judul}
+                // onChange={(e) => setData({ ...data, judul: e.target.value })}
                 htmlFor="judul-artikel"
                 label="Judul Artikel"
                 classLabel="w-full text-[16px] text-neutral-700 font-normal"
@@ -188,7 +144,7 @@ export default function NewArticle() {
                       id="file-input-image"
                       name="image_url"
                       accept="image/*"
-                      onChange={handleImageChange}
+                      // onChange={handleImageChange}
                       className="hidden"
                     />
                     <label

@@ -6,16 +6,17 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { useNavigate } from "react-router-dom";
-import FormLabel from "elements/form/label/label";
-import { useState } from "react";
-import FormTextArea from "elements/form/text-area/text-area";
 import Buttons from "elements/form/button/button";
 import FormInput from "elements/form/input/input";
-import { createNewCar } from "service/api";
+import FormLabel from "elements/form/label/label";
+import FormTextArea from "elements/form/text-area/text-area";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { getMobilById, updateTravelCar } from "service/api";
 import Swal from "sweetalert2";
 
-export default function TambahMobil() {
+export default function TravelCarUpdate() {
+  const { id } = useParams();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [carsForm, setCarsForm] = useState({
@@ -25,18 +26,32 @@ export default function TambahMobil() {
     nopol: "",
   });
 
-  const handleNewCar = async (e) => {
+  const fetchTraverCar = async (id) => {
+    try {
+      const response = await getMobilById(id);
+
+      setCarsForm(response?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTraverCar(id);
+  }, [id]);
+
+  const handleUpdateTravelCar = async (e) => {
     e.preventDefault();
 
     try {
       setIsLoading(true);
-      const response = await createNewCar(carsForm);
+      const response = await updateTravelCar(id, carsForm);
 
       if (response.success === true) {
         setIsLoading(false);
         Swal.fire({
           icon: "success",
-          title: "Berhasil menambahkan mobil!",
+          title: "Berhasil mengupdate mobil!",
           timer: 2000,
           showConfirmButton: false,
           position: "center",
@@ -67,13 +82,13 @@ export default function TambahMobil() {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>Tambah Mobil</BreadcrumbPage>
+            <BreadcrumbPage>Update Mobil</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
 
       <div className="bg-neutral-50 mt-10">
-        <form onSubmit={handleNewCar} className="p-10">
+        <form onSubmit={handleUpdateTravelCar} className="p-10">
           <div className="flex flex-col w-full gap-y-6">
             <div className="grid grid-cols-2 w-full gap-6">
               <div className="flex flex-col w-full gap-y-3">
@@ -83,7 +98,7 @@ export default function TambahMobil() {
                   className="w-full border border-outlineBorder rounded-md h-[40px] pl-3"
                   id="tipe-mobil"
                   name="type"
-                  value={carsForm.car}
+                  value={carsForm.type}
                   onChange={(e) =>
                     setCarsForm({ ...carsForm, type: e.target.value })
                   }
@@ -100,7 +115,7 @@ export default function TambahMobil() {
                   className="w-full border border-outlineBorder rounded-md h-[40px] pl-3"
                   id="jumlah-kursi"
                   name="jumlah_kursi"
-                  value={carsForm.seat}
+                  value={carsForm.jumlah_kursi}
                   onChange={(e) =>
                     setCarsForm({ ...carsForm, jumlah_kursi: e.target.value })
                   }
@@ -119,7 +134,7 @@ export default function TambahMobil() {
                   className="w-full border border-outlineBorder rounded-md h-[40px] pl-3"
                   id="nopop"
                   name="nopol"
-                  value={carsForm.seat}
+                  value={carsForm.nopol}
                   onChange={(e) =>
                     setCarsForm({ ...carsForm, nopol: e.target.value })
                   }
@@ -137,7 +152,7 @@ export default function TambahMobil() {
                 />
 
                 <FormTextArea
-                  value={carsForm.facilities}
+                  value={carsForm.fasilitas}
                   name="fasilitas"
                   id="fasilitas"
                   placeholder="Fasilitas"
@@ -156,7 +171,7 @@ export default function TambahMobil() {
               disables={isLoading ? true : false}
               type="submit"
               className="w-full bg-main hover:bg-primary-600 text-paper py-2 rounded-md"
-              name="Tambah"
+              name="Simpan"
             />
           </div>
         </form>
