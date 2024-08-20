@@ -93,11 +93,9 @@ export default function NewArticle() {
       formData.append("image_url", fileImage);
     }
 
-    console.log(fileImage, "ini image url");
-
-    formData.forEach((value, key) => {
-      console.log(`${key}: ${value}` + `ini data`);
-    });
+    // formData.forEach((value, key) => {
+    //   console.log(`${key}: ${value}` + `ini data`);
+    // });
 
     try {
       setIsLoading(true);

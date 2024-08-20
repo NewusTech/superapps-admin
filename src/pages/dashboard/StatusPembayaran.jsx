@@ -1,15 +1,22 @@
-import { Button as Btn } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import React, { useEffect, useState } from "react";
 import SuccessIcon from "assets/icons/success.svg";
-import { useParams } from "react-router-dom";
-import { getPaymentStatus } from "service/api";
-import { Download } from "lucide-react";
-import { formatDecimalRupiah, formatTanggalPanjang, formatTime } from "helpers";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  getDownloadInvoice,
+  getDownloadTicket,
+  getPaymentStatus,
+} from "service/api";
+import { Download, Loader } from "lucide-react";
+import { formatDecimalRupiah, formatLongDate, formatTime } from "helpers";
+import Swal from "sweetalert2";
 
 export default function StatusPembayaran() {
+  const navigate = useNavigate();
   const { kodePembayaran } = useParams();
   const [payment, setPayment] = useState();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isFirstLoading, setIsFirstLoading] = useState(false);
+  const [isSecondLoading, setIsSecondLoading] = useState(false);
 
   const fetchPaymentStatus = async (kode) => {
     try {
@@ -25,18 +32,80 @@ export default function StatusPembayaran() {
     fetchPaymentStatus(kodePembayaran);
   }, [kodePembayaran]);
 
-  console.log(payment, "ini payment");
-
-  console.log(kodePembayaran, "ini kode pembayaran");
-
   let time;
   let date;
   let price;
   if (payment?.jam || payment?.tanggal || payment?.harga) {
-    date = formatTanggalPanjang(payment?.tanggal);
+    date = formatLongDate(payment?.tanggal);
     time = formatTime(payment?.jam);
     price = formatDecimalRupiah(payment?.harga);
   }
+
+  const handleDownloadTicket = async () => {
+    try {
+      setIsFirstLoading(true);
+
+      const response = await getDownloadTicket(kodePembayaran);
+
+      if (response?.success === true) {
+        setIsFirstLoading(false);
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil download e-ticket!",
+          timer: 2000,
+          showConfirmButton: false,
+          position: "center",
+        });
+
+        window.open(response?.data?.link, "_blank");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Gagal Mendapatkan e-ticket!",
+          timer: 2000,
+          showConfirmButton: false,
+          position: "center",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsFirstLoading(false);
+    }
+  };
+
+  const handleDownloadInvoice = async () => {
+    try {
+      setIsSecondLoading(true);
+
+      const response = await getDownloadInvoice(kodePembayaran);
+
+      if (response?.success === true) {
+        setIsSecondLoading(false);
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil download invoice!",
+          timer: 2000,
+          showConfirmButton: false,
+          position: "center",
+        });
+
+        window.open(response?.data?.link, "_blank");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Gagal Mendapatkan invoice!",
+          timer: 2000,
+          showConfirmButton: false,
+          position: "center",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsSecondLoading(false);
+    }
+  };
 
   return (
     <div className="w-full flex flex-row justify-center mt-16">
@@ -74,11 +143,12 @@ export default function StatusPembayaran() {
           </div>
         </div>
         <div className="flex flex-row w-full gap-x-3 mt-12">
-          <Btn
-            disabled={isLoading ? true : false}
+          <Button
+            disabled={isSecondLoading ? true : false}
+            onClick={handleDownloadInvoice}
             type="submit"
             className="w-full border border-textSecondary bg-neutral-50 hover:bg-neutral-100 text-neutral-500 space-x-8">
-            {isLoading ? (
+            {isSecondLoading ? (
               <Loader className="animate-spin" />
             ) : (
               <>
@@ -87,13 +157,14 @@ export default function StatusPembayaran() {
                 <p>Invoice</p>
               </>
             )}
-          </Btn>
+          </Button>
 
-          <Btn
-            disabled={isLoading ? true : false}
+          <Button
+            onClick={handleDownloadTicket}
+            disabled={isFirstLoading ? true : false}
             type="submit"
             className="w-full bg-main hover:bg-primary-600 text-paper space-x-8">
-            {isLoading ? (
+            {isFirstLoading ? (
               <Loader className="animate-spin" />
             ) : (
               <>
@@ -102,7 +173,7 @@ export default function StatusPembayaran() {
                 <p>Unduh</p>
               </>
             )}
-          </Btn>
+          </Button>
         </div>
       </div>
     </div>

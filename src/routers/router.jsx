@@ -38,6 +38,10 @@ import BranchUpdate from "pages/cabang/BranchUpdate";
 import LocationPointUpdate from "pages/titik-lokasi/LocationPointUpdate";
 import UpdateArticle from "pages/artikel/updateArticle";
 import ScheduleUpdate from "pages/jadwal/ScheduleUpdate";
+import DetailPesanan from "pages/dashboard/DetailPesanan";
+import Paket from "pages/paket/Paket";
+import TambahPaket from "pages/paket/TambahPaket";
+import PembayaranPaket from "pages/paket/pembayaran";
 
 const router = createBrowserRouter([
   {
@@ -75,6 +79,16 @@ const router = createBrowserRouter([
       {
         path: "/order/choosing-car",
         element: <TambahPesanan />,
+        loader: () => {
+          if (!Cookies.get("token")) {
+            return redirect("/login");
+          }
+          return null;
+        },
+      },
+      {
+        path: "/order/detail-order/:bookingCode",
+        element: <DetailPesanan />,
         loader: () => {
           if (!Cookies.get("token")) {
             return redirect("/login");
@@ -125,6 +139,36 @@ const router = createBrowserRouter([
       {
         path: "/order-history",
         element: <RiwayatPesanan />,
+        loader: () => {
+          if (!Cookies.get("token")) {
+            return redirect("/login");
+          }
+          return null;
+        },
+      },
+      {
+        path: "/package",
+        element: <Paket />,
+        loader: () => {
+          if (!Cookies.get("token")) {
+            return redirect("/login");
+          }
+          return null;
+        },
+      },
+      {
+        path: "/package/create-package",
+        element: <TambahPaket />,
+        loader: () => {
+          if (!Cookies.get("token")) {
+            return redirect("/login");
+          }
+          return null;
+        },
+      },
+      {
+        path: "/package/payment-step/:kodeResi",
+        element: <PembayaranPaket />,
         loader: () => {
           if (!Cookies.get("token")) {
             return redirect("/login");

@@ -31,6 +31,18 @@ export const getAllPesanan = async (search, status, startDate, endDate) => {
   return await response.json();
 };
 
+export const getDetailPesanan = async (bookingCode) => {
+  const response = await fetch(`${apiUrl}/pesanan/riwayat/${bookingCode}`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+    cache: "no-store",
+  });
+  return await response.json();
+};
+
 export const createNewPesanan = async (data) => {
   const response = await fetch(`${apiUrl}/pesanan/pesanan`, {
     headers: {
@@ -612,6 +624,59 @@ export const getPaymentStatus = async (paymentCode) => {
       "Content-Type": "application/json",
     },
     method: "GET",
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
+export const getDownloadTicket = async (paymentCode) => {
+  const response = await fetch(`${apiUrl}/pesanan/tiket/${paymentCode}`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
+export const getDownloadInvoice = async (paymentCode) => {
+  const response = await fetch(`${apiUrl}/pesanan/invoice/${paymentCode}`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
+export const getAllPackages = async () => {
+  const response = await fetch(`${apiUrl}/paket/paket`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
+export const createNewPackage = async (data) => {
+  const response = await fetch(`${apiUrl}/paket/paket`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    body: JSON.stringify(data),
     cache: "no-store",
   });
 
