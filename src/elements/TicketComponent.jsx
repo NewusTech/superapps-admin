@@ -18,14 +18,17 @@ export default function TicketComponent({ data }) {
       to={`/order/order-seat-form/${data?.id}`}
       className="border rounded-md p-4 bg-white hover:bg-gray-50">
       <div className="flex flex-row items-center">
-        <p className="text-main font-bold">{data?.master_mobil?.type}</p>
+        <div className="w-full flex flex-row gap-x-3">
+          <p className="text-main font-bold">{data?.master_mobil?.type}</p>
+          <p className="text-main font-bold">{data?.master_mobil?.nopol}</p>
+        </div>
         <div className="ml-auto flex flex-col gap-2">
           <p className="text-main font-bold">Rp. {data?.master_rute?.harga}</p>
           <p className="text-greenColor">{data?.ketersediaan}</p>
         </div>
       </div>
       <div className="h-1 border-t-2 border-dashed my-4" />
-      <div className="flex flex-row items-center">
+      <div className="flex flex-row items-center gap-x-4">
         <div className="flex flex-col gap-2 text-gray-500">
           <p className="">{data?.master_rute?.kota_asal}</p>
           <p className="">{dateBerangkat}</p>
@@ -33,8 +36,7 @@ export default function TicketComponent({ data }) {
         <div className="mx-auto">
           <img
             src={IconDuration}
-            alt=""
-            srcSet=""
+            alt="Durasi"
             height={64}
             className="h-12 mt-2"
           />

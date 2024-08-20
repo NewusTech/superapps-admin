@@ -1,23 +1,27 @@
 import React, { useEffect, useState } from "react";
+import { Button as Btn } from "@/components/ui/button";
 import SearchInput from "elements/Search";
 import Button from "elements/Button";
 import Filter from "elements/Filter";
 import { ReactComponent as IconPrint } from "assets/icons/Print.svg";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { NumericFormat } from "react-number-format";
 import Select from "react-select";
 import { columns, dataFilters } from "constants/constants";
 import { formatDateArrange, formatLongDate, formatTime } from "helpers";
-import { getAllPesanan } from "service/api";
+import { getAllPesanan, getDownloadTicket } from "service/api";
 import { useDebounce } from "hooks/useDebounce";
 import Pagination from "elements/pagination/pagination";
 import ArrangeDate from "elements/filterArrangeDate/arrangeDate";
+import { Loader } from "lucide-react";
+import Swal from "sweetalert2";
 
 export default function Dashboard() {
   const navigate = useNavigate();
   const [selectedColumns, setSelectedColumns] = useState([]);
   const [order, setOrder] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [isFirstLoading, setIsFirstLoading] = useState(false);
   const [search, setSearch] = useState("");
   const debounceSearch = useDebounce(search, 500);
   const [filterStatus, setFilterStatus] = useState("");
@@ -99,6 +103,39 @@ export default function Dashboard() {
 
   const handleOnSetFilter = (value) => {
     setFilterStatus(value !== "" ? value : "");
+  };
+
+  const handleDownloadTicket = async (paymentCode) => {
+    try {
+      setIsFirstLoading(true);
+
+      const response = await getDownloadTicket(paymentCode);
+
+      if (response?.success === true) {
+        setIsFirstLoading(false);
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil download e-ticket!",
+          timer: 2000,
+          showConfirmButton: false,
+          position: "center",
+        });
+
+        window.open(response?.data?.link, "_blank");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Gagal Mendapatkan e-ticket!",
+          timer: 2000,
+          showConfirmButton: false,
+          position: "center",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsFirstLoading(false);
+    }
   };
 
   return (
@@ -216,8 +253,12 @@ export default function Dashboard() {
                                   key={col?.key}
                                   className="px-3 py-1 text-center">
                                   {col?.key === "no" && index + 1}
-                                  {col?.key === "nama_pemesan" &&
-                                    item?.nama_pemesan}
+                                  <Link
+                                    className="hover:text-primary-700 hover:underline"
+                                    to={`/order/detail-order/${item?.kode_pesanan}`}>
+                                    {col?.key === "nama_pemesan" &&
+                                      item?.nama_pemesan}
+                                  </Link>
                                   {col?.key === "rute" && item?.rute}
                                   {col?.key === "jam_berangkat" && time}
                                   {col?.key === "tanggal_berangkat" && date}
@@ -249,9 +290,20 @@ export default function Dashboard() {
                                       </span>
                                     ))}
                                   {col?.key === "print" && (
-                                    <button>
-                                      <IconPrint stroke="#0705EC" />
-                                    </button>
+                                    <Btn
+                                      onClick={() =>
+                                        handleDownloadTicket(
+                                          item?.kode_pembayaran
+                                        )
+                                      }
+                                      disabled={isFirstLoading ? true : false}
+                                      type="submit">
+                                      {isFirstLoading ? (
+                                        <Loader className="animate-spin" />
+                                      ) : (
+                                        <IconPrint />
+                                      )}
+                                    </Btn>
                                   )}
                                 </td>
                               );

@@ -8,15 +8,18 @@ import {
 } from "@/components/ui/breadcrumb";
 import { useNavigate } from "react-router-dom";
 import FormLabel from "elements/form/label/label";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import FormTextArea from "elements/form/text-area/text-area";
 import Buttons from "elements/form/button/button";
 import FormInput from "elements/form/input/input";
 import { createNewCar } from "service/api";
 import Swal from "sweetalert2";
+import { useQuill } from "react-quilljs";
 
 export default function TambahMobil() {
   const navigate = useNavigate();
+  const { quill, quillRef } = useQuill();
+  const dropRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const [carsForm, setCarsForm] = useState({
     type: "",
@@ -24,6 +27,17 @@ export default function TambahMobil() {
     fasilitas: "",
     nopol: "",
   });
+
+  useEffect(() => {
+    if (quill) {
+      quill.on("text-change", () => {
+        setCarsForm((prevData) => ({
+          ...prevData,
+          fasilitas: quill.root.innerHTML,
+        }));
+      });
+    }
+  }, [quill]);
 
   const handleNewCar = async (e) => {
     e.preventDefault();
@@ -111,7 +125,7 @@ export default function TambahMobil() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 w-full gap-6">
+            <div className="grid grid-cols-1 w-full gap-6">
               <div className="flex flex-col w-full gap-y-3">
                 <FormInput
                   type="text"
@@ -129,7 +143,7 @@ export default function TambahMobil() {
                 />
               </div>
 
-              <div className="w-full flex flex-col gap-y-3">
+              {/* <div className="w-full flex flex-col gap-y-3">
                 <FormLabel
                   htmlFor="fasilitas"
                   name="Fasilitas"
@@ -146,7 +160,18 @@ export default function TambahMobil() {
                   }
                   className="w-full border border-outlineBorder pl-3 h-[100px] rounded-md"
                 />
-              </div>
+              </div> */}
+            </div>
+
+            <div className="w-full flex flex-col gap-y-3">
+              <FormLabel
+                htmlFor="fasilitas"
+                name="Fasilitas"
+                className="w-full"
+              />
+              <div
+                className="flex flex-col h-[300px] w-ful border border-textSecondary"
+                ref={quillRef}></div>
             </div>
           </div>
 

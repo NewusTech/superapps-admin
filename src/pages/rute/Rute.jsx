@@ -104,7 +104,7 @@ export default function Rute() {
                   <th className="p-3">No</th>
                   <th className="p-3">Dari</th>
                   <th className="p-3">Ke</th>
-                  <th className="p-3">Waktu Keberangkatan</th>
+                  {/* <th className="p-3">Waktu Keberangkatan</th> */}
                   <th className="p-3">Harga</th>
                   <th className="py-3 w-56">Action</th>
                 </tr>
@@ -122,17 +122,17 @@ export default function Rute() {
                   rute &&
                   currentItems &&
                   currentItems?.map((item, index) => {
-                    let time;
-                    if (item?.waktu_keberangkatan) {
-                      time = formatTime(item?.waktu_keberangkatan);
-                    }
+                    // let time;
+                    // if (item?.waktu_keberangkatan) {
+                    //   time = formatTime(item?.waktu_keberangkatan);
+                    // }
 
                     return (
                       <tr key={index} className="border-b text-center">
                         <td className="p-3 px-4">{index + 1}</td>
                         <td className="p-3 px-4">{item.kota_asal}</td>
                         <td className="p-3">{item.kota_tujuan}</td>
-                        <td className="p-3">{time}</td>
+                        {/* <td className="p-3">{time}</td> */}
                         <td className="p-3">
                           Rp.{item.harga?.toLocaleString("id-ID")}
                         </td>

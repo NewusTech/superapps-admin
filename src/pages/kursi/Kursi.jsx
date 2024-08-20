@@ -136,6 +136,7 @@ export default function Kursi() {
               <tr className="text-center bg-gray-100 border-b h-14">
                 <th className="p-3">No</th>
                 <th className="p-3">Mobil</th>
+                <th className="p-3">Nomor Polisi</th>
                 <th className="p-3">Jumlah Kursi Tersedia</th>
                 <th className="p-3">Out of Order</th>
               </tr>
@@ -232,7 +233,8 @@ export default function Kursi() {
                           </AlertDialogContent>
                         </AlertDialog>
                       </td>
-                      <td className="px-3 py-1">{car?.available_seats}</td>
+                      <td className="px-3 py-1">{car?.nopol}</td>
+                      <td className="px-3 py-1">{car?.jumlah_kursi}</td>
                       <td className="px-3 py-1">
                         <SwitchInput className="bg-primary-700 rounded-full" />
                       </td>

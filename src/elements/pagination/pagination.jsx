@@ -55,7 +55,7 @@ const Pagination = ({
         className="text-neutral-700 rounded-md cursor-pointer">
         <ChevronLeft />
       </button>
-      {pageNumbers.map((number) => (
+      {/* {pageNumbers.map((number) => (
         <button
           key={number}
           onClick={() => handlePageChange(number)}
@@ -64,7 +64,12 @@ const Pagination = ({
           } rounded-md`}>
           {number}
         </button>
-      ))}
+      ))} */}
+
+      <span className="px-4 py-2 text-neutral-700">
+        {currentPage} of {totalPages}
+      </span>
+
       <button
         onClick={handleNextPage}
         disabled={currentPage === totalPages}

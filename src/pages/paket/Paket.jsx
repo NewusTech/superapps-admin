@@ -4,13 +4,34 @@ import Filter from "../../elements/Filter";
 import { ReactComponent as IconPrint } from "../../assets/icons/Print.svg";
 import DatePrintFilter from "../../elements/DatePrintFilter";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getAllPackages } from "service/api";
+import { formatRupiah } from "helpers";
 
 export default function Paket() {
   const navigate = useNavigate();
+  const [packages, setPackages] = useState([]);
+
+  const fetchPackages = async () => {
+    try {
+      const response = await getAllPackages();
+
+      setPackages(response?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPackages();
+  }, []);
+
+  console.log(packages, "ini paket");
 
   const handleNewPaket = () => {
-    navigate("/paket/tambah");
+    navigate("/package/create-package");
   };
+
   return (
     <>
       <div className="">
@@ -38,6 +59,7 @@ export default function Paket() {
           <table className="table-auto w-full text-xs">
             <thead>
               <tr className="text-left bg-gray-100 border-b">
+                <th className="p-3">No</th>
                 <th className="p-3">Nama Pengirim</th>
                 <th className="p-3">Nama Penerima</th>
                 <th className="p-3">Jenis</th>
@@ -47,20 +69,29 @@ export default function Paket() {
               </tr>
             </thead>
             <tbody>
-              {[...Array(8)].map((_, index) => (
-                <tr key={index} className="border-b">
-                  <td className="px-3 py-1">Yulivia</td>
-                  <td className="px-3 py-1">Dila Azzahra</td>
-                  <td className="px-3 py-1">Makanan</td>
-                  <td className="px-3 py-1">1 kg</td>
-                  <td className="px-3 py-1">24.000</td>
-                  <td className="px-3 py-1">
-                    <button>
-                      <IconPrint stroke="#0705EC" />
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {packages &&
+                packages?.map((paket, index) => {
+                  let price;
+                  if (paket?.biaya) {
+                    price = formatRupiah(paket?.biaya);
+                  }
+
+                  return (
+                    <tr key={index} className="border-b">
+                      <td className="px-3 py-1">{index + 1}</td>
+                      <td className="px-3 py-1">{paket?.nama_pengirim}</td>
+                      <td className="px-3 py-1">{paket?.nama_penerima}</td>
+                      <td className="px-3 py-1">{paket?.jenis_paket}</td>
+                      <td className="px-3 py-1">{paket?.total_berat} Kg</td>
+                      <td className="px-3 py-1">{price}</td>
+                      <td className="px-3 py-1">
+                        <button>
+                          <IconPrint stroke="#0705EC" />
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
             </tbody>
           </table>
           <div className="flex justify-between text-sm mt-2 p-4">

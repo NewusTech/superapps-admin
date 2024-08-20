@@ -20,7 +20,7 @@ export default function RouteUpdate() {
   const [form, setForm] = useState({
     kota_asal: "",
     kota_tujuan: "",
-    waktu_keberangkatan: "",
+    // waktu_keberangkatan: "",
     harga: "",
   });
 
@@ -120,8 +120,8 @@ export default function RouteUpdate() {
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-x-3">
-              <FormInput
+            <div className="grid grid-cols-1 gap-x-3">
+              {/* <FormInput
                 type="time"
                 className="w-full border block border-outlineBorder rounded-md h-[40px] pl-3"
                 id="time"
@@ -134,7 +134,7 @@ export default function RouteUpdate() {
                 htmlFor="time"
                 placeholder="Waktu Berangkat"
                 classLabel="w-full"
-              />
+              /> */}
 
               <FormInput
                 type="number"

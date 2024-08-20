@@ -8,15 +8,18 @@ import {
 } from "@/components/ui/breadcrumb";
 import { useNavigate } from "react-router-dom";
 import FormInput from "elements/form/input/input";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import FormLabel from "elements/form/label/label";
 import FormTextArea from "elements/form/text-area/text-area";
 import Buttons from "elements/form/button/button";
 import { createNewDriver } from "service/api";
 import Swal from "sweetalert2";
+import { useQuill } from "react-quilljs";
 
 export default function TambahSupir() {
   const navigate = useNavigate();
+  const { quill, quillRef } = useQuill();
+  const dropRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const [form, setForm] = useState({
     nama: "",
@@ -25,6 +28,17 @@ export default function TambahSupir() {
     tanggal_bergabung: "",
     alamat: "",
   });
+
+  useEffect(() => {
+    if (quill) {
+      quill.on("text-change", () => {
+        setForm((prevData) => ({
+          ...prevData,
+          alamat: quill.root.innerHTML,
+        }));
+      });
+    }
+  }, [quill]);
 
   const handleNewDriver = async (e) => {
     e.preventDefault();
@@ -136,14 +150,18 @@ export default function TambahSupir() {
             <div className="w-full flex flex-col gap-y-3">
               <FormLabel htmlFor="alamat" name="Alamat" className="w-full" />
 
-              <FormTextArea
+              <div
+                className="flex flex-col h-[300px] w-ful border border-textSecondary"
+                ref={quillRef}></div>
+
+              {/* <FormTextArea
                 value={form.alamat}
                 name="alamat"
                 id="alamat"
                 placeholder="Alamat"
                 onChange={(e) => setForm({ ...form, alamat: e.target.value })}
                 className="w-full border border-outlineBorder pl-3 h-[100px] rounded-md"
-              />
+              /> */}
             </div>
           </div>
           <div className="pt-10 w-full">

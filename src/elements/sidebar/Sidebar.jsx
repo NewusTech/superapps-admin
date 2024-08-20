@@ -2,6 +2,7 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import SidebarItem from "elements/sidebar/SidebarItem";
 import { ReactComponent as IconPesanan } from "assets/icons/ic-clipboard.svg";
+import { ReactComponent as IconPaket } from "assets/icons/ph_package.svg";
 import { ReactComponent as IconRiwayatPesanan } from "assets/icons/icon-park-outline_history-query.svg";
 import { ReactComponent as IconListPenumpang } from "assets/icons/carbon_list-checked-mirror.svg";
 import { ReactComponent as IconDatabase } from "assets/icons/ic_database.svg";
@@ -31,13 +32,13 @@ const transsactionRute = [
     iconA: <IconPesanan stroke={colorActive} />,
     iconD: <IconPesanan stroke={colorDactive} />,
   },
-  // {
-  //   name: "Paket",
-  //   link: "/paket",
-  //   space: "space-x-2",
-  //   iconA: <IconPaket fill={colorActive} />,
-  //   iconD: <IconPaket fill={colorDactive} />,
-  // },
+  {
+    name: "Paket",
+    link: "/package",
+    space: "space-x-2",
+    iconA: <IconPaket fill={colorActive} />,
+    iconD: <IconPaket fill={colorDactive} />,
+  },
   {
     name: "Riwayat Pesanan",
     link: "/order-history",
