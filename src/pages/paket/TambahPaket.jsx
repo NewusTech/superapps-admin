@@ -75,29 +75,33 @@ export default function TambahPaket() {
     try {
       setIsLoading(true);
 
-      const response = await createNewPackage(form);
+      const response = await createNewPackage({
+        ...form,
+        biaya: Number(form.biaya),
+        total_berat: Number(form.total_berat),
+      });
 
       console.log(response, "ini res");
 
-      // if (response.success === true) {
-      //   setIsLoading(false);
-      //   Swal.fire({
-      //     icon: "success",
-      //     title: "Berhasil menambahkan paket!",
-      //     timer: 2000,
-      //     showConfirmButton: false,
-      //     position: "center",
-      //   });
-      //   navigate(`/package/payment-step/${response.data.kodeResi}`);
-      // } else {
-      //   Swal.fire({
-      //     icon: "error",
-      //     title: response.message,
-      //     timer: 2000,
-      //     showConfirmButton: false,
-      //     position: "center",
-      //   });
-      // }
+      if (response.success === true) {
+        setIsLoading(false);
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil menambahkan paket!",
+          timer: 2000,
+          showConfirmButton: false,
+          position: "center",
+        });
+        navigate(`/package/payment-step/${response.data.resi}`);
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: response.message,
+          timer: 2000,
+          showConfirmButton: false,
+          position: "center",
+        });
+      }
     } catch (error) {
       console.log(error);
     } finally {
@@ -147,7 +151,7 @@ export default function TambahPaket() {
 
                 <div className="flex flex-col w-full gap-y-3">
                   <FormInput
-                    type="text"
+                    type="number"
                     placeholder="Nomor Telepon"
                     className="w-full border border-outlineBorder rounded-md h-[40px] pl-3"
                     id="telepon"
@@ -226,7 +230,7 @@ export default function TambahPaket() {
               <div className="grid grid-cols-2 w-full gap-6">
                 <div className="flex flex-col w-full gap-y-3">
                   <FormInput
-                    type="text"
+                    type="number"
                     placeholder="Total Berat"
                     className="w-full block border border-outlineBorder rounded-md h-[40px] pl-3"
                     id="total"
@@ -269,23 +273,23 @@ export default function TambahPaket() {
                 <div className="flex flex-col w-full gap-y-3">
                   <FormInput
                     type="text"
-                    placeholder="Nama Pengirim"
+                    placeholder="Nama Penerima"
                     className="w-full border border-outlineBorder rounded-md h-[40px] pl-3"
-                    id="pengirim"
-                    name="nama_pengirim"
-                    value={form.nama_pengirim}
+                    id="penerima"
+                    name="nama_penerima"
+                    value={form.nama_penerima}
                     onChange={(e) =>
-                      setForm({ ...form, nama_pengirim: e.target.value })
+                      setForm({ ...form, nama_penerima: e.target.value })
                     }
-                    htmlFor="pengirim"
-                    label="Nama Pengirim"
+                    htmlFor="penerima"
+                    label="Nama Penerima"
                     classLabel="w-full"
                   />
                 </div>
 
                 <div className="flex flex-col w-full gap-y-3">
                   <FormInput
-                    type="text"
+                    type="number"
                     placeholder="Nomor Telepon"
                     className="w-full border border-outlineBorder rounded-md h-[40px] pl-3"
                     id="telepon-penerima"

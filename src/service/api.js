@@ -682,3 +682,78 @@ export const createNewPackage = async (data) => {
 
   return await response.json();
 };
+
+// status pembayaran package
+export const getPackageHistoryByResi = async (kodeResi) => {
+  const response = await fetch(`${apiUrl}/paket/paket/${kodeResi}`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+    cache: "no-store",
+  });
+  return await response.json();
+};
+
+export const makingPackagePayment = async (data) => {
+  const response = await fetch(`${apiUrl}/paket/proses-pembayaran`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    body: JSON.stringify(data),
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
+export const updatePackagePaymentStatus = async (kodeResi) => {
+  const response = await fetch(
+    `${apiUrl}/paket/status-pembayaran/update/${kodeResi}`,
+    {
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "Content-Type": "application/json",
+      },
+      method: "PATCH",
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+export const getPaymentStatusPackage = async (kodePaket) => {
+  const response = await fetch(
+    `${apiUrl}/paket/status-pembayaran/${kodePaket}`,
+    {
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+export const getDownloadResiPackage = async (paymentCode) => {
+  const response = await fetch(
+    `${apiUrl}/paket/label/download/${paymentCode}`,
+    {
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};

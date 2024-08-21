@@ -7,10 +7,13 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getAllPackages } from "service/api";
 import { formatRupiah } from "helpers";
+import Pagination from "elements/pagination/pagination";
 
 export default function Paket() {
   const navigate = useNavigate();
   const [packages, setPackages] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   const fetchPackages = async () => {
     try {
@@ -25,6 +28,15 @@ export default function Paket() {
   useEffect(() => {
     fetchPackages();
   }, []);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  let currentItems = [];
+  if (packages) {
+    currentItems = packages.slice(indexOfFirstItem, indexOfLastItem);
+  }
+
+  const totalPages = Math.ceil(packages.length / itemsPerPage);
 
   console.log(packages, "ini paket");
 
@@ -70,7 +82,8 @@ export default function Paket() {
             </thead>
             <tbody>
               {packages &&
-                packages?.map((paket, index) => {
+                currentItems &&
+                currentItems?.map((paket, index) => {
                   let price;
                   if (paket?.biaya) {
                     price = formatRupiah(paket?.biaya);
@@ -94,6 +107,7 @@ export default function Paket() {
                 })}
             </tbody>
           </table>
+
           <div className="flex justify-between text-sm mt-2 p-4">
             <div>
               <p className="text-left font-bold">Pesanan</p>
@@ -104,6 +118,15 @@ export default function Paket() {
               <p className="text-right">2.000.000</p>
             </div>
           </div>
+        </div>
+        <div className="flex justify-end pr-4">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            itemsPerPage={itemsPerPage}
+            onPageChange={setCurrentPage}
+            onItemsPerPageChange={setItemsPerPage}
+          />
         </div>
       </div>
     </>

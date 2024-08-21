@@ -42,6 +42,8 @@ import DetailPesanan from "pages/dashboard/DetailPesanan";
 import Paket from "pages/paket/Paket";
 import TambahPaket from "pages/paket/TambahPaket";
 import PembayaranPaket from "pages/paket/pembayaran";
+import UpdateStatusPembayaranPackage from "pages/paket/updateStatusPembayaran";
+import StatusPackagePembayaran from "pages/paket/statusPembayaran";
 
 const router = createBrowserRouter([
   {
@@ -169,6 +171,26 @@ const router = createBrowserRouter([
       {
         path: "/package/payment-step/:kodeResi",
         element: <PembayaranPaket />,
+        loader: () => {
+          if (!Cookies.get("token")) {
+            return redirect("/login");
+          }
+          return null;
+        },
+      },
+      {
+        path: "/package/update-payment-status-package/:kodeResi",
+        element: <UpdateStatusPembayaranPackage />,
+        loader: () => {
+          if (!Cookies.get("token")) {
+            return redirect("/login");
+          }
+          return null;
+        },
+      },
+      {
+        path: "/package/package-payment-status/:kodePaket",
+        element: <StatusPackagePembayaran />,
         loader: () => {
           if (!Cookies.get("token")) {
             return redirect("/login");
