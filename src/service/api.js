@@ -656,8 +656,8 @@ export const getDownloadInvoice = async (paymentCode) => {
   return await response.json();
 };
 
-export const getAllPackages = async () => {
-  const response = await fetch(`${apiUrl}/paket/paket`, {
+export const getAllPackages = async (search) => {
+  const response = await fetch(`${apiUrl}/paket/paket?search=${search}`, {
     headers: {
       Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",
@@ -666,6 +666,18 @@ export const getAllPackages = async () => {
     cache: "no-store",
   });
 
+  return await response.json();
+};
+
+export const getDetailPackage = async (kodeResi) => {
+  const response = await fetch(`${apiUrl}/pesanan/riwayat/${kodeResi}`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+    cache: "no-store",
+  });
   return await response.json();
 };
 
@@ -754,6 +766,19 @@ export const getDownloadResiPackage = async (paymentCode) => {
       cache: "no-store",
     }
   );
+
+  return await response.json();
+};
+
+export const getDownloadInvoicePackage = async (paymentCode) => {
+  const response = await fetch(`${apiUrl}/pesanan/invoice/${paymentCode}`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+    cache: "no-store",
+  });
 
   return await response.json();
 };

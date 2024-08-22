@@ -29,6 +29,7 @@ export default function Jadwal() {
   const [dataSelects, setDataSelects] = useState([]);
   const [Jadwals, setJadwals] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingDatas, setIsLoadingDatas] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [forms, setForms] = useState([
@@ -48,11 +49,14 @@ export default function Jadwal() {
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   const getSchedules = async () => {
+    setIsLoadingDatas(true);
     try {
       const response = await getAllSchedules();
       setJadwals(response?.data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoadingDatas(false);
     }
   };
 
@@ -384,7 +388,6 @@ export default function Jadwal() {
                         <div className="grid grid-cols-2 gap-x-4">
                           <FormSelect
                             data={dataSelects.rute}
-                            htmlFor="rute"
                             label="Rute"
                             classLabel="w-full"
                             change={(e) =>
@@ -419,7 +422,6 @@ export default function Jadwal() {
                         <div className="grid grid-cols-2 gap-x-4">
                           <FormSelect
                             data={dataSelects.mobil}
-                            htmlFor="mobil"
                             label="Mobil"
                             classLabel="w-full"
                             change={(e) =>
@@ -431,7 +433,6 @@ export default function Jadwal() {
 
                           <FormSelect
                             data={dataSelects.supir}
-                            htmlFor="supir"
                             label="Supir"
                             classLabel="w-full"
                             change={(e) =>
@@ -471,77 +472,83 @@ export default function Jadwal() {
         </div>
       )}
 
-      <div className="bg-neutral-50 rounded-md border mt-8 w-full pb-4">
-        <table className="w-full text-xs">
-          <thead className="border-b">
-            <tr className="text-center h-12 bg-gray-100">
-              <th className="py-1 px-4">No</th>
-              <th className="py-1 px-4">Mobil</th>
-              <th className="py-1 px-4">Rute</th>
-              <th className="py-1 px-4">Waktu Keberangkatan</th>
-              <th className="py-1 px-4">Supir</th>
-              <th className="py-1 w-56">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Jadwals.length <= 0 ? (
-              <tr>
-                <td colSpan={10}>
-                  <p className="text-lg mt-5 font-light text-center">
-                    Data Kosong
-                  </p>
-                </td>
-              </tr>
-            ) : (
-              Jadwals &&
-              currentItems &&
-              currentItems?.map((item, index) => {
-                let time = "";
-                if (item?.waktu_keberangkatan) {
-                  time = formatTime(item?.waktu_keberangkatan);
-                }
-
-                return (
-                  <tr key={index} className="text-center border-b">
-                    <td className="p-3 px-4">{index + 1}</td>
-                    <td className="p-3 px-4">{item?.master_mobil?.type}</td>
-                    <td className="p-3 px-4">
-                      {item?.master_rute?.kota_asal} -{" "}
-                      {item?.master_rute?.kota_tujuan}
-                    </td>
-                    <td className="p-3 px-4">{time}</td>
-                    <td className="p-3 px-4">{item?.master_supir?.nama}</td>
-                    <td className="p-2 flex flex-row items-center justify-center gap-4">
-                      <Button
-                        text={"edit"}
-                        className={"h-8"}
-                        icon={<FaRegPenToSquare />}
-                        onButonClick={() => handleScheduleUpdate(item?.id)}
-                      />
-                      <Button
-                        text={"delete"}
-                        className={"h-8"}
-                        color="red"
-                        onButonClick={() => handleDeleteSchedule(item?.id)}
-                        icon={<FaTrash />}
-                      />
-                    </td>
-                  </tr>
-                );
-              })
-            )}
-          </tbody>
-        </table>
-        <div className="flex justify-end pr-4">
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            itemsPerPage={itemsPerPage}
-            onPageChange={setCurrentPage}
-            onItemsPerPageChange={setItemsPerPage}
-          />
+      {isLoadingDatas ? (
+        <div className="flex justify-center items-center pt-20">
+          <div className="w-16 h-16 border-8 border-t-8 border-t-main border-gray-200 rounded-full animate-spin"></div>
         </div>
-      </div>
+      ) : (
+        <div className="bg-neutral-50 rounded-md border mt-8 w-full pb-4">
+          <table className="w-full text-xs">
+            <thead className="border-b">
+              <tr className="text-center h-12 bg-gray-100">
+                <th className="py-1 px-4">No</th>
+                <th className="py-1 px-4">Mobil</th>
+                <th className="py-1 px-4">Rute</th>
+                <th className="py-1 px-4">Waktu Keberangkatan</th>
+                <th className="py-1 px-4">Supir</th>
+                <th className="py-1 w-56">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Jadwals.length <= 0 ? (
+                <tr>
+                  <td colSpan={10}>
+                    <p className="text-lg mt-5 font-light text-center">
+                      Data Kosong
+                    </p>
+                  </td>
+                </tr>
+              ) : (
+                Jadwals &&
+                currentItems &&
+                currentItems?.map((item, index) => {
+                  let time = "";
+                  if (item?.waktu_keberangkatan) {
+                    time = formatTime(item?.waktu_keberangkatan);
+                  }
+
+                  return (
+                    <tr key={index} className="text-center border-b">
+                      <td className="p-3 px-4">{index + 1}</td>
+                      <td className="p-3 px-4">{item?.master_mobil?.type}</td>
+                      <td className="p-3 px-4">
+                        {item?.master_rute?.kota_asal} -{" "}
+                        {item?.master_rute?.kota_tujuan}
+                      </td>
+                      <td className="p-3 px-4">{time}</td>
+                      <td className="p-3 px-4">{item?.master_supir?.nama}</td>
+                      <td className="p-2 flex flex-row items-center justify-center gap-4">
+                        <Button
+                          text={"edit"}
+                          className={"h-8"}
+                          icon={<FaRegPenToSquare />}
+                          onButonClick={() => handleScheduleUpdate(item?.id)}
+                        />
+                        <Button
+                          text={"delete"}
+                          className={"h-8"}
+                          color="red"
+                          onButonClick={() => handleDeleteSchedule(item?.id)}
+                          icon={<FaTrash />}
+                        />
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
+          </table>
+          <div className="flex justify-end pr-4">
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              itemsPerPage={itemsPerPage}
+              onPageChange={setCurrentPage}
+              onItemsPerPageChange={setItemsPerPage}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

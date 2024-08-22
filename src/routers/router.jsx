@@ -44,6 +44,7 @@ import TambahPaket from "pages/paket/TambahPaket";
 import PembayaranPaket from "pages/paket/pembayaran";
 import UpdateStatusPembayaranPackage from "pages/paket/updateStatusPembayaran";
 import StatusPackagePembayaran from "pages/paket/statusPembayaran";
+import DetailPaket from "pages/paket/detailPaket";
 
 const router = createBrowserRouter([
   {
@@ -151,6 +152,16 @@ const router = createBrowserRouter([
       {
         path: "/package",
         element: <Paket />,
+        loader: () => {
+          if (!Cookies.get("token")) {
+            return redirect("/login");
+          }
+          return null;
+        },
+      },
+      {
+        path: "/package/detail-package/:kodeResi",
+        element: <DetailPaket />,
         loader: () => {
           if (!Cookies.get("token")) {
             return redirect("/login");

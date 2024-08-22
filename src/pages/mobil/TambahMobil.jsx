@@ -9,12 +9,12 @@ import {
 import { useNavigate } from "react-router-dom";
 import FormLabel from "elements/form/label/label";
 import { useEffect, useRef, useState } from "react";
-import FormTextArea from "elements/form/text-area/text-area";
 import Buttons from "elements/form/button/button";
 import FormInput from "elements/form/input/input";
 import { createNewCar } from "service/api";
 import Swal from "sweetalert2";
 import { useQuill } from "react-quilljs";
+import { Label } from "@/components/ui/label";
 
 export default function TambahMobil() {
   const navigate = useNavigate();
@@ -131,7 +131,7 @@ export default function TambahMobil() {
                   type="text"
                   placeholder="Nomor Polisi"
                   className="w-full border border-outlineBorder rounded-md h-[40px] pl-3"
-                  id="nopop"
+                  id="nopol"
                   name="nopol"
                   value={carsForm.seat}
                   onChange={(e) =>
@@ -142,33 +142,10 @@ export default function TambahMobil() {
                   classLabel="w-full"
                 />
               </div>
-
-              {/* <div className="w-full flex flex-col gap-y-3">
-                <FormLabel
-                  htmlFor="fasilitas"
-                  name="Fasilitas"
-                  className="w-full"
-                />
-
-                <FormTextArea
-                  value={carsForm.facilities}
-                  name="fasilitas"
-                  id="fasilitas"
-                  placeholder="Fasilitas"
-                  onChange={(e) =>
-                    setCarsForm({ ...carsForm, fasilitas: e.target.value })
-                  }
-                  className="w-full border border-outlineBorder pl-3 h-[100px] rounded-md"
-                />
-              </div> */}
             </div>
 
             <div className="w-full flex flex-col gap-y-3">
-              <FormLabel
-                htmlFor="fasilitas"
-                name="Fasilitas"
-                className="w-full"
-              />
+              <Label className="w-full">Fasilitas</Label>
               <div
                 className="flex flex-col h-[300px] w-ful border border-textSecondary"
                 ref={quillRef}></div>
