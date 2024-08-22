@@ -15,6 +15,7 @@ import Buttons from "elements/form/button/button";
 import { createNewDriver } from "service/api";
 import Swal from "sweetalert2";
 import { useQuill } from "react-quilljs";
+import { Label } from "@/components/ui/label";
 
 export default function TambahSupir() {
   const navigate = useNavigate();
@@ -148,20 +149,11 @@ export default function TambahSupir() {
             </div>
 
             <div className="w-full flex flex-col gap-y-3">
-              <FormLabel htmlFor="alamat" name="Alamat" className="w-full" />
+              <Label className="w-full">Alamat</Label>
 
               <div
                 className="flex flex-col h-[300px] w-ful border border-textSecondary"
                 ref={quillRef}></div>
-
-              {/* <FormTextArea
-                value={form.alamat}
-                name="alamat"
-                id="alamat"
-                placeholder="Alamat"
-                onChange={(e) => setForm({ ...form, alamat: e.target.value })}
-                className="w-full border border-outlineBorder pl-3 h-[100px] rounded-md"
-              /> */}
             </div>
           </div>
           <div className="pt-10 w-full">

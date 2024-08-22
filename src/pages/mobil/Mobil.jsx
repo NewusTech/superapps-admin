@@ -110,7 +110,16 @@ export default function Mobil() {
                 </tr>
               </thead>
               <tbody>
-                {mobil &&
+                {mobil?.data?.length === 0 ? (
+                  <tr>
+                    <td colSpan={7}>
+                      <p className="text-lg mt-5 font-light text-center">
+                        Data Kosong
+                      </p>
+                    </td>
+                  </tr>
+                ) : (
+                  mobil &&
                   currentItems &&
                   currentItems?.map((car, i) => {
                     return (
@@ -138,7 +147,8 @@ export default function Mobil() {
                         </td>
                       </tr>
                     );
-                  })}
+                  })
+                )}
               </tbody>
             </table>
 

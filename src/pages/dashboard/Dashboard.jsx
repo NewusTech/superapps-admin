@@ -13,7 +13,7 @@ import { getAllPesanan, getDownloadTicket } from "service/api";
 import { useDebounce } from "hooks/useDebounce";
 import Pagination from "elements/pagination/pagination";
 import ArrangeDate from "elements/filterArrangeDate/arrangeDate";
-import { Loader } from "lucide-react";
+import { Loader, Plus, Printer } from "lucide-react";
 import Swal from "sweetalert2";
 
 export default function Dashboard() {
@@ -142,30 +142,14 @@ export default function Dashboard() {
     <div className="flex flex-col h-full">
       <div className="">
         <SearchInput name="search" value={search} handleSearch={handleSearch} />
-        <div className="pt-[29px]">
-          <Button
-            text="+ Tambah Pesanan"
-            type="button"
-            width="195"
-            height="48"
-            onButonClick={handleOnTambahPesanan}
-          />
-        </div>
-        <div className="flex flex-row justify-between gap-x-3">
-          <div className="space-x-1 flex items-end pt-4">
-            {dataFilters?.map((f) => (
-              <Button
-                key={f.name}
-                text={f.name}
-                type="status-filter"
-                active={filterStatus === f?.filter}
-                onButonClick={() => handleOnSetFilter(f?.filter)}
-              />
-            ))}
-            <Filter
-              active={filterStatus}
-              handleButtonClick={handleOnFilterClear}
-            />
+        <div className="pt-[29px] w-full flex flex-row justify-between gap-x-4">
+          <div className="w-3/12">
+            <Btn
+              onClick={handleOnTambahPesanan}
+              className="bg-primary-700 flex gap-x-3 w-full">
+              <Plus className="w-5 h-5 text-neutral-50" />
+              <p className="text-neutral-50 text-[14px]">Tambah Pesanan</p>
+            </Btn>
           </div>
 
           <div className="w-full flex items-end">
@@ -184,12 +168,37 @@ export default function Dashboard() {
               classNamePrefix="select"
             />
           </div>
+        </div>
+        <div className="flex flex-row justify-between gap-x-3">
+          <div className="space-x-1 flex items-end pt-4">
+            {dataFilters?.map((f) => (
+              <Button
+                key={f.name}
+                text={f.name}
+                type="status-filter"
+                active={filterStatus === f?.filter}
+                onButonClick={() => handleOnSetFilter(f?.filter)}
+              />
+            ))}
+            <Filter
+              active={filterStatus}
+              handleButtonClick={handleOnFilterClear}
+            />
+          </div>
 
           <div className="flex items-end gap-x-2">
             <div className="flex items-center space-x-2">
               <ArrangeDate date={startDate} setDate={(e) => setStartDate(e)} />
               <p className="text-center">to</p>
               <ArrangeDate date={endDate} setDate={(e) => setEndDate(e)} />
+            </div>
+
+            <div>
+              <Btn className="border border-outline_border-100 rounded-lg flex gap-x-2">
+                <Printer className="w-5 h-5 text-primary-700" />
+
+                <p className="text-primary-700 text-[14px]">Print</p>
+              </Btn>
             </div>
           </div>
         </div>

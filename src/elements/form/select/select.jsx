@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/select";
 
 export default function FormSelect({
-  htmlFor,
   label,
   classLabel,
   data,
@@ -20,9 +19,7 @@ export default function FormSelect({
 }) {
   return (
     <div className="flex flex-col gap-y-3">
-      <Label className={classLabel} htmlFor={htmlFor}>
-        {label}
-      </Label>
+      <Label className={classLabel}>{label}</Label>
 
       <Select name={name} onValueChange={change} value={value}>
         <SelectTrigger className="w-full">
