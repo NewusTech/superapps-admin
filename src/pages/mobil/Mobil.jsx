@@ -7,6 +7,7 @@ import { deleteCar, getAllMobil } from "service/api";
 import Pagination from "elements/pagination/pagination";
 import Loading from "elements/Loading";
 import Swal from "sweetalert2";
+import { RichTextDisplay } from "elements/richTextDisplay";
 
 export default function Mobil() {
   const navigate = useNavigate();
@@ -128,7 +129,9 @@ export default function Mobil() {
                         <td className="p-2 px-4">{car?.type}</td>
                         <td className="p-2 px-4">{car?.nopol}</td>
                         <td className="p-2">{car?.jumlah_kursi}</td>
-                        <td className="p-2">{car?.fasilitas}</td>
+                        <td className="p-2">
+                          <RichTextDisplay content={car?.fasilitas} />
+                        </td>
                         <td className="p-2">{car?.status}</td>
                         <td className="p-2 flex flex-row items-center justify-center gap-4">
                           <Button

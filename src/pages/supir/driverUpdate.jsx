@@ -71,8 +71,6 @@ export default function DriverUpdate() {
 
       const response = await updateDriver(id, form);
 
-      console.log(response, "ini response");
-
       if (response.success === true) {
         setIsLoading(false);
         Swal.fire({

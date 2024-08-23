@@ -45,6 +45,15 @@ import PembayaranPaket from "pages/paket/pembayaran";
 import UpdateStatusPembayaranPackage from "pages/paket/updateStatusPembayaran";
 import StatusPackagePembayaran from "pages/paket/statusPembayaran";
 import DetailPaket from "pages/paket/detailPaket";
+import RentalScreen from "pages/rental/rental";
+import MobilRentalScreen from "pages/rental/mobilRental";
+import HotelScreen from "pages/hotel/hotel";
+import MasterHotelScreen from "pages/hotel/masterHotel";
+import ArticleRouteScreen from "pages/articleRoute/articleRoute";
+import ArticleDestinationScreen from "pages/articleDestination/articleDestination";
+import ArticlePenginapanScreen from "pages/articlePenginapan/articlePenginapan";
+import TambahMobilRentalScreen from "pages/rental/tambahMobilRental";
+import TambahHotelScreen from "pages/hotel/tambahHotel";
 
 const router = createBrowserRouter([
   {
@@ -492,6 +501,96 @@ const router = createBrowserRouter([
       {
         path: "/article/update-article/:id",
         element: <UpdateArticle />,
+        loader: () => {
+          if (!Cookies.get("token")) {
+            return redirect("/login");
+          }
+          return null;
+        },
+      },
+      {
+        path: "/article/article-route",
+        element: <ArticleRouteScreen />,
+        loader: () => {
+          if (!Cookies.get("token")) {
+            return redirect("/login");
+          }
+          return null;
+        },
+      },
+      {
+        path: "/article/article-destination",
+        element: <ArticleDestinationScreen />,
+        loader: () => {
+          if (!Cookies.get("token")) {
+            return redirect("/login");
+          }
+          return null;
+        },
+      },
+      {
+        path: "/article/article-hostel",
+        element: <ArticlePenginapanScreen />,
+        loader: () => {
+          if (!Cookies.get("token")) {
+            return redirect("/login");
+          }
+          return null;
+        },
+      },
+      {
+        path: "/travel-car-rent",
+        element: <RentalScreen />,
+        loader: () => {
+          if (!Cookies.get("token")) {
+            return redirect("/login");
+          }
+          return null;
+        },
+      },
+      {
+        path: "/travel-car-rent/car-master",
+        element: <MobilRentalScreen />,
+        loader: () => {
+          if (!Cookies.get("token")) {
+            return redirect("/login");
+          }
+          return null;
+        },
+      },
+      {
+        path: "/travel-car-rent/car-master/create-travel-car",
+        element: <TambahMobilRentalScreen />,
+        loader: () => {
+          if (!Cookies.get("token")) {
+            return redirect("/login");
+          }
+          return null;
+        },
+      },
+      {
+        path: "/hostel",
+        element: <HotelScreen />,
+        loader: () => {
+          if (!Cookies.get("token")) {
+            return redirect("/login");
+          }
+          return null;
+        },
+      },
+      {
+        path: "/hostel/master-hostel",
+        element: <MasterHotelScreen />,
+        loader: () => {
+          if (!Cookies.get("token")) {
+            return redirect("/login");
+          }
+          return null;
+        },
+      },
+      {
+        path: "/hostel/master-hostel/create-hostel",
+        element: <TambahHotelScreen />,
         loader: () => {
           if (!Cookies.get("token")) {
             return redirect("/login");

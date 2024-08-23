@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Filter, Plus } from "lucide-react";
 import { columnPakets } from "constants/constants";
 
-export default function Paket() {
+export default function HotelScreen() {
   const navigate = useNavigate();
   const [packages, setPackages] = useState([]);
   const [selectedColumns, setSelectedColumns] = useState([]);
@@ -91,21 +91,16 @@ export default function Paket() {
     <>
       <div className="flex flex-col gap-y-5">
         <SearchInput name="search" value={search} handleSearch={handleSearch} />
-        <div className="pt-[29px] flex flex-row gap-x-3">
-          <div className="w-3/12">
-            <Button
-              onClick={handleNewPaket}
-              className="bg-primary-700 flex gap-x-3 w-full">
-              <Plus className="w-5 h-5 text-neutral-50" />
-              <p className="text-neutral-50 text-[14px]">Tambah Paket</p>
-            </Button>
-          </div>
-        </div>
         <div className="flex justify-between">
           <div className="flex flex-row gap-x-3 w-full">
-            <Button className="border border-primary-700 rounded-lg">
-              <Filter className="w-5 h-5 text-primary-700" />
-            </Button>
+            <div className="w-3/12">
+              <Button
+                onClick={handleNewPaket}
+                className="bg-primary-700 flex gap-x-3 w-full">
+                <Plus className="w-5 h-5 text-neutral-50" />
+                <p className="text-neutral-50 text-[14px]">Tambah Paket</p>
+              </Button>
+            </div>
 
             <div className="w-full flex items-end">
               <Select

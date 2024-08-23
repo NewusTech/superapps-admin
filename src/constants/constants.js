@@ -46,3 +46,16 @@ export const columnPakets = [
   { key: "biaya", label: "Biaya Pengiriman" },
   { key: "print", label: "Print" },
 ];
+
+export const columnRentals = [
+  { key: "no", label: "No" },
+  { key: "nama", label: "Nama" },
+  { key: "mobil_type", label: "Tipe Mobil" },
+  { key: "area", label: "Area" },
+  { key: "durasi_sewa", label: "Durasi Sewa" },
+  { key: "tanggal_awal_sewa", label: "Tanggal Mulai" },
+  { key: "tanggal_akhir_sewa", label: "Tanggal Selesai" },
+  { key: "harga", label: "Harga" },
+  { key: "status", label: "Status" },
+  { key: "print", label: "Print" },
+];

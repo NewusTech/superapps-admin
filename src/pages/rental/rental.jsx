@@ -7,19 +7,23 @@ import { ReactComponent as IconPrint } from "assets/icons/Print.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { NumericFormat } from "react-number-format";
 import Select from "react-select";
-import { columns, dataFilters } from "constants/constants";
+import { columnRentals, columns, dataFilters } from "constants/constants";
 import { formatDateArrange, formatLongDate, formatTime } from "helpers";
-import { getAllPesanan, getDownloadTicket } from "service/api";
+import {
+  getAllPesanan,
+  getAllTravelCarRent,
+  getDownloadTicket,
+} from "service/api";
 import { useDebounce } from "hooks/useDebounce";
 import Pagination from "elements/pagination/pagination";
 import ArrangeDate from "elements/filterArrangeDate/arrangeDate";
 import { Loader, Plus, Printer } from "lucide-react";
 import Swal from "sweetalert2";
 
-export default function Dashboard() {
+export default function RentalScreen() {
   const navigate = useNavigate();
   const [selectedColumns, setSelectedColumns] = useState([]);
-  const [order, setOrder] = useState();
+  const [rent, setRent] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [isFirstLoading, setIsFirstLoading] = useState(false);
   const [search, setSearch] = useState("");
@@ -38,21 +42,16 @@ export default function Dashboard() {
     setSelectedColumns(selectedOptions.map((option) => option.value));
   };
 
-  const columnOptions = columns.map((col) => ({
+  const columnOptions = columnRentals.map((col) => ({
     value: col.key,
     label: col.label,
   }));
 
-  const pesanan = async (search, status, startDates, endDates) => {
+  const fetchRentalHistory = async () => {
     setIsLoading(true);
     try {
-      const response = await getAllPesanan(
-        search,
-        status,
-        startDates,
-        endDates
-      );
-      setOrder(response);
+      const response = await getAllTravelCarRent();
+      setRent(response);
     } catch (error) {
       console.log(error.name);
     } finally {
@@ -70,21 +69,23 @@ export default function Dashboard() {
   const displayedColumns =
     selectedColumns?.length > 0
       ? selectedColumns
-      : columns?.map((col) => col?.key);
+      : columnRentals?.map((col) => col?.key);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
   let currentItems = [];
-  if (order?.data) {
-    currentItems = order?.data?.slice(indexOfFirstItem, indexOfLastItem);
+  if (rent?.data) {
+    currentItems = rent?.data?.slice(indexOfFirstItem, indexOfLastItem);
   }
 
-  const totalPages = Math?.ceil(order?.data?.length / itemsPerPage);
+  const totalPages = Math?.ceil(rent?.data?.length / itemsPerPage);
 
   useEffect(() => {
-    pesanan(debounceSearch, filterStatus, startDateFormatted, endDateFormatted);
-  }, [debounceSearch, filterStatus, startDateFormatted, endDateFormatted]);
+    fetchRentalHistory();
+  }, []);
+
+  console.log(rent, "ini rental");
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -105,38 +106,38 @@ export default function Dashboard() {
     setFilterStatus(value !== "" ? value : "");
   };
 
-  const handleDownloadTicket = async (paymentCode) => {
-    try {
-      setIsFirstLoading(true);
+  // const handleDownloadTicket = async (paymentCode) => {
+  //   try {
+  //     setIsFirstLoading(true);
 
-      const response = await getDownloadTicket(paymentCode);
+  //     const response = await getDownloadTicket(paymentCode);
 
-      if (response?.success === true) {
-        setIsFirstLoading(false);
-        Swal.fire({
-          icon: "success",
-          title: "Berhasil download e-ticket!",
-          timer: 2000,
-          showConfirmButton: false,
-          position: "center",
-        });
+  //     if (response?.success === true) {
+  //       setIsFirstLoading(false);
+  //       Swal.fire({
+  //         icon: "success",
+  //         title: "Berhasil download e-ticket!",
+  //         timer: 2000,
+  //         showConfirmButton: false,
+  //         position: "center",
+  //       });
 
-        window.open(response?.data?.link, "_blank");
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Gagal Mendapatkan e-ticket!",
-          timer: 2000,
-          showConfirmButton: false,
-          position: "center",
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsFirstLoading(false);
-    }
-  };
+  //       window.open(response?.data?.link, "_blank");
+  //     } else {
+  //       Swal.fire({
+  //         icon: "error",
+  //         title: "Gagal Mendapatkan e-ticket!",
+  //         timer: 2000,
+  //         showConfirmButton: false,
+  //         position: "center",
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   } finally {
+  //     setIsFirstLoading(false);
+  //   }
+  // };
 
   return (
     <div className="flex flex-col h-full">
@@ -214,7 +215,7 @@ export default function Dashboard() {
               <table className="table-auto w-full text-xs">
                 <thead>
                   <tr className="text-left bg-gray-100 border-b">
-                    {columns
+                    {columnRentals
                       ?.filter((col) => displayedColumns?.includes(col?.key))
                       ?.map((col) => (
                         <th
@@ -226,32 +227,30 @@ export default function Dashboard() {
                   </tr>
                 </thead>
                 <tbody>
-                  {order?.data?.length === 0 ? (
+                  {rent?.data?.length === 0 ? (
                     <tr>
                       <td colSpan={10}>
-                        <p className="text-lg mt-5 font-light text-center">
+                        <p className="text-lg my-5 font-light text-center">
                           Data Kosong
                         </p>
                       </td>
                     </tr>
                   ) : (
-                    order &&
-                    order?.data?.length > 0 &&
+                    rent &&
+                    rent?.data?.length > 0 &&
                     currentItems &&
                     currentItems?.length > 0 &&
                     currentItems?.map((item, index) => {
-                      let date;
-                      if (item?.tanggal_berangkat) {
-                        date = formatLongDate(item?.tanggal_berangkat);
-                      }
-                      let time;
-                      if (item?.jam_berangkat) {
-                        time = formatTime(item?.jam_berangkat);
+                      let dateStartRent;
+                      let dateEndRent;
+                      if (item?.tanggal_awal_sewa || item?.tanggal_akhir_sewa) {
+                        dateEndRent = formatLongDate(item?.tanggal_akhir_sewa);
+                        dateStartRent = formatLongDate(item?.tanggal_awal_sewa);
                       }
 
                       return (
-                        <tr key={item?.kode_pesanan} className="border-b">
-                          {columns
+                        <tr key={index} className="border-b">
+                          {columnRentals
                             ?.filter((col) =>
                               displayedColumns?.includes(col?.key)
                             )
@@ -263,15 +262,18 @@ export default function Dashboard() {
                                   {col?.key === "no" && index + 1}
                                   <Link
                                     className="hover:text-primary-700 hover:underline"
-                                    to={`/order/detail-order/${item?.kode_pesanan}`}>
-                                    {col?.key === "nama_pemesan" &&
-                                      item?.nama_pemesan}
+                                    to={`/order/detail-order/${item?.nama}`}>
+                                    {col?.key === "nama" && item?.nama}
                                   </Link>
-                                  {col?.key === "rute" && item?.rute}
-                                  {col?.key === "jam_berangkat" && time}
-                                  {col?.key === "tanggal_berangkat" && date}
-                                  {col?.key === "mobil" && item?.mobil}
-                                  {col?.key === "supir" && item?.supir}
+                                  {col?.key === "mobil_type" &&
+                                    item?.mobil_type}
+                                  {col?.key === "area" && item?.area}
+                                  {col?.key === "durasi_sewa" &&
+                                    item?.durasi_sewa}
+                                  {col?.key === "tanggal_awal_sewa" &&
+                                    dateStartRent}
+                                  {col?.key === "tanggal_akhir_sewa" &&
+                                    dateEndRent}
                                   {col?.key === "harga" && (
                                     <NumericFormat
                                       className=""
@@ -297,7 +299,7 @@ export default function Dashboard() {
                                         Menunggu
                                       </span>
                                     ))}
-                                  {col?.key === "print" && (
+                                  {/* {col?.key === "print" && (
                                     <Btn
                                       onClick={() =>
                                         handleDownloadTicket(
@@ -312,7 +314,7 @@ export default function Dashboard() {
                                         <IconPrint />
                                       )}
                                     </Btn>
-                                  )}
+                                  )} */}
                                 </td>
                               );
                             })}
@@ -328,7 +330,7 @@ export default function Dashboard() {
                   <p className="text-left">Total</p>
                 </div>
                 <div>
-                  <p className="text-right font-bold">{order?.total_pesanan}</p>
+                  <p className="text-right font-bold">{rent?.total_pesanan}</p>
                   <p className="text-right">
                     <NumericFormat
                       className=""
@@ -337,7 +339,7 @@ export default function Dashboard() {
                       thousandsGroupStyle="none"
                       thousandSeparator="."
                       decimalSeparator=","
-                      value={order?.total_uang}
+                      value={rent?.total_uang}
                     />
                   </p>
                 </div>

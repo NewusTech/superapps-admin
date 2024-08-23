@@ -15,6 +15,8 @@ import { ReactComponent as IconRute } from "assets/icons/ic_route.svg";
 import { ReactComponent as IconCabang } from "assets/icons/ic_branch.svg";
 import { ReactComponent as IconTitikLokasi } from "assets/icons/ic_pin.svg";
 import { ReactComponent as IconUser } from "assets/icons/mdi_user-outline.svg";
+import { ReactComponent as IconBuilding } from "assets/icons/ph--building-office.svg";
+import { ReactComponent as IconWriteBlog } from "assets/icons/dashicons--welcome-write-blog.svg";
 import { Loader, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Cookies from "js-cookie";
@@ -24,7 +26,7 @@ const { colorActive, colorDactive } = {
   colorDactive: "#8C8D89",
 };
 
-const transsactionRute = [
+const kelolaTravelRutes = [
   {
     name: "Pesanan",
     link: "/",
@@ -32,44 +34,6 @@ const transsactionRute = [
     iconA: <IconPesanan stroke={colorActive} />,
     iconD: <IconPesanan stroke={colorDactive} />,
   },
-  {
-    name: "Paket",
-    link: "/package",
-    space: "space-x-2",
-    iconA: <IconPaket fill={colorActive} />,
-    iconD: <IconPaket fill={colorDactive} />,
-  },
-  {
-    name: "Riwayat Pesanan",
-    link: "/order-history",
-    space: "space-x-2",
-    iconA: <IconRiwayatPesanan stroke={colorActive} />,
-    iconD: <IconRiwayatPesanan stroke={colorDactive} />,
-  },
-  {
-    name: "List Penumpang",
-    link: "/passenger-list",
-    space: "space-x-2",
-    iconA: <IconListPenumpang fill={colorActive} />,
-    iconD: <IconListPenumpang fill={colorDactive} />,
-  },
-  {
-    name: "Database Konsumen",
-    link: "/consument-list",
-    space: "space-x-3",
-    iconA: <IconDatabase fill={colorActive} />,
-    iconD: <IconDatabase fill={colorDactive} />,
-  },
-  {
-    name: "Laporan",
-    link: "/report",
-    space: "space-x-3",
-    iconA: <IconLaporan fill={colorActive} />,
-    iconD: <IconLaporan fill={colorDactive} />,
-  },
-];
-
-const keloraTravelRute = [
   {
     name: "Jadwal",
     link: "/schedule",
@@ -90,6 +54,13 @@ const keloraTravelRute = [
     space: "space-x-3",
     iconA: <IconKursi fill={colorActive} />,
     iconD: <IconKursi fill={colorDactive} />,
+  },
+  {
+    name: "List Penumpang",
+    link: "/passenger-list",
+    space: "space-x-2",
+    iconA: <IconListPenumpang fill={colorActive} />,
+    iconD: <IconListPenumpang fill={colorDactive} />,
   },
   {
     name: "Supir",
@@ -119,17 +90,90 @@ const keloraTravelRute = [
     iconA: <IconTitikLokasi fill={colorActive} />,
     iconD: <IconTitikLokasi fill={colorDactive} />,
   },
+  {
+    name: "Laporan",
+    link: "/report",
+    space: "space-x-3",
+    iconA: <IconLaporan fill={colorActive} />,
+    iconD: <IconLaporan fill={colorDactive} />,
+  },
+];
+
+const KelolaRentalRutes = [
+  {
+    name: "Pesanan",
+    link: "/travel-car-rent",
+    space: "space-x-1",
+    iconA: <IconPesanan stroke={colorActive} />,
+    iconD: <IconPesanan stroke={colorDactive} />,
+  },
+  {
+    name: "Mobil",
+    link: "/travel-car-rent/car-master",
+    space: "space-x-1",
+    iconA: <IconMobil fill={colorActive} />,
+    iconD: <IconMobil fill={colorDactive} />,
+  },
+];
+
+const KelolaPaketRutes = [
+  {
+    name: "Paket",
+    link: "/package",
+    space: "space-x-2",
+    iconA: <IconPaket fill={colorActive} />,
+    iconD: <IconPaket fill={colorDactive} />,
+  },
+];
+
+const KelolaPenginapanRutes = [
+  {
+    name: "Pesanan",
+    link: "/hostel",
+    space: "space-x-2",
+    iconA: <IconPesanan stroke={colorActive} />,
+    iconD: <IconPesanan stroke={colorDactive} />,
+  },
+  {
+    name: "Apartement",
+    link: "/hostel/master-hostel",
+    space: "space-x-2",
+    iconA: <IconBuilding fill={colorActive} />,
+    iconD: <IconBuilding fill={colorDactive} />,
+  },
 ];
 
 const kelolaArtikelRute = [
   {
-    name: "Artikel",
+    name: "Blog",
     link: "/article",
     space: "space-x-3",
-    iconA: <IconJadwal fill={colorActive} />,
-    iconD: <IconJadwal fill={colorDactive} />,
+    iconA: <IconWriteBlog fill={colorActive} />,
+    iconD: <IconWriteBlog fill={colorDactive} />,
+  },
+  {
+    name: "Rute",
+    link: "/article/article-route",
+    space: "space-x-3",
+    iconA: <IconWriteBlog fill={colorActive} />,
+    iconD: <IconWriteBlog fill={colorDactive} />,
+  },
+  {
+    name: "Destinasi",
+    link: "/article/article-destination",
+    space: "space-x-3",
+    iconA: <IconWriteBlog fill={colorActive} />,
+    iconD: <IconWriteBlog fill={colorDactive} />,
+  },
+  {
+    name: "Penginapan",
+    link: "/article/article-hostel",
+    space: "space-x-3",
+    iconA: <IconWriteBlog fill={colorActive} />,
+    iconD: <IconWriteBlog fill={colorDactive} />,
   },
 ];
+
 const kelolapenggunaRute = [
   {
     name: "Pengguna",
@@ -144,6 +188,13 @@ const kelolapenggunaRute = [
     space: "space-x-3",
     iconA: <IconUser fill={colorActive} />,
     iconD: <IconUser fill={colorDactive} />,
+  },
+  {
+    name: "Database Konsumen",
+    link: "/consument-list",
+    space: "space-x-3",
+    iconA: <IconDatabase fill={colorActive} />,
+    iconD: <IconDatabase fill={colorDactive} />,
   },
 ];
 
@@ -161,26 +212,12 @@ const Sidebar = () => {
     <div className="w-64 h-screen bg-white py-5 px-10 shadow-lg fixed overflow-y-auto hide-scrollbar">
       <h2 className="text-2xl text-main py-5 font-bold">Admin</h2>
       <ul className="flex flex-col gap-y-3">
-        {transsactionRute.map((r) => {
-          let active = currentPath == r.link ? true : false;
-          return (
-            <SidebarItem
-              key={r.name}
-              text={r.name}
-              link={r.link}
-              active={active}
-              space={r.space}
-              menuIcon={active ? r.iconA : r.iconD}
-            />
-          );
-        })}
         <div className="mt-2 mb-1">
-          {/* <SidebarItem text="Kelola Travel" /> */}
-          <p className="text-md font-semibold text-textSecondary">
+          <p className="text-md font-semibold text-neutral-700">
             Kelola Travel
           </p>
         </div>
-        {keloraTravelRute.map((r) => {
+        {kelolaTravelRutes.map((r) => {
           let active = currentPath == r.link ? true : false;
           return (
             <SidebarItem
@@ -194,7 +231,59 @@ const Sidebar = () => {
           );
         })}
         <div className="mt-2 mb-1">
-          <p className="text-md font-semibold text-textSecondary">
+          <p className="text-md font-semibold text-neutral-700">
+            Kelola Rental
+          </p>
+        </div>
+        {KelolaRentalRutes.map((r) => {
+          let active = currentPath == r.link ? true : false;
+          return (
+            <SidebarItem
+              key={r.name}
+              text={r.name}
+              link={r.link}
+              active={active}
+              space={r.space}
+              menuIcon={active ? r.iconA : r.iconD}
+            />
+          );
+        })}
+        <div className="mt-2 mb-1">
+          <p className="text-md font-semibold text-neutral-700">Kelola Paket</p>
+        </div>
+        {KelolaPaketRutes.map((r) => {
+          let active = currentPath == r.link ? true : false;
+          return (
+            <SidebarItem
+              key={r.name}
+              text={r.name}
+              link={r.link}
+              active={active}
+              space={r.space}
+              menuIcon={active ? r.iconA : r.iconD}
+            />
+          );
+        })}
+        <div className="mt-2 mb-1">
+          <p className="text-md font-semibold text-neutral-700">
+            Kelola Penginapan
+          </p>
+        </div>
+        {KelolaPenginapanRutes.map((r) => {
+          let active = currentPath == r.link ? true : false;
+          return (
+            <SidebarItem
+              key={r.name}
+              text={r.name}
+              link={r.link}
+              active={active}
+              space={r.space}
+              menuIcon={active ? r.iconA : r.iconD}
+            />
+          );
+        })}
+        <div className="mt-2 mb-1">
+          <p className="text-md font-semibold text-neutral-700">
             Kelola Artikel
           </p>
         </div>
@@ -211,8 +300,9 @@ const Sidebar = () => {
             />
           );
         })}
+
         <div className="mt-2 mb-1">
-          <p className="text-md font-semibold text-textSecondary">
+          <p className="text-md font-semibold text-neutral-700">
             Kelola Pengguna
           </p>
         </div>

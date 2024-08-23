@@ -78,8 +78,6 @@ export default function PembayaranPaket() {
 
       const response = await makingPackagePayment(data);
 
-      console.log(response, "ini response payment");
-
       if (response.success === true) {
         setIsLoading(false);
         Swal.fire({
