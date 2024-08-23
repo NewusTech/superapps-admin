@@ -63,8 +63,6 @@ export default function UpdateStatusPembayaranPackage() {
 
       const response = await updatePackagePaymentStatus(kodeResi);
 
-      console.log(response, "ini rees");
-
       if (response.success === true) {
         setIsLoading(false);
         Swal.fire({

@@ -656,21 +656,24 @@ export const getDownloadInvoice = async (paymentCode) => {
   return await response.json();
 };
 
-export const getAllPackages = async (search) => {
-  const response = await fetch(`${apiUrl}/paket/paket?search=${search}`, {
-    headers: {
-      Authorization: `Bearer ${Cookies.get("token")}`,
-      "Content-Type": "application/json",
-    },
-    method: "GET",
-    cache: "no-store",
-  });
+export const getAllPackages = async (search, startDate, endDate) => {
+  const response = await fetch(
+    `${apiUrl}/paket/paket?search=${search}&startDate=${startDate}&endDate=${endDate}`,
+    {
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+      cache: "no-store",
+    }
+  );
 
   return await response.json();
 };
 
 export const getDetailPackage = async (kodeResi) => {
-  const response = await fetch(`${apiUrl}/pesanan/riwayat/${kodeResi}`, {
+  const response = await fetch(`${apiUrl}/paket/paket/${kodeResi}`, {
     headers: {
       Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",
@@ -772,6 +775,19 @@ export const getDownloadResiPackage = async (paymentCode) => {
 
 export const getDownloadInvoicePackage = async (paymentCode) => {
   const response = await fetch(`${apiUrl}/pesanan/invoice/${paymentCode}`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
+export const getAllTravelCarRent = async () => {
+  const response = await fetch(`${apiUrl}/rental/riwayat`, {
     headers: {
       Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",

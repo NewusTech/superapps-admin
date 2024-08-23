@@ -22,8 +22,6 @@ export default function StatusPackagePembayaran() {
   const navigate = useNavigate();
   const { kodePaket } = useParams();
 
-  console.log(kodePaket, "ini kode paket");
-
   const [payment, setPayment] = useState();
   const [isFirstLoading, setIsFirstLoading] = useState(false);
   const [isSecondLoading, setIsSecondLoading] = useState(false);
@@ -50,8 +48,6 @@ export default function StatusPackagePembayaran() {
     time = formatTime(payment?.waktu);
     price = formatDecimalRupiah(payment?.paket?.biaya);
   }
-
-  console.log(payment, "ini payment");
 
   const handleDownloadTicket = async () => {
     try {

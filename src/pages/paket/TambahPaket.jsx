@@ -81,8 +81,6 @@ export default function TambahPaket() {
         total_berat: Number(form.total_berat),
       });
 
-      console.log(response, "ini res");
-
       if (response.success === true) {
         setIsLoading(false);
         Swal.fire({

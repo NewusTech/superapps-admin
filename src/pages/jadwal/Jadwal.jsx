@@ -40,6 +40,7 @@ export default function Jadwal() {
       master_supir_id: "",
       ketersediaan: "Tersedia",
       tanggal_berangkat: localStorage.getItem("tanggal_berangkat"),
+      waktu_tiba: "",
     },
   ]);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -84,6 +85,7 @@ export default function Jadwal() {
 
   const handleNewSchedule = async (e) => {
     e.preventDefault();
+
     try {
       setIsLoading(true);
 
@@ -134,6 +136,7 @@ export default function Jadwal() {
         master_supir_id: "",
         tanggal_berangkat: "",
         ketersediaan: "",
+        waktu_tiba: "",
       },
     ]);
   };
@@ -284,8 +287,6 @@ export default function Jadwal() {
 
       if (result.isConfirmed) {
         const response = await deleteSchedule(id);
-
-        console.log(response, "ini res");
 
         const date = formatTanggalPanjang(response?.tanggal_berangkat);
 
@@ -441,6 +442,29 @@ export default function Jadwal() {
                             name="master_supir_id"
                             value={form?.master_supir_id}
                           />
+                        </div>
+
+                        <div className="grid grid-cols-1 gap-x-4">
+                          <div className="flex flex-col w-full gap-y-3">
+                            <FormInput
+                              type="time"
+                              placeholder="Waktu Tiba"
+                              className="w-full block border border-outlineBorder rounded-md h-[40px] pl-3"
+                              id="waktu_tiba"
+                              name="waktu_tiba"
+                              value={form?.waktu_tiba}
+                              onChange={(e) =>
+                                handleInputChange(
+                                  index,
+                                  "waktu_tiba",
+                                  e.target.value
+                                )
+                              }
+                              htmlFor="waktu_tiba"
+                              label="Waktu Tiba"
+                              classLabel="w-full"
+                            />
+                          </div>
                         </div>
                       </div>
 

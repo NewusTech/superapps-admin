@@ -44,8 +44,6 @@ export default function DetailPesanan() {
     time = formatTime(detail?.pesanan?.jam);
   }
 
-  console.log(detail, "detail");
-
   const handleDownloadTicket = async (paymentCode) => {
     try {
       setIsFirstLoading(true);

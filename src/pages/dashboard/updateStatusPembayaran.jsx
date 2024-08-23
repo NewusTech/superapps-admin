@@ -37,8 +37,6 @@ export default function UpdateStatusPembayaran() {
     fetchOrderByOrderCode(kodePesanan);
   }, [kodePesanan]);
 
-  console.log(order, "ini order");
-
   let time;
   if (order?.jam_berangkat) {
     time = formatTime(order?.jam_berangkat);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -14,28 +14,34 @@ import {
   getDownloadInvoicePackage,
   getDownloadResiPackage,
 } from "service/api";
+import { RichTextDisplay } from "elements/richTextDisplay";
+import {
+  formatDecimalRupiah,
+  formatRupiah,
+  formatTanggalPanjang,
+} from "helpers";
 
 export default function DetailPaket() {
   const { kodeResi } = useParams();
-  // const [detail, setDetail] = useState();
-  // const [isFirstLoading, setIsFirstLoading] = useState(false);
-  // const [isSecondLoading, setIsSecondLoading] = useState(false);
+  const [detail, setDetail] = useState();
+  const [isFirstLoading, setIsFirstLoading] = useState(false);
+  const [isSecondLoading, setIsSecondLoading] = useState(false);
 
-  // console.log(kodeResi, "ini code resi");
+  const fetchDetailPesanan = async (kode) => {
+    try {
+      const response = await getDetailPackage(kode);
 
-  // const fetchDetailPesanan = async (kode) => {
-  //   try {
-  //     const response = await getDetailPackage(kode);
+      setDetail(response?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  //     setDetail(response?.data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  useEffect(() => {
+    fetchDetailPesanan(kodeResi);
+  }, [kodeResi]);
 
-  // useEffect(() => {
-  //   fetchDetailPesanan(bookingCode);
-  // }, [bookingCode]);
+  console.log(detail, "ini detail");
 
   // let time;
   // if (detail?.pesanan?.jam) {
@@ -112,10 +118,7 @@ export default function DetailPaket() {
 
   return (
     <section className="min-h-screen pt-20 px-4">
-      <div>
-        <div>Hello World</div>
-      </div>
-      {/* <div className="my-5">
+      <div className="my-5">
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -132,54 +135,56 @@ export default function DetailPaket() {
         <div className="bg-white flex flex-col w-full p-8 gap-y-4">
           <div className="flex w-full">
             <p className="font-semibold text-neutral-700 text-[18px]">
-              Rincian Pengerim
+              Rincian Pengirim
             </p>
           </div>
 
           <div className="grid grid-rows-4 grid-cols-2 gap-4">
             <div className="grid grid-cols-2 w-full">
               <p className="font-normal">Nama</p>
-              <p className="text-gray-500">: {confirms?.nama_pengirim}</p>
+              <p className="text-gray-500">: {detail?.nama_pengirim}</p>
             </div>
 
             <div className="grid grid-cols-2 w-full">
               <p className="font-normal">Jenis</p>
-              <p className="text-gray-500">: {confirms?.jenis_paket}</p>
+              <p className="text-gray-500">: {detail?.jenis_paket}</p>
             </div>
 
             <div className="grid grid-cols-2 w-full">
               <p className="font-normal">Nomor Telepon</p>
-              <p className="text-gray-500">: {confirms?.no_telp_pengirim}</p>
+              <p className="text-gray-500">: {detail?.no_telp_pengirim}</p>
             </div>
 
             <div className="grid grid-cols-2 w-full">
               <p className="font-normal">Total Berat</p>
-              <p className="text-gray-500">: {confirms?.total_berat}</p>
+              <p className="text-gray-500">: {detail?.total_berat}</p>
             </div>
 
             <div className="grid grid-cols-2 w-full">
               <p className="font-normal">Alamat</p>
               <div className="text-gray-500 flex flex-row gap-x-1">
-                : <RichTextDisplay content={confirms?.alamat_pengirim} />
+                : <RichTextDisplay content={detail?.alamat_pengirim} />
               </div>
             </div>
 
             <div className="grid grid-cols-2 w-full">
               <p className="font-normal">Biaya</p>
-              <p className="text-gray-500">: {confirms?.biaya}</p>
+              <p className="text-gray-500">
+                : {detail?.biaya && formatDecimalRupiah(detail?.biaya)}
+              </p>
             </div>
 
             <div className="grid grid-cols-2 w-full">
               <p className="font-normal">Alamat</p>
               <div className="text-gray-500 flex flex-row gap-x-1">
-                : <RichTextDisplay content={confirms?.tujuan} />
+                : <RichTextDisplay content={detail?.tujuan} />
               </div>
             </div>
 
             <div className="grid grid-cols-2 w-full">
               <p className="font-normal">Tanggal Pengiriman</p>
               <p className="text-gray-500">
-                : {formatTanggalPanjang(confirms?.tanggal_dikirim)}
+                : {formatTanggalPanjang(detail?.tanggal_dikirim)}
               </p>
             </div>
           </div>
@@ -195,18 +200,18 @@ export default function DetailPaket() {
           <div className="grid grid-rows-4 gap-4">
             <div className="grid grid-cols-2 w-full">
               <p className="font-normal">Nama</p>
-              <p className="text-gray-500">: {confirms?.nama_penerima}</p>
+              <p className="text-gray-500">: {detail?.nama_penerima}</p>
             </div>
 
             <div className="grid grid-cols-2 w-full">
               <p className="font-normal">Nomor Telepon</p>
-              <p className="text-gray-500">: {confirms?.no_telp_penerima}</p>
+              <p className="text-gray-500">: {detail?.no_telp_penerima}</p>
             </div>
 
             <div className="grid grid-cols-2 w-full">
               <p className="font-normal">Alamat</p>
               <div className="text-gray-500 flex flex-row gap-x-1">
-                : <RichTextDisplay content={confirms?.alamat_penerima} />
+                : <RichTextDisplay content={detail?.alamat_penerima} />
               </div>
             </div>
 
@@ -214,13 +219,13 @@ export default function DetailPaket() {
               <p className="font-normal">Tanggal Penerimaan</p>
               <p className="text-gray-500">
                 {" "}
-                : {formatTanggalPanjang(confirms?.tanggal_diterima)}
+                : {formatTanggalPanjang(detail?.tanggal_diterima)}
               </p>
             </div>
           </div>
         </div>
       </div>
-      <div className="flex flex-row w-full justify-end gap-x-3 mt-12">
+      {/* <div className="flex flex-row w-full justify-end gap-x-3 mt-12">
         <div className="flex flex-row w-4/12 gap-x-3">
           <Button
             disabled={isSecondLoading ? true : false}
