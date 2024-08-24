@@ -2,7 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import SearchInput from "../../elements/Search";
 import Buttons from "elements/form/button/button";
 import { Button as Btn } from "@/components/ui/button";
-import { getAllMobil, getSeatsByCar, updateStatusSeats } from "service/api";
+import {
+  getAllMasterTravelCarRent,
+  getAllMobil,
+  getSeatsByCar,
+  updateStatusSeats,
+} from "service/api";
 import Pagination from "elements/pagination/pagination";
 import {
   AlertDialog,
@@ -32,7 +37,7 @@ export default function MobilRentalScreen() {
   const fetchAllCars = async () => {
     setIsLoadingDatas(true);
     try {
-      const response = await getAllMobil();
+      const response = await getAllMasterTravelCarRent();
 
       setCars(response?.data);
     } catch (error) {
@@ -46,14 +51,16 @@ export default function MobilRentalScreen() {
     fetchAllCars();
   }, []);
 
+  console.log(cars, "cars");
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   let currentItems = [];
   if (cars) {
-    currentItems = cars.slice(indexOfFirstItem, indexOfLastItem);
+    currentItems = cars?.slice(indexOfFirstItem, indexOfLastItem);
   }
 
-  const totalPages = Math.ceil(cars.length / itemsPerPage);
+  const totalPages = Math.ceil(cars?.length / itemsPerPage);
 
   const handleClickCar = async (id) => {
     try {

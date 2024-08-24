@@ -54,6 +54,9 @@ import ArticleDestinationScreen from "pages/articleDestination/articleDestinatio
 import ArticlePenginapanScreen from "pages/articlePenginapan/articlePenginapan";
 import TambahMobilRentalScreen from "pages/rental/tambahMobilRental";
 import TambahHotelScreen from "pages/hotel/tambahHotel";
+import DetailRental from "pages/rental/detailRental";
+import OrderRental from "pages/rental/orderRental";
+import PembayaranRental from "pages/rental/pembayaran";
 
 const router = createBrowserRouter([
   {
@@ -541,6 +544,36 @@ const router = createBrowserRouter([
       {
         path: "/travel-car-rent",
         element: <RentalScreen />,
+        loader: () => {
+          if (!Cookies.get("token")) {
+            return redirect("/login");
+          }
+          return null;
+        },
+      },
+      {
+        path: "/travel-car-rent/detail-travel-car-rent/:kodePembayaran",
+        element: <DetailRental />,
+        loader: () => {
+          if (!Cookies.get("token")) {
+            return redirect("/login");
+          }
+          return null;
+        },
+      },
+      {
+        path: "/travel-car-rent/order-travel-car-rent",
+        element: <OrderRental />,
+        loader: () => {
+          if (!Cookies.get("token")) {
+            return redirect("/login");
+          }
+          return null;
+        },
+      },
+      {
+        path: "/travel-car-rent/order-travel-car-rent/payment",
+        element: <PembayaranRental />,
         loader: () => {
           if (!Cookies.get("token")) {
             return redirect("/login");

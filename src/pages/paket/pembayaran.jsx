@@ -130,7 +130,7 @@ export default function PembayaranPaket() {
         <div className="bg-white flex flex-col w-full p-8 gap-y-4">
           <div className="flex w-full">
             <p className="font-semibold text-neutral-700 text-[18px]">
-              Rincian Pengerim
+              Rincian Pengirim
             </p>
           </div>
 

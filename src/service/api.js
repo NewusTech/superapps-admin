@@ -798,3 +798,72 @@ export const getAllTravelCarRent = async () => {
 
   return await response.json();
 };
+
+export const getDetailTravelCarRent = async (kodePembayaran) => {
+  const response = await fetch(`${apiUrl}/rental/riwayat/${kodePembayaran}`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
+export const getAllMasterTravelCarRent = async () => {
+  const response = await fetch(`${apiUrl}/rental/mobil`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
+export const getDetailMasterTravelCarRent = async (id) => {
+  const response = await fetch(`${apiUrl}/rental/mobil/${id}`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
+export const createTravelCarRent = async (data) => {
+  const response = await fetch(`${apiUrl}/rental/process-payment`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    body: JSON.stringify(data),
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
+export const updateRentalStatusPayment = async (kodePembayaran) => {
+  const response = await fetch(
+    `${apiUrl}/rental/status-pembayaran/update/${kodePembayaran}`,
+    {
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "Content-Type": "application/json",
+      },
+      method: "PATCH",
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};

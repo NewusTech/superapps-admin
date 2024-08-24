@@ -285,17 +285,23 @@ export default function Dashboard() {
                                   )}
                                   {col?.key === "status" &&
                                     (item?.status === "Sukses" ? (
-                                      <span className="bg-green-100 text-greenColor py-1 px-3 rounded text-xs">
-                                        Sukses
-                                      </span>
+                                      <div className="w-full bg-green-100 px-3 py-2 rounded">
+                                        <span className="text-greenColor text-xs">
+                                          Sukses
+                                        </span>
+                                      </div>
                                     ) : item?.status === "Gagal" ? (
-                                      <span className="bg-red-100 text-redColor py-1 px-3 rounded text-xs">
-                                        Gagal
-                                      </span>
+                                      <div className="w-full bg-red-100 px-3 py-2 rounded">
+                                        <span className="text-redColor text-xs">
+                                          Gagal
+                                        </span>
+                                      </div>
                                     ) : (
-                                      <span className="bg-gray-300 text-textSecondary py-1 px-3 rounded text-xs">
-                                        Menunggu
-                                      </span>
+                                      <div className="w-full bg-gray-300 px-3 py-2 rounded">
+                                        <span className="text-textSecondary text-xs">
+                                          Menunggu
+                                        </span>
+                                      </div>
                                     ))}
                                   {col?.key === "print" && (
                                     <Btn

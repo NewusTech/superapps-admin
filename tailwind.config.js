@@ -107,8 +107,8 @@ module.exports = {
         },
         //
         main: "#0705EC",
-        secondary: "#EC4E28",
-        thirtiary: "#F4801D",
+        secondaryColor: "#EC4E28",
+        thirtiaryColor: "#F4801D",
         quaternary: "#5C5C5C",
         softBlue: "#1C6AE4",
         greenColor: "#28C584",

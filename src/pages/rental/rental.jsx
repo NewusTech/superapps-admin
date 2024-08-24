@@ -8,7 +8,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { NumericFormat } from "react-number-format";
 import Select from "react-select";
 import { columnRentals, columns, dataFilters } from "constants/constants";
-import { formatDateArrange, formatLongDate, formatTime } from "helpers";
+import {
+  formatDateArrange,
+  formatLongDate,
+  formatTanggalPanjang,
+  formatTime,
+} from "helpers";
 import {
   getAllPesanan,
   getAllTravelCarRent,
@@ -93,7 +98,7 @@ export default function RentalScreen() {
   };
 
   const handleOnTambahPesanan = () => {
-    navigate("/order/choosing-car");
+    navigate("/travel-car-rent/order-travel-car-rent");
   };
 
   const handleOnFilterClear = () => {
@@ -244,8 +249,12 @@ export default function RentalScreen() {
                       let dateStartRent;
                       let dateEndRent;
                       if (item?.tanggal_awal_sewa || item?.tanggal_akhir_sewa) {
-                        dateEndRent = formatLongDate(item?.tanggal_akhir_sewa);
-                        dateStartRent = formatLongDate(item?.tanggal_awal_sewa);
+                        dateEndRent = formatTanggalPanjang(
+                          item?.tanggal_akhir_sewa
+                        );
+                        dateStartRent = formatTanggalPanjang(
+                          item?.tanggal_awal_sewa
+                        );
                       }
 
                       return (
@@ -256,13 +265,11 @@ export default function RentalScreen() {
                             )
                             ?.map((col) => {
                               return (
-                                <td
-                                  key={col?.key}
-                                  className="px-3 py-1 text-center">
+                                <td key={col?.key} className="p-3 text-center">
                                   {col?.key === "no" && index + 1}
                                   <Link
                                     className="hover:text-primary-700 hover:underline"
-                                    to={`/order/detail-order/${item?.nama}`}>
+                                    to={`/travel-car-rent/detail-travel-car-rent/${item?.kode_pembayaran}`}>
                                     {col?.key === "nama" && item?.nama}
                                   </Link>
                                   {col?.key === "mobil_type" &&
@@ -287,17 +294,29 @@ export default function RentalScreen() {
                                   )}
                                   {col?.key === "status" &&
                                     (item?.status === "Sukses" ? (
-                                      <span className="bg-green-100 text-greenColor py-1 px-3 rounded text-xs">
-                                        Sukses
-                                      </span>
+                                      <div className="w-full bg-green-100 px-3 py-2 rounded">
+                                        <span className="text-greenColor text-xs">
+                                          Sukses
+                                        </span>
+                                      </div>
                                     ) : item?.status === "Gagal" ? (
-                                      <span className="bg-red-100 text-redColor py-1 px-3 rounded text-xs">
-                                        Gagal
-                                      </span>
+                                      <div className="w-full bg-red-100 px-3 py-2 rounded">
+                                        <span className="text-redColor text-xs">
+                                          Gagal
+                                        </span>
+                                      </div>
+                                    ) : item?.status === "Kadaluwarsa" ? (
+                                      <div className="w-full bg-thirtiary-400 px-3 py-2 rounded">
+                                        <span className="text-thirtiary-700 text-xs">
+                                          Kadaluwarsa
+                                        </span>
+                                      </div>
                                     ) : (
-                                      <span className="bg-gray-300 text-textSecondary py-1 px-3 rounded text-xs">
-                                        Menunggu
-                                      </span>
+                                      <div className="w-full bg-gray-300 px-3 py-2 rounded">
+                                        <span className="text-textSecondary text-xs">
+                                          Menunggu
+                                        </span>
+                                      </div>
                                     ))}
                                   {/* {col?.key === "print" && (
                                     <Btn
