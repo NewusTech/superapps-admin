@@ -31,6 +31,8 @@ jobs:
     - name : Run NPM
       run: npm i
     - name : Run build
-      run: npm run build
+      run: |
+          cd /home/newus-admin-superapps/htdocs/admin-superapps.newus.id
+          npm run build
     - name : Restart
       run  : systemctl restart nginx
