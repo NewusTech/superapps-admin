@@ -41,8 +41,6 @@ export default function DetailPaket() {
     fetchDetailPesanan(kodeResi);
   }, [kodeResi]);
 
-  console.log(detail, "ini detail");
-
   // let time;
   // if (detail?.pesanan?.jam) {
   //   time = formatTime(detail?.pesanan?.jam);

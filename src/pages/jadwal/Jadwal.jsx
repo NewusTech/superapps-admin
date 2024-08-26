@@ -4,7 +4,12 @@ import Buttons from "elements/form/button/button";
 import FormInput from "elements/form/input/input";
 import FormSelect from "elements/form/select/select";
 import Pagination from "elements/pagination/pagination";
-import { formatDateInput, formatTanggalPanjang, formatTime } from "helpers";
+import {
+  formatDateArrange,
+  formatDateInput,
+  formatTanggalPanjang,
+  formatTime,
+} from "helpers";
 import {
   ChevronLeft,
   ChevronRight,
@@ -20,6 +25,7 @@ import {
   createNewSchedule,
   deleteSchedule,
   getAllSchedules,
+  getScheduleByDate,
   getScheduleSelect,
 } from "service/api";
 import Swal from "sweetalert2";
@@ -28,6 +34,7 @@ export default function Jadwal() {
   const navigate = useNavigate();
   const [dataSelects, setDataSelects] = useState([]);
   const [Jadwals, setJadwals] = useState([]);
+  const [schedule, setSchedule] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingDatas, setIsLoadingDatas] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -44,6 +51,7 @@ export default function Jadwal() {
     },
   ]);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [dateButton, setDateButton] = useState(null);
   const [schedules, setSchedules] = useState({});
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const today = new Date();
@@ -64,6 +72,19 @@ export default function Jadwal() {
   useEffect(() => {
     getSchedules();
   }, []);
+
+  const fetchScheduleByDate = async (date) => {
+    try {
+      const response = await getScheduleByDate(date);
+      setSchedule(response?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchScheduleByDate(dateButton);
+  }, [dateButton]);
 
   const fetchScheduleSelect = async () => {
     try {
@@ -158,6 +179,12 @@ export default function Jadwal() {
     localStorage.setItem("tanggal_berangkat", formatDateInput(date));
   };
 
+  const handleButtonDateClick = (date) => {
+    let getDate = formatDateInput(date);
+    setDateButton(getDate);
+    localStorage.setItem("dateButton", formatDateInput(date));
+  };
+
   const renderSchedules = (date) => {
     const dateKey = date.toISOString().split("T")[0];
     return schedules[dateKey]?.map((schedule, index) => (
@@ -217,8 +244,8 @@ export default function Jadwal() {
       days.push(
         <div
           key={`prev-${day}`}
-          className="p-2 h-20 text-neutral-600 border border-neutral-600 opacity-50">
-          {day}
+          className="w-full px-1 h-20 text-neutral-600 border border-neutral-600 opacity-50">
+          <div className="py-2">{day}</div>
         </div>
       );
     }
@@ -230,12 +257,22 @@ export default function Jadwal() {
       const isToday = date.toDateString() === today.toDateString();
       days.push(
         <div
-          key={day}
+          key={`${day}`}
           className={`border p-2 h-20 cursor-pointer ${
             isToday ? "bg-primary-600 text-neutral-50" : ""
-          }`}
-          onClick={() => handleDateClick(date)}>
-          <div>{day}</div>
+          }`}>
+          <div className="py-1" onClick={() => handleDateClick(date)}>
+            {day}
+          </div>
+          <Btn
+            onClick={() => handleButtonDateClick(date)}
+            className={` ${
+              isToday
+                ? "bg-white text-neutral-700"
+                : "bg-thirtiary-700 text-neutral-50"
+            }  rounded-none px-2 w-full h-8`}>
+            Cek Jadwal
+          </Btn>
           {renderSchedules(date)}
         </div>
       );
@@ -251,8 +288,8 @@ export default function Jadwal() {
       days.push(
         <div
           key={`next-${day}`}
-          className="text-neutral-600 border border-neutral-600 p-2 h-20 opacity-50">
-          {day}
+          className="w-full px-1 h-20 text-neutral-600 border border-neutral-600 opacity-50">
+          <div className="py-2">{day}</div>
         </div>
       );
     }
@@ -490,6 +527,100 @@ export default function Jadwal() {
                   className="w-full bg-main hover:bg-primary-600 text-paper py-2 rounded-md"
                   name="Simpan"
                 />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {dateButton && (
+        <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
+          <div className="bg-neutral-50 p-4 rounded shadow-lg w-8/12 max-h-[600px] overflow-y-auto hide-scrollbar">
+            <div className="flex flex-col w-full verticalScroll">
+              <div className="flex flex-col w-full py-5 gap-y-4">
+                <div className="flex flex-row justify-between w-full">
+                  <h3 className="text-[20px] mb-4 text-center font-semibold w-full">
+                    Jadwal Per Tanggal {formatTanggalPanjang(dateButton)}
+                  </h3>
+
+                  <X
+                    onClick={() => setDateButton(null)}
+                    className="cursor-pointer"
+                  />
+                </div>
+
+                <div className="flex flex-col verticalScroll w-full h-[400px] pb-8 gap-y-12">
+                  {schedule?.length === 0 ? (
+                    <div>
+                      <div colSpan={10}>
+                        <p className="text-[32px] mt-5 font-light text-center">
+                          Belum Ada jadwal
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    schedule &&
+                    schedule?.map((item, index) => (
+                      <div
+                        key={index}
+                        className="w-11/12 self-center flex flex-col gap-y-1 border border-outlineBorder rounded-md">
+                        <div className="flex items-center py-4 rounded-t-md bg-primary-700 flex-col gap-y-4">
+                          <h2 className="text-neutral-50 font-semibold text-[20px]">
+                            Jadwal {index + 1}
+                          </h2>
+                        </div>
+
+                        <div className="w-full flex flex-row p-4 gap-x-5">
+                          <div className="w-full flex flex-col gap-y-4">
+                            <div className="w-full grid grid-cols-2">
+                              <p>Berangkat</p>
+
+                              <p>: {item?.master_rute?.kota_asal}</p>
+                            </div>
+
+                            <div className="w-full grid grid-cols-2">
+                              <p>Mobil</p>
+
+                              <p>: {item?.master_mobil?.type}</p>
+                            </div>
+
+                            <div className="w-full grid grid-cols-2">
+                              <p>Waktu Keberangkatan</p>
+
+                              <p>: {formatTime(item?.waktu_keberangkatan)}</p>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center justify-center w-0.5 h-[100px] bg-neutral-300"></div>
+
+                          <div className="w-full flex flex-col gap-y-4">
+                            <div className="w-full grid grid-cols-2">
+                              <p>Tujuan</p>
+
+                              <p>: {item?.master_rute?.kota_tujuan}</p>
+                            </div>
+
+                            <div className="w-full grid grid-cols-2">
+                              <p>Supir</p>
+
+                              <p>: {item?.master_supir?.nama}</p>
+                            </div>
+
+                            <div className="w-full grid grid-cols-2">
+                              <p>Waktu Tiba</p>
+
+                              <p>
+                                :{" "}
+                                {item?.waktu_tiba &&
+                                  formatTime(item?.waktu_tiba)}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
               </div>
             </div>
           </div>

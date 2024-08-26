@@ -15,7 +15,7 @@ import FormInput from "elements/form/input/input";
 import FormSelect from "elements/form/select/select";
 import { getAllMasterTravelCarRent } from "service/api";
 import { Input } from "@/components/ui/input";
-import { Check } from "lucide-react";
+import { Check, Loader } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import FormTextArea from "elements/form/text-area/text-area";
@@ -45,6 +45,7 @@ export default function OrderRental() {
   const [cars, setCars] = useState([]);
   const [biayaSewa, setBiayaSewa] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
 
   const fetchAllCars = async () => {
     try {
@@ -89,6 +90,10 @@ export default function OrderRental() {
     }
   };
 
+  const changeSelectArea = (value) => {
+    setForm({ ...form, area: value });
+  };
+
   useEffect(() => {
     if (
       localStorage.getItem("nama") ||
@@ -105,6 +110,14 @@ export default function OrderRental() {
       localStorage.getItem("jam_keberangkatan") ||
       localStorage.getItem("all_in")
     ) {
+      let value = localStorage.getItem("all_in");
+      let valueAllIn;
+      if (value === "true") {
+        valueAllIn = true;
+      } else if (value === "false") {
+        valueAllIn = false;
+      }
+
       setForm({
         nama: localStorage.getItem("nama"),
         email: localStorage.getItem("email"),
@@ -118,31 +131,26 @@ export default function OrderRental() {
         alamat_keberangkatan: localStorage.getItem("alamat_keberangkatan"),
         mobil_rental_id: localStorage.getItem("mobil_rental_id"),
         jam_keberangkatan: localStorage.getItem("jam_keberangkatan"),
-        all_in: localStorage.getItem("all_in"),
+        all_in: valueAllIn,
       });
     }
   }, [localStorage]);
 
   const handleNewPackage = () => {
+    Object.keys(form).forEach((key) => {
+      localStorage.setItem(key, form[key]);
+    });
     setIsLoading(true);
-    try {
-      console.log(form, "ini form data");
-      Object.keys(form).forEach((key) => {
-        localStorage.setItem(key, form[key]);
-      });
-    } catch (error) {
-      console.log(error);
-    } finally {
+    setTimeout(() => {
       setIsLoading(false);
       navigate("/travel-car-rent/order-travel-car-rent/payment");
-    }
+    }, 2000);
   };
 
-  const [isChecked, setIsChecked] = useState(false);
-
   const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
-    setForm({ ...form, all_in: isChecked });
+    const updatedChecked = !isChecked;
+    setIsChecked(updatedChecked);
+    setForm({ ...form, all_in: updatedChecked });
   };
 
   return (
@@ -270,7 +278,7 @@ export default function OrderRental() {
                 />
               </div>
 
-              <div className="flex flex-col w-full gap-y-3">
+              {/* <div className="flex flex-col w-full gap-y-3">
                 <FormInput
                   type="text"
                   placeholder="area"
@@ -282,6 +290,20 @@ export default function OrderRental() {
                   htmlFor="area"
                   label="Area"
                   classLabel="w-full"
+                />
+              </div> */}
+              <div className="flex flex-col w-full gap-y-3">
+                <FormSelect
+                  data={[
+                    { id: "dalam kota", nama: "Dalam Kota" },
+                    { id: "luar kota", nama: "Luar Kota" },
+                  ]}
+                  change={changeSelectArea}
+                  htmlFor="area"
+                  label="Area"
+                  classLabel="w-full"
+                  name="area"
+                  value={form?.area}
                 />
               </div>
             </div>
@@ -360,11 +382,7 @@ export default function OrderRental() {
 
             <div className="flex flex-row w-full gap-6">
               <div className="w-full flex flex-col gap-y-3">
-                <FormLabel
-                  htmlFor="alamat_keberangakatn"
-                  name="Alamat Keberangkatan"
-                  className="w-full"
-                />
+                <FormLabel name="Alamat Keberangkatan" className="w-full" />
 
                 <div className="flex flex-col w-full gap-y-3">
                   <FormTextArea
@@ -394,11 +412,11 @@ export default function OrderRental() {
                   className="flex items-center cursor-pointer select-none">
                   <span
                     className={`w-5 h-5 rounded-full inline-block mr-2 border ${
-                      isChecked
+                      form.all_in
                         ? "bg-green-500 border-green-500 text-neutral-50 flex items-center justify-center"
                         : "bg-neutral-300 border-neutral-300 flex items-center justify-center"
                     }`}>
-                    {isChecked ? (
+                    {form.all_in ? (
                       <Check
                         size={16}
                         strokeWidth={3}
@@ -435,11 +453,15 @@ export default function OrderRental() {
           <Button
             onClick={handleNewPackage}
             // isLoading={isLoading}
-            // disables={isLoading ? true : false}
+            disables={isLoading ? true : false}
             // type="submit"
             className="w-full bg-main hover:bg-primary-600 text-paper py-2 rounded-md"
             name="Pesan">
-            Lanjutkan Pemesanan
+            {isLoading ? (
+              <Loader className="animate-spin" />
+            ) : (
+              "Lanjutkan Pemesanan"
+            )}
           </Button>
         </div>
       </div>

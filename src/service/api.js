@@ -455,6 +455,19 @@ export const getScheduleById = async (id) => {
   return await response.json();
 };
 
+export const getScheduleByDate = async (date) => {
+  const response = await fetch(`${apiUrl}/jadwal/${date}`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
 export const updateSchedule = async (id, data) => {
   const response = await fetch(`${apiUrl}/jadwal/jadwal/${id}`, {
     headers: {
@@ -786,15 +799,23 @@ export const getDownloadInvoicePackage = async (paymentCode) => {
   return await response.json();
 };
 
-export const getAllTravelCarRent = async () => {
-  const response = await fetch(`${apiUrl}/rental/riwayat`, {
-    headers: {
-      Authorization: `Bearer ${Cookies.get("token")}`,
-      "Content-Type": "application/json",
-    },
-    method: "GET",
-    cache: "no-store",
-  });
+export const getAllTravelCarRent = async (
+  search,
+  status,
+  startDate,
+  endDate
+) => {
+  const response = await fetch(
+    `${apiUrl}/rental/riwayat?search=${search}&status=${status}&startDate=${startDate}&endDate=${endDate}`,
+    {
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+      cache: "no-store",
+    }
+  );
 
   return await response.json();
 };
@@ -861,6 +882,38 @@ export const updateRentalStatusPayment = async (kodePembayaran) => {
         "Content-Type": "application/json",
       },
       method: "PATCH",
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+export const getAllCustomerList = async (search, startDate, endDate) => {
+  const response = await fetch(
+    `${apiUrl}/perjalanan/list-penumpang?search=${search}&startDate=${startDate}&endDate=${endDate}`,
+    {
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+export const getAllReports = async (search, startDate, endDate) => {
+  const response = await fetch(
+    `${apiUrl}/laporan?search=${search}&startDate=${startDate}&endDate=${endDate}`,
+    {
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "Content-Type": "application/json",
+      },
+      method: "GET",
       cache: "no-store",
     }
   );

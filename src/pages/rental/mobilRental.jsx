@@ -51,8 +51,6 @@ export default function MobilRentalScreen() {
     fetchAllCars();
   }, []);
 
-  console.log(cars, "cars");
-
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   let currentItems = [];

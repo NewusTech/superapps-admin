@@ -127,11 +127,7 @@ export default function PembayaranRental() {
     try {
       setIsLoading(true);
 
-      console.log(datas, "ini data");
-
       const response = await createTravelCarRent(datas);
-
-      console.log(response, "ini response");
 
       if (response.success === true) {
         setIsLoading(false);
@@ -178,7 +174,7 @@ export default function PembayaranRental() {
           position: "center",
         });
         localStorage.clear();
-        navigate(`/`);
+        navigate(`/travel-car-rent`);
       } else {
         Swal.fire({
           icon: "error",

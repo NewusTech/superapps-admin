@@ -30,8 +30,6 @@ export default function UpdateArticle() {
   const [previewImage, setPreviewImage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log(id, "ini id");
-
   useEffect(() => {
     if (quill) {
       quill.on("text-change", () => {

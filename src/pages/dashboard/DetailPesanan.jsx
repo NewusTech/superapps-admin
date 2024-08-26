@@ -40,8 +40,8 @@ export default function DetailPesanan() {
   }, [bookingCode]);
 
   let time;
-  if (detail?.pesanan?.jam) {
-    time = formatTime(detail?.pesanan?.jam);
+  if (detail?.pesanan?.jam_berangkat) {
+    time = formatTime(detail?.pesanan?.jam_berangkat);
   }
 
   const handleDownloadTicket = async (paymentCode) => {
@@ -147,7 +147,7 @@ export default function DetailPesanan() {
               </p>
 
               <p className="font-normal text-[16px] text-neutral-700">
-                {/* : {detail && detail?.} */}
+                : {detail && detail?.pesanan?.nama}
               </p>
             </div>
 
@@ -157,7 +157,7 @@ export default function DetailPesanan() {
               </p>
 
               <p className="font-normal text-[16px] text-neutral-700">
-                {/* : {order?.rute} */}
+                : {detail && detail?.pesanan?.no_telp}
               </p>
             </div>
 
@@ -175,7 +175,7 @@ export default function DetailPesanan() {
               <p className="font-normal text-[16px] text-neutral-700">Sopir</p>
 
               <p className="font-normal text-[16px] text-neutral-700">
-                {/* : {order?.titik_antar} */}
+                : {detail && detail?.pesanan?.supir}
               </p>
             </div>
 
@@ -270,7 +270,7 @@ export default function DetailPesanan() {
                     </p>
 
                     <p className="font-normal text-[16px] text-neutral-700">
-                      {/* : {order?.titik_antar} */}
+                      : {item?.email}
                     </p>
                   </div>
 
