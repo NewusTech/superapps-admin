@@ -59,3 +59,24 @@ export const columnRentals = [
   { key: "status", label: "Status" },
   { key: "print", label: "Print" },
 ];
+
+export const columnCustomers = [
+  { key: "no", label: "No" },
+  { key: "supir", label: "Supir" },
+  { key: "rute", label: "Rute" },
+  { key: "jam_berangkat", label: "Jam Keberangkatan" },
+  { key: "tanggal_berangkat", label: "Tanggal Keberangkatan" },
+  { key: "mobil", label: "Mobil" },
+  { key: "print", label: "Print" },
+];
+
+export const columnReports = [
+  { key: "no", label: "No" },
+  { key: "rute", label: "Rute" },
+  { key: "mobil", label: "Mobil" },
+  // { key: "supir", label: "Supir" },
+  { key: "jam_berangkat", label: "Jam Keberangkatan" },
+  { key: "tanggal_berangkat", label: "Tanggal Keberangkatan" },
+  { key: "jumlah_penumpang", label: "Jumlah Penumpang" },
+  { key: "jumlah_harga", label: "Jumlah Harga" },
+];

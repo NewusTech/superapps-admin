@@ -169,3 +169,13 @@
   list-style-type: disc;
   margin-left: 3em;
 }
+
+.verticalScroll {
+  width: 100%;
+  overflow-y: scroll;
+  scrollbar-color: transparent transparent;
+}
+
+.verticalScroll::-webkit-scrollbar {
+  display: none;
+}

@@ -52,10 +52,15 @@ export default function RentalScreen() {
     label: col.label,
   }));
 
-  const fetchRentalHistory = async () => {
+  const fetchRentalHistory = async (search, status, startDate, endDate) => {
     setIsLoading(true);
     try {
-      const response = await getAllTravelCarRent();
+      const response = await getAllTravelCarRent(
+        search,
+        status,
+        startDate,
+        endDate
+      );
       setRent(response);
     } catch (error) {
       console.log(error.name);
@@ -70,6 +75,11 @@ export default function RentalScreen() {
   const endDateFormatted = endDate
     ? formatDateArrange(new Date(endDate))
     : undefined;
+
+  const [day, month, year] = startDateFormatted.split("-");
+  const filterStartDate = `${year}-${month}-${day}`;
+  const [day2, month2, year2] = endDateFormatted.split("-");
+  const filterEndDate = `${year2}-${month2}-${day2}`;
 
   const displayedColumns =
     selectedColumns?.length > 0
@@ -87,10 +97,13 @@ export default function RentalScreen() {
   const totalPages = Math?.ceil(rent?.data?.length / itemsPerPage);
 
   useEffect(() => {
-    fetchRentalHistory();
-  }, []);
-
-  console.log(rent, "ini rental");
+    fetchRentalHistory(
+      debounceSearch,
+      filterStatus,
+      filterStartDate,
+      filterEndDate
+    );
+  }, [debounceSearch, filterStatus, filterStartDate, filterEndDate]);
 
   const handleSearch = (e) => {
     e.preventDefault();

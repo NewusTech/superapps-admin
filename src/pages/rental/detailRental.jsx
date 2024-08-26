@@ -24,8 +24,6 @@ export default function DetailRental() {
   const { bookingCode } = useParams();
   const { kodePembayaran } = useParams();
 
-  console.log(kodePembayaran, "pembayaran");
-
   const [detail, setDetail] = useState();
   const [isFirstLoading, setIsFirstLoading] = useState(false);
   const [isSecondLoading, setIsSecondLoading] = useState(false);
@@ -43,8 +41,6 @@ export default function DetailRental() {
   useEffect(() => {
     fetchDetailPesanan(kodePembayaran);
   }, [kodePembayaran]);
-
-  console.log(detail, "detail");
 
   // const handleDownloadTicket = async (paymentCode) => {
   //   try {
