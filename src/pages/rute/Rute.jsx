@@ -63,6 +63,7 @@ export default function Rute() {
 
       if (result.isConfirmed) {
         const response = await deleteRute(id);
+        console.log(response, "ini res");
 
         if (response.success === true) {
           await Swal.fire({

@@ -83,8 +83,8 @@ export default function HotelScreen() {
     setSearch(e.target.value);
   };
 
-  const handleNewPaket = () => {
-    navigate("/package/create-package");
+  const handleNewHostel = () => {
+    navigate("/hostel/order-hostel");
   };
 
   return (
@@ -95,7 +95,7 @@ export default function HotelScreen() {
           <div className="flex flex-row gap-x-3 w-full">
             <div className="w-3/12">
               <Button
-                onClick={handleNewPaket}
+                onClick={handleNewHostel}
                 className="bg-primary-700 flex gap-x-3 w-full">
                 <Plus className="w-5 h-5 text-neutral-50" />
                 <p className="text-neutral-50 text-[14px]">Tambah Paket</p>

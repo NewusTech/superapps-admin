@@ -96,10 +96,10 @@ export const createNewRute = async (data) => {
   const response = await fetch(`${apiUrl}/rute/master_rute`, {
     headers: {
       Authorization: `Bearer ${Cookies.get("token")}`,
-      "Content-Type": "application/json",
+      // "Content-Type": "application/json",
     },
     method: "POST",
-    body: JSON.stringify(data),
+    body: data,
     cache: "no-store",
   });
   return await response.json();
@@ -121,10 +121,10 @@ export const updateRute = async (id, data) => {
   const response = await fetch(`${apiUrl}/rute/master_rute/${id}`, {
     headers: {
       Authorization: `Bearer ${Cookies.get("token")}`,
-      "Content-Type": "application/json",
+      // "Content-Type": "application/json",
     },
-    method: "PUT",
-    body: JSON.stringify(data),
+    method: "POST",
+    body: data,
     cache: "no-store",
   });
   return await response.json();
@@ -568,6 +568,59 @@ export const deleteArticle = async (id) => {
       "Content-Type": "application/json",
     },
     method: "DELETE",
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
+export const getAllDestination = async (search) => {
+  const response = await fetch(`${apiUrl}/pariwisata?search=${search}`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
+export const createNewDestination = async (data) => {
+  const response = await fetch(`${apiUrl}/pariwisata`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+    },
+    method: "POST",
+    body: data,
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
+export const deleteDestination = async (id) => {
+  const response = await fetch(`${apiUrl}/pariwisata/${id}`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    method: "DELETE",
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
+export const updateDestination = async (id, data) => {
+  const response = await fetch(`${apiUrl}/pariwisata/${id}`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    body: data,
     cache: "no-store",
   });
 

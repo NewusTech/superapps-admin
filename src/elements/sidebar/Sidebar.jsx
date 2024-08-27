@@ -152,22 +152,8 @@ const kelolaArtikelRute = [
     iconD: <IconWriteBlog fill={colorDactive} />,
   },
   {
-    name: "Rute",
-    link: "/article/article-route",
-    space: "space-x-3",
-    iconA: <IconWriteBlog fill={colorActive} />,
-    iconD: <IconWriteBlog fill={colorDactive} />,
-  },
-  {
     name: "Destinasi",
     link: "/article/article-destination",
-    space: "space-x-3",
-    iconA: <IconWriteBlog fill={colorActive} />,
-    iconD: <IconWriteBlog fill={colorDactive} />,
-  },
-  {
-    name: "Penginapan",
-    link: "/article/article-hostel",
     space: "space-x-3",
     iconA: <IconWriteBlog fill={colorActive} />,
     iconD: <IconWriteBlog fill={colorDactive} />,
