@@ -97,7 +97,7 @@ export default function TambahHotelScreen() {
   };
 
   return (
-    <section className="min-h-screen pt-20 px-4">
+    <section className="min-h-screen pt-16 px-4">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>

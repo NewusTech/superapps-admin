@@ -49,14 +49,14 @@ import RentalScreen from "pages/rental/rental";
 import MobilRentalScreen from "pages/rental/mobilRental";
 import HotelScreen from "pages/hotel/hotel";
 import MasterHotelScreen from "pages/hotel/masterHotel";
-import ArticleRouteScreen from "pages/articleRoute/articleRoute";
 import ArticleDestinationScreen from "pages/articleDestination/articleDestination";
-import ArticlePenginapanScreen from "pages/articlePenginapan/articlePenginapan";
 import TambahMobilRentalScreen from "pages/rental/tambahMobilRental";
 import TambahHotelScreen from "pages/hotel/tambahHotel";
 import DetailRental from "pages/rental/detailRental";
 import OrderRental from "pages/rental/orderRental";
 import PembayaranRental from "pages/rental/pembayaran";
+import NewDestinationArticle from "pages/articleDestination/newDestinationArticle";
+import OrderPenginapan from "pages/hotel/orderPenginapan";
 
 const router = createBrowserRouter([
   {
@@ -512,16 +512,6 @@ const router = createBrowserRouter([
         },
       },
       {
-        path: "/article/article-route",
-        element: <ArticleRouteScreen />,
-        loader: () => {
-          if (!Cookies.get("token")) {
-            return redirect("/login");
-          }
-          return null;
-        },
-      },
-      {
         path: "/article/article-destination",
         element: <ArticleDestinationScreen />,
         loader: () => {
@@ -532,8 +522,8 @@ const router = createBrowserRouter([
         },
       },
       {
-        path: "/article/article-hostel",
-        element: <ArticlePenginapanScreen />,
+        path: "/article/article-destination/new-destination",
+        element: <NewDestinationArticle />,
         loader: () => {
           if (!Cookies.get("token")) {
             return redirect("/login");
@@ -604,6 +594,16 @@ const router = createBrowserRouter([
       {
         path: "/hostel",
         element: <HotelScreen />,
+        loader: () => {
+          if (!Cookies.get("token")) {
+            return redirect("/login");
+          }
+          return null;
+        },
+      },
+      {
+        path: "/hostel/order-hostel",
+        element: <OrderPenginapan />,
         loader: () => {
           if (!Cookies.get("token")) {
             return redirect("/login");

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useQuill } from "react-quilljs";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -13,12 +14,13 @@ import FormLabel from "elements/form/label/label";
 import FormInput from "elements/form/input/input";
 import FormSelect from "elements/form/select/select";
 import { getAllMasterTravelCarRent } from "service/api";
+import { Input } from "@/components/ui/input";
 import { Check, Loader } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import FormTextArea from "elements/form/text-area/text-area";
 
-export default function OrderRental() {
+export default function OrderPenginapan() {
   const navigate = useNavigate();
   const [form, setForm] = useState({
     nama: "",
@@ -131,11 +133,11 @@ export default function OrderRental() {
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbLink href="/travel-car-rent">Rental</BreadcrumbLink>
+            <BreadcrumbLink href="/hostel">Pesanan Penginapan</BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>Tambah Order Rental</BreadcrumbPage>
+            <BreadcrumbPage>Tambah Order Penginapan</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
@@ -235,7 +237,7 @@ export default function OrderRental() {
 
           <div className="w-full flex flex-col gap-y-3">
             <h3 className="font-semibold text-[18px] text-neutral-700">
-              Detail Sewa & Rental Mobil
+              Detail Sewa Penginapan
             </h3>
 
             <div className="grid grid-cols-2 w-full gap-6">
@@ -251,6 +253,20 @@ export default function OrderRental() {
                 />
               </div>
 
+              {/* <div className="flex flex-col w-full gap-y-3">
+                <FormInput
+                  type="text"
+                  placeholder="area"
+                  className="w-full border border-outlineBorder rounded-md h-[40px] pl-3"
+                  id="area"
+                  name="area"
+                  value={form.area}
+                  onChange={(e) => setForm({ ...form, area: e.target.value })}
+                  htmlFor="area"
+                  label="Area"
+                  classLabel="w-full"
+                />
+              </div> */}
               <div className="flex flex-col w-full gap-y-3">
                 <FormSelect
                   data={[
@@ -303,7 +319,7 @@ export default function OrderRental() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 w-full gap-6">
+            <div className="grid grid-cols-1 w-full gap-6">
               <div className="flex flex-col w-full gap-y-3">
                 <FormInput
                   type="number"
@@ -321,7 +337,7 @@ export default function OrderRental() {
                 />
               </div>
 
-              <div className="flex flex-col w-full gap-y-3">
+              {/* <div className="flex flex-col w-full gap-y-3">
                 <FormInput
                   type="time"
                   placeholder="Jam Keberangakatan"
@@ -336,10 +352,10 @@ export default function OrderRental() {
                   label="Jam Keberangkatan"
                   classLabel="w-full"
                 />
-              </div>
+              </div> */}
             </div>
 
-            <div className="flex flex-row w-full gap-6">
+            {/* <div className="flex flex-row w-full gap-6">
               <div className="w-full flex flex-col gap-y-3">
                 <FormLabel name="Alamat Keberangkatan" className="w-full" />
 
@@ -392,7 +408,7 @@ export default function OrderRental() {
                   <strong>ALL IN</strong> (Biaya Tol, Kapal dan BBM)
                 </label>
               </div>
-            </div>
+            </div> */}
           </div>
 
           <div className="flex flex-col justify-center w-full gap-y-3">
