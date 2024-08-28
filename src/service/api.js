@@ -456,7 +456,7 @@ export const getScheduleById = async (id) => {
 };
 
 export const getScheduleByDate = async (date) => {
-  const response = await fetch(`${apiUrl}/jadwal/${date}`, {
+  const response = await fetch(`${apiUrl}/jadwal/tanggal/${date}`, {
     headers: {
       Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",

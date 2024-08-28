@@ -52,7 +52,7 @@ export default function MasterHotelScreen() {
     fetchAllMasterPenginapan();
   }, []);
 
-  console.log(hotels, "hotels");
+  // console.log(hotels, "hotels");
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;

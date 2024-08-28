@@ -151,22 +151,22 @@ export default function TambahHotelScreen() {
     formData.append("kebijakan", JSON.stringify(ArrayValueFasility));
     formData.append("fasilitas", JSON.stringify(ArrayValueKebijakan));
 
-    console.log(ArrayValueFasility, "ini fasilitas");
-    console.log(ArrayValueKebijakan, "ini kebijakan");
+    // console.log(ArrayValueFasility, "ini fasilitas");
+    // console.log(ArrayValueKebijakan, "ini kebijakan");
 
     fileImages.forEach((file) => {
       formData.append("images[]", file);
     });
 
-    formData.forEach((value, key) => {
-      console.log(`${key}: ${value}` + `ini data`);
-    });
+    // formData.forEach((value, key) => {
+    //   console.log(`${key}: ${value}` + `ini data`);
+    // });
 
     try {
       setIsLoading(true);
       const response = await createNewMasterApartement(formData);
 
-      console.log(response, "ini response");
+      // console.log(response, "ini response");
 
       if (response.success === true) {
         setIsLoading(false);
@@ -177,7 +177,7 @@ export default function TambahHotelScreen() {
           showConfirmButton: false,
           position: "center",
         });
-        // navigate("/hostel/master-hostel");
+        navigate("/hostel/master-hostel");
       } else {
         Swal.fire({
           icon: "error",
