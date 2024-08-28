@@ -19,6 +19,7 @@ import { columnPakets } from "constants/constants";
 
 export default function HotelScreen() {
   const navigate = useNavigate();
+  const [hotels, setHotels] = useState([]);
   const [packages, setPackages] = useState([]);
   const [selectedColumns, setSelectedColumns] = useState([]);
   const [search, setSearch] = useState("");

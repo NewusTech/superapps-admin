@@ -2,7 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import SearchInput from "../../elements/Search";
 import Buttons from "elements/form/button/button";
 import { Button as Btn } from "@/components/ui/button";
-import { getAllMobil, getSeatsByCar, updateStatusSeats } from "service/api";
+import {
+  getAllMasterPenginapan,
+  getAllMobil,
+  getSeatsByCar,
+  updateStatusSeats,
+} from "service/api";
 import Pagination from "elements/pagination/pagination";
 import {
   AlertDialog,
@@ -19,6 +24,7 @@ import { Plus } from "lucide-react";
 
 export default function MasterHotelScreen() {
   const navigate = useNavigate();
+  const [hotels, setHotels] = useState([]);
   const [cars, setCars] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -29,12 +35,12 @@ export default function MasterHotelScreen() {
   const [isLoadingDatas, setIsLoadingDatas] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const fetchAllCars = async () => {
+  const fetchAllMasterPenginapan = async () => {
     setIsLoadingDatas(true);
     try {
-      const response = await getAllMobil();
+      const response = await getAllMasterPenginapan();
 
-      setCars(response?.data);
+      setHotels(response?.data);
     } catch (error) {
       console.log(error);
     } finally {
@@ -43,92 +49,94 @@ export default function MasterHotelScreen() {
   };
 
   useEffect(() => {
-    fetchAllCars();
+    fetchAllMasterPenginapan();
   }, []);
+
+  console.log(hotels, "hotels");
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   let currentItems = [];
-  if (cars) {
-    currentItems = cars.slice(indexOfFirstItem, indexOfLastItem);
+  if (hotels) {
+    currentItems = hotels.slice(indexOfFirstItem, indexOfLastItem);
   }
 
-  const totalPages = Math.ceil(cars.length / itemsPerPage);
+  const totalPages = Math.ceil(hotels.length / itemsPerPage);
 
-  const handleClickCar = async (id) => {
-    try {
-      const response = await getSeatsByCar(id);
+  // const handleClickCar = async (id) => {
+  //   try {
+  //     const response = await getSeatsByCar(id);
 
-      setSeats(response?.data);
-      setUpdateSeats(
-        response?.data?.map((seat) => ({
-          id: seat.id,
-          status: seat.status,
-        }))
-      );
-      setIsDialogOpen(true);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     setSeats(response?.data);
+  //     setUpdateSeats(
+  //       response?.data?.map((seat) => ({
+  //         id: seat.id,
+  //         status: seat.status,
+  //       }))
+  //     );
+  //     setIsDialogOpen(true);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  const handleSwitchChange = (index) => {
-    setUpdateSeats((prevSeats) => {
-      const updatedSeats = prevSeats.map((seat, idx) =>
-        idx === index
-          ? { ...seat, status: seat.status === "kosong" ? "terisi" : "kosong" }
-          : seat
-      );
-      return updatedSeats;
-    });
-  };
+  // const handleSwitchChange = (index) => {
+  //   setUpdateSeats((prevSeats) => {
+  //     const updatedSeats = prevSeats.map((seat, idx) =>
+  //       idx === index
+  //         ? { ...seat, status: seat.status === "kosong" ? "terisi" : "kosong" }
+  //         : seat
+  //     );
+  //     return updatedSeats;
+  //   });
+  // };
 
-  const handleSave = async () => {
-    setIsLoading(true);
+  // const handleSave = async () => {
+  //   setIsLoading(true);
 
-    const formattedSeats = updateSeats.filter((seat, index) => {
-      return seat.status !== seats[index].status;
-    });
+  //   const formattedSeats = updateSeats.filter((seat, index) => {
+  //     return seat.status !== seats[index].status;
+  //   });
 
-    if (formattedSeats.length === 0) {
-      setIsLoading(false);
-      return;
-    }
+  //   if (formattedSeats.length === 0) {
+  //     setIsLoading(false);
+  //     return;
+  //   }
 
-    try {
-      let response;
-      for (const seat of formattedSeats) {
-        response = await updateStatusSeats(seat.id, formattedSeats);
-      }
+  //   try {
+  //     let response;
+  //     for (const seat of formattedSeats) {
+  //       response = await updateStatusSeats(seat.id, formattedSeats);
+  //     }
 
-      if (response.success === true) {
-        setIsLoading(false);
-        Swal.fire({
-          icon: "success",
-          title: "Berhasil mengupdate kursi!",
-          timer: 2000,
-          showConfirmButton: false,
-          position: "center",
-        });
+  //     if (response.success === true) {
+  //       setIsLoading(false);
+  //       Swal.fire({
+  //         icon: "success",
+  //         title: "Berhasil mengupdate kursi!",
+  //         timer: 2000,
+  //         showConfirmButton: false,
+  //         position: "center",
+  //       });
 
-        fetchAllCars();
-        setIsDialogOpen(false);
-        navigate("/seat");
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: response.message,
-          timer: 2000,
-          showConfirmButton: false,
-          position: "center",
-        });
-      }
-    } catch (error) {
-      console.error("Error updating seat status:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  //       fetchAllCars();
+  //       setIsDialogOpen(false);
+  //       navigate("/seat");
+  //     } else {
+  //       Swal.fire({
+  //         icon: "error",
+  //         title: response.message,
+  //         timer: 2000,
+  //         showConfirmButton: false,
+  //         position: "center",
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.error("Error updating seat status:", error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   const handleOnTambahHotel = () => {
     navigate("/hostel/master-hostel/create-hostel");
@@ -137,8 +145,6 @@ export default function MasterHotelScreen() {
   return (
     <section className="min-h-screen">
       <div>
-        <SearchInput />
-
         <div className="pt-[29px] w-full flex flex-row justify-between gap-x-4">
           <div className="w-3/12">
             <Btn
@@ -156,19 +162,17 @@ export default function MasterHotelScreen() {
             <div className="w-16 h-16 border-8 border-t-8 border-t-main border-gray-200 rounded-full animate-spin"></div>
           </div>
         ) : (
-          <div className="bg-white rounded-md border my-5">
+          <div className="bg-white rounded-md border my-5 pb-6">
             <table className="table-auto w-full">
               <thead>
                 <tr className="text-center bg-gray-100 border-b h-14">
                   <th className="p-3">No</th>
-                  <th className="p-3">Mobil</th>
-                  <th className="p-3">Nomor Polisi</th>
-                  <th className="p-3">Jumlah Kursi Tersedia</th>
+                  <th className="p-3">Apartemen</th>
                   <th className="p-3">Out of Order</th>
                 </tr>
               </thead>
               <tbody>
-                {cars?.data?.length === 0 ? (
+                {hotels?.length === 0 ? (
                   <tr>
                     <td colSpan={10}>
                       <p className="text-lg mt-5 font-light text-center">
@@ -177,14 +181,15 @@ export default function MasterHotelScreen() {
                     </td>
                   </tr>
                 ) : (
-                  cars &&
+                  hotels &&
                   currentItems &&
-                  currentItems?.map((car, index) => {
+                  currentItems?.map((hotel, index) => {
                     return (
                       <tr key={index} className="border-b text-center">
                         <td className="px-3 py-1">{index + 1}</td>
                         <td className="px-3 py-1">
-                          <AlertDialog
+                          {hotel?.title}
+                          {/* <AlertDialog
                             open={isDialogOpen}
                             onOpenChange={setIsDialogOpen}>
                             <AlertDialogTrigger
@@ -266,10 +271,8 @@ export default function MasterHotelScreen() {
                                 </div>
                               </div>
                             </AlertDialogContent>
-                          </AlertDialog>
+                          </AlertDialog> */}
                         </td>
-                        <td className="px-3 py-1">{car?.nopol}</td>
-                        <td className="px-3 py-1">{car?.jumlah_kursi}</td>
                         <td className="px-3 py-1">
                           <SwitchInput className="bg-primary-700 rounded-full" />
                         </td>
@@ -279,17 +282,17 @@ export default function MasterHotelScreen() {
                 )}
               </tbody>
             </table>
-            <div className="flex justify-end pr-4 mb-8">
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                itemsPerPage={itemsPerPage}
-                onPageChange={setCurrentPage}
-                onItemsPerPageChange={setItemsPerPage}
-              />
-            </div>
           </div>
         )}
+      </div>
+      <div className="flex justify-end pr-4 mb-8">
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          itemsPerPage={itemsPerPage}
+          onPageChange={setCurrentPage}
+          onItemsPerPageChange={setItemsPerPage}
+        />
       </div>
     </section>
   );

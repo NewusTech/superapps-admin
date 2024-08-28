@@ -973,3 +973,46 @@ export const getAllReports = async (search, startDate, endDate) => {
 
   return await response.json();
 };
+
+export const getAllMasterPenginapan = async () => {
+  const response = await fetch(`${apiUrl}/master_penginapan/penginapan`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
+export const getMasterDataCreate = async () => {
+  const response = await fetch(
+    `${apiUrl}/master_penginapan/penginapan/create`,
+    {
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+export const createNewMasterApartement = async (data) => {
+  const response = await fetch(`${apiUrl}/master_penginapan/penginapan`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      // "Content-Type": "application/json",
+    },
+    method: "POST",
+    body: data,
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
