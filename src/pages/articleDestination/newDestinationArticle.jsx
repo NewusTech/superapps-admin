@@ -97,15 +97,15 @@ export default function NewDestinationArticle() {
       formData.append("image_url", fileImage);
     }
 
-    formData.forEach((value, key) => {
-      console.log(`${key}: ${value}` + `ini data`);
-    });
+    // formData.forEach((value, key) => {
+    //   console.log(`${key}: ${value}` + `ini data`);
+    // });
 
     try {
       setIsLoading(true);
       const response = await createNewDestination(formData);
 
-      console.log(response, "ini res");
+      // console.log(response, "ini res");
 
       if (response.success === true) {
         setIsLoading(false);

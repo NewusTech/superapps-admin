@@ -43,7 +43,7 @@ export default function TambahMobilRentalScreen() {
   const handleNewCar = async (e) => {
     e.preventDefault();
 
-    console.log(e, "ini e loh");
+    // console.log(e, "ini e loh");
 
     // try {
     //   setIsLoading(true);
