@@ -80,3 +80,15 @@ export const columnReports = [
   { key: "jumlah_penumpang", label: "Jumlah Penumpang" },
   { key: "jumlah_harga", label: "Jumlah Harga" },
 ];
+
+export const columnHotels = [
+  { key: "no", label: "No" },
+  // { key: "no_pesanan", label: "No Pesanan" },
+  { key: "nama", label: "Nama" },
+  { key: "mobil", label: "Mobil" },
+  { key: "tanggal_checkin", label: "Tanggal Check In" },
+  { key: "tanggal_checkout", label: "Tanggal Check Out" },
+  { key: "biaya", label: "Biaya" },
+  { key: "status", label: "Status" },
+  { key: "print", label: "Print" },
+];

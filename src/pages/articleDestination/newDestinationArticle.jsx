@@ -14,7 +14,7 @@ import "quill/dist/quill.snow.css";
 import { Label } from "@/components/ui/label";
 import { Trash } from "lucide-react";
 import Buttons from "elements/form/button/button";
-import { createNewArticle, createNewDestination } from "service/api";
+import { createNewDestination } from "service/api";
 import Swal from "sweetalert2";
 
 export default function NewDestinationArticle() {
