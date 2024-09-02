@@ -919,7 +919,7 @@ export const createTravelCarRent = async (data) => {
       "Content-Type": "application/json",
     },
     method: "POST",
-    body: JSON.stringify(data),
+    body: data,
     cache: "no-store",
   });
 
