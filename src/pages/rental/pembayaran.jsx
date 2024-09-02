@@ -37,6 +37,10 @@ export default function PembayaranRental() {
     nik: "",
     no_telp: "",
     alamat: "",
+    username_ig: "",
+    username_fb: "",
+    image_ktp: "",
+    image_swafoto: "",
     area: "",
     durasi_sewa: "",
     tanggal_mulai_sewa: "",
@@ -45,6 +49,7 @@ export default function PembayaranRental() {
     mobil_rental_id: "",
     jam_keberangkatan: "",
     all_in: "",
+    catatan_sopir: "",
   });
   const [car, setCar] = useState();
   const [payments, setPayments] = useState([]);
@@ -60,6 +65,10 @@ export default function PembayaranRental() {
       nik: localStorage.getItem("nik"),
       no_telp: localStorage.getItem("no_telp"),
       alamat: localStorage.getItem("alamat"),
+      username_ig: localStorage.getItem("username_ig"),
+      username_fb: localStorage.getItem("username_fb"),
+      image_ktp: localStorage.getItem("image_ktp"),
+      image_swafoto: localStorage.getItem("image_swafoto"),
       area: localStorage.getItem("area"),
       durasi_sewa: localStorage.getItem("durasi_sewa"),
       tanggal_mulai_sewa: localStorage.getItem("tanggal_mulai_sewa"),
@@ -68,6 +77,7 @@ export default function PembayaranRental() {
       mobil_rental_id: localStorage.getItem("mobil_rental_id"),
       jam_keberangkatan: localStorage.getItem("jam_keberangkatan"),
       all_in: localStorage.getItem("all_in"),
+      catatan_sopir: localStorage.getItem("catatan_sopir"),
     });
   }, []);
 
@@ -124,10 +134,32 @@ export default function PembayaranRental() {
       metode_id: data?.metode_id,
     };
 
+    const formData = new FormData();
+
+    formData.append("nama", datas.nama);
+    formData.append("email", datas.email);
+    formData.append("nik", datas.nik);
+    formData.append("no_telp", datas.no_telp);
+    formData.append("alamat", datas?.alamat);
+    formData.append("username_ig", datas.username_ig);
+    formData.append("username_fb", datas.username_fb);
+    formData.append("image_ktp", datas.image_ktp);
+    formData.append("image_swafoto", datas.image_swafoto);
+    formData.append("area", datas.area);
+    formData.append("durasi_sewa", datas.durasi_sewa);
+    formData.append("tanggal_mulai_sewa", datas.tanggal_mulai_sewa);
+    formData.append("tanggal_akhir_sewa", datas.tanggal_akhir_sewa);
+    formData.append("alamat_keberangkatan", datas.alamat_keberangkatan);
+    formData.append("mobil_rental_id", datas.mobil_rental_id);
+    formData.append("jam_keberangkatan", datas.jam_keberangkatan);
+    formData.append("all_in", isAllIn);
+    formData.append("catatan_sopir", datas.catatan_sopir);
+    formData.append("metode_id", datas.metode_id);
+
     try {
       setIsLoading(true);
 
-      const response = await createTravelCarRent(datas);
+      const response = await createTravelCarRent(formData);
 
       if (response.success === true) {
         setIsLoading(false);

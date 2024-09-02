@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Breadcrumb,
@@ -13,19 +13,25 @@ import FormLabel from "elements/form/label/label";
 import FormInput from "elements/form/input/input";
 import FormSelect from "elements/form/select/select";
 import { getAllMasterTravelCarRent } from "service/api";
-import { Check, Loader } from "lucide-react";
+import { Check, Loader, Trash } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import FormTextArea from "elements/form/text-area/text-area";
+import { FaCloudArrowUp } from "react-icons/fa6";
 
 export default function OrderRental() {
   const navigate = useNavigate();
+  const dropRef = useRef(null);
   const [form, setForm] = useState({
     nama: "",
     email: "",
     nik: "",
     no_telp: "",
     alamat: "",
+    username_ig: "",
+    username_fb: "",
+    image_ktp: "",
+    image_swafoto: "",
     area: "",
     durasi_sewa: "",
     tanggal_mulai_sewa: "",
@@ -34,9 +40,14 @@ export default function OrderRental() {
     mobil_rental_id: "",
     jam_keberangkatan: "",
     all_in: "",
+    catatan_sopir: "",
   });
   const [cars, setCars] = useState([]);
   const [biayaSewa, setBiayaSewa] = useState(0);
+  const [fileImageKTP, setFileImageKTP] = useState(null);
+  const [fileImageSwafoto, setFileImageSwafoto] = useState(null);
+  const [previewImageKTP, setPreviewImageKTP] = useState("");
+  const [previewImageSwafoto, setPreviewImageSwafoto] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
 
@@ -110,9 +121,38 @@ export default function OrderRental() {
   }, [localStorage]);
 
   const handleNewPackage = () => {
-    Object.keys(form).forEach((key) => {
-      localStorage.setItem(key, form[key]);
-    });
+    // const formData = new FormData();
+
+    // formData.append("nama", form.nama);
+    // formData.append("email", form.email);
+    // formData.append("nik", form.nik);
+    // formData.append("no_telp", form.no_telp);
+    // formData.append("alamat", form.alamat);
+    // formData.append("username_ig", form.username_ig);
+    // formData.append("username_fb", form.username_fb);
+    // formData.append("image_ktp", fileImageKTP);
+    // formData.append("image_swafoto", fileImageSwafoto);
+    // formData.append("area", form.area);
+    // formData.append("durasi_sewa", form.durasi_sewa);
+    // formData.append("tanggal_mulai_sewa", form.tanggal_mulai_sewa);
+    // formData.append("tanggal_akhir_sewa", form.tanggal_akhir_sewa);
+    // formData.append("alamat_keberangkatan", form.alamat_keberangkatan);
+    // formData.append("mobil_rental_id", form.mobil_rental_id);
+    // formData.append("jam_keberangkatan", form.jam_keberangkatan);
+    // formData.append("all_in", form.all_in);
+    // formData.append("catatan_sopir", form.catatan_sopir);
+
+    // Object.keys(form).forEach((key) => {
+    //   localStorage.setItem(key, form[key]);
+    // });
+
+    const formData = new FormData();
+    Object.entries(form).forEach(([key, value]) => formData.append(key, value));
+    formData.append("image_ktp", fileImageKTP);
+    formData.append("image_swafoto", fileImageSwafoto);
+
+    Object.keys(form).forEach((key) => localStorage.setItem(key, form[key]));
+
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
@@ -124,6 +164,93 @@ export default function OrderRental() {
     const updatedChecked = !isChecked;
     setIsChecked(updatedChecked);
     setForm({ ...form, all_in: updatedChecked });
+  };
+
+  const handleImageKTPChange = (e) => {
+    const file = e.target.files?.[0];
+    console.log(file, "ini file");
+
+    if (file) {
+      setFileImageKTP(file);
+      setForm({
+        ...form,
+        image_ktp: file.name,
+      });
+      const fileUrl = URL.createObjectURL(file);
+      console.log(fileUrl, "ini url");
+
+      var filesss = new File([fileUrl], "foto_ktp.png", {
+        type: "image/png",
+        lastModified: new Date().getTime(),
+      });
+
+      console.log(filesss, "ini files");
+
+      setPreviewImageKTP(fileUrl);
+    }
+  };
+
+  const handleImageSwafotoChange = (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setFileImageSwafoto(file);
+      setForm({
+        ...form,
+        image_swafoto: file.name,
+      });
+      const fileUrl = URL.createObjectURL(file);
+      setPreviewImageSwafoto(fileUrl);
+    }
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDropImageKTP = (e) => {
+    e.preventDefault();
+
+    const file = e.dataTransfer.files?.[0];
+    if (file) {
+      setFileImageKTP(file);
+      setForm({
+        ...form,
+        image_ktp: file.name,
+      });
+      const fileUrl = URL.createObjectURL(file);
+      setPreviewImageKTP(fileUrl);
+    }
+  };
+
+  const handleDropImageSwafoto = (e) => {
+    e.preventDefault();
+
+    const file = e.dataTransfer.files?.[0];
+    if (file) {
+      setFileImageSwafoto(file);
+      setForm({
+        ...form,
+        image_swafoto: file.name,
+      });
+      const fileUrl = URL.createObjectURL(file);
+      setPreviewImageSwafoto(fileUrl);
+    }
+  };
+
+  const handleRemoveImageKTP = () => {
+    setFileImageKTP(null);
+    setPreviewImageKTP("");
+    setForm({ ...form, image_ktp: "" });
+  };
+
+  const handleRemoveImageSwafoto = () => {
+    setFileImageSwafoto(null);
+    setPreviewImageSwafoto("");
+    setForm({ ...form, image_swafoto: "" });
   };
 
   return (
@@ -213,6 +340,42 @@ export default function OrderRental() {
               </div>
             </div>
 
+            <div className="grid grid-cols-2 w-full gap-6">
+              <div className="flex flex-col w-full gap-y-3">
+                <FormInput
+                  type="text"
+                  placeholder="Username Instagram"
+                  className="w-full border border-outlineBorder rounded-md h-[40px] pl-3"
+                  id="username-ig"
+                  name="username_ig"
+                  value={form.username_ig}
+                  onChange={(e) =>
+                    setForm({ ...form, username_ig: e.target.value })
+                  }
+                  htmlFor="username-ig"
+                  label="Username Instagram"
+                  classLabel="w-full"
+                />
+              </div>
+
+              <div className="flex flex-col w-full gap-y-3">
+                <FormInput
+                  type="text"
+                  placeholder="Username Facebook"
+                  className="w-full block border border-outlineBorder rounded-md h-[40px] pl-3"
+                  id="username-fb"
+                  name="username_fb"
+                  value={form.username_fb}
+                  onChange={(e) =>
+                    setForm({ ...form, username_fb: e.target.value })
+                  }
+                  htmlFor="username-fb"
+                  label="Username Facebook"
+                  classLabel="w-full"
+                />
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 w-full gap-6">
               <div className="w-full flex flex-col gap-y-3">
                 <FormLabel name="Alamat" className="w-full" />
@@ -229,6 +392,120 @@ export default function OrderRental() {
                     className="w-full h-[150px]"
                   />
                 </div>
+              </div>
+            </div>
+
+            <div className="flex flex-col w-full">
+              <Label className="text-[16px] text-neutral-700 font-normal mb-2">
+                Upload Kartu Tanda Penduduk
+              </Label>
+
+              <div className="flex flex-col md:flex-row w-full">
+                <div
+                  ref={dropRef}
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDropImageKTP}
+                  className={`w-full ${
+                    form?.image_ktp || previewImageKTP ? "md:w-8/12" : "w-full"
+                  }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                  <>
+                    <input
+                      type="file"
+                      id="file-input-image-ktp"
+                      name="image_ktp"
+                      accept="image/*"
+                      onChange={handleImageKTPChange}
+                      className="hidden"
+                    />
+                    <label
+                      htmlFor="file-input-image-ktp"
+                      className="flex flex-col items-center text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
+                      <span>
+                        <FaCloudArrowUp className="w-6 h-6" />
+                      </span>
+                      <span>
+                        Drag and drop file here or click to select file
+                      </span>
+                    </label>
+                  </>
+                </div>
+
+                {(previewImageKTP || form?.image_ktp) && (
+                  <div className="relative md:ml-4 w-full mt-1">
+                    <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
+                      <img
+                        src={previewImageKTP || form?.image_ktp}
+                        alt="Preview"
+                        className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
+                      />
+                      <button
+                        type="button"
+                        onClick={handleRemoveImageKTP}
+                        className="absolute bg-none -top-0 -right-0 md:-top-0 md:-right-0 text-neutral-800 p-1">
+                        <Trash />
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="flex flex-col w-full">
+              <Label className="text-[16px] text-neutral-700 font-normal mb-2">
+                Upload Swafoto atau Foto Selfie
+              </Label>
+
+              <div className="flex flex-col md:flex-row w-full">
+                <div
+                  ref={dropRef}
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDropImageSwafoto}
+                  className={`w-full ${
+                    form?.image_swafoto || previewImageSwafoto
+                      ? "md:w-8/12"
+                      : "w-full"
+                  }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                  <>
+                    <input
+                      type="file"
+                      id="file-input-image-swafoto"
+                      name="image_swafoto"
+                      accept="image/*"
+                      onChange={handleImageSwafotoChange}
+                      className="hidden"
+                    />
+                    <label
+                      htmlFor="file-input-image-swafoto"
+                      className="flex flex-col items-center text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
+                      <span>
+                        <FaCloudArrowUp className="w-6 h-6" />
+                      </span>
+                      <span>
+                        Drag and drop file here or click to select file
+                      </span>
+                    </label>
+                  </>
+                </div>
+
+                {(previewImageSwafoto || form?.image_swafoto) && (
+                  <div className="relative md:ml-4 w-full mt-1">
+                    <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
+                      <img
+                        src={previewImageSwafoto || form?.image_swafoto}
+                        alt="Preview"
+                        className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
+                      />
+                      <button
+                        type="button"
+                        onClick={handleRemoveImageSwafoto}
+                        className="absolute bg-none -top-0 -right-0 md:-top-0 md:-right-0 text-neutral-800 p-1">
+                        <Trash />
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -357,41 +634,58 @@ export default function OrderRental() {
                 </div>
               </div>
 
-              <div className="flex flex-col justify-center w-6/12 gap-y-3">
-                <input
-                  type="checkbox"
-                  id="all-in"
-                  name="all_in"
-                  checked={isChecked}
-                  onChange={handleCheckboxChange}
-                  className="hidden"
-                />
-                <label
-                  htmlFor="all-in"
-                  className="flex items-center cursor-pointer select-none">
-                  <span
-                    className={`w-5 h-5 rounded-full inline-block mr-2 border ${
-                      form.all_in
-                        ? "bg-green-500 border-green-500 text-neutral-50 flex items-center justify-center"
-                        : "bg-neutral-300 border-neutral-300 flex items-center justify-center"
-                    }`}>
-                    {form.all_in ? (
-                      <Check
-                        size={16}
-                        strokeWidth={3}
-                        className="text-neutral-50"
-                      />
-                    ) : (
-                      <Check
-                        size={16}
-                        strokeWidth={3}
-                        className="text-neutral-50"
-                      />
-                    )}
-                  </span>
-                  <strong>ALL IN</strong> (Biaya Tol, Kapal dan BBM)
-                </label>
+              <div className="w-full flex flex-col gap-y-3">
+                <FormLabel name="Catat Supir" className="w-full" />
+
+                <div className="flex flex-col w-full gap-y-3">
+                  <FormTextArea
+                    name="catatan_sopir"
+                    id="catatan-sopir"
+                    value={form.catatan_sopir}
+                    onChange={(e) =>
+                      setForm({ ...form, catatan_sopir: e.target.value })
+                    }
+                    placeholder="Catatan Supir"
+                    className="w-full h-[150px]"
+                  />
+                </div>
               </div>
+            </div>
+
+            <div className="flex flex-col justify-center w-6/12 gap-y-3">
+              <input
+                type="checkbox"
+                id="all-in"
+                name="all_in"
+                checked={isChecked}
+                onChange={handleCheckboxChange}
+                className="hidden"
+              />
+              <label
+                htmlFor="all-in"
+                className="flex items-center cursor-pointer select-none">
+                <span
+                  className={`w-5 h-5 rounded-full inline-block mr-2 border ${
+                    form.all_in
+                      ? "bg-green-500 border-green-500 text-neutral-50 flex items-center justify-center"
+                      : "bg-neutral-300 border-neutral-300 flex items-center justify-center"
+                  }`}>
+                  {form.all_in ? (
+                    <Check
+                      size={16}
+                      strokeWidth={3}
+                      className="text-neutral-50"
+                    />
+                  ) : (
+                    <Check
+                      size={16}
+                      strokeWidth={3}
+                      className="text-neutral-50"
+                    />
+                  )}
+                </span>
+                <strong>ALL IN</strong> (Biaya Tol, Kapal dan BBM)
+              </label>
             </div>
           </div>
 

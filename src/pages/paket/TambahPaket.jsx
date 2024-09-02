@@ -24,11 +24,13 @@ export default function TambahPaket() {
   const { quill: quillPengirim, quillRef: quillRefPengirim } = useQuill();
   const { quill: quillPenerima, quillRef: quillRefPenerima } = useQuill();
   const { quill: quillTujuan, quillRef: quillRefTujuan } = useQuill();
+  const { quill: quillCatatan, quillRef: quillRefCatatan } = useQuill();
   const [form, setForm] = useState({
     nama_pengirim: "",
     nama_penerima: "",
     alamat_pengirim: "",
     alamat_penerima: "",
+    catatan: "",
     tujuan: "",
     tanggal_dikirim: "",
     tanggal_diterima: "",
@@ -67,7 +69,16 @@ export default function TambahPaket() {
         }));
       });
     }
-  }, [quillPengirim, quillPenerima, quillTujuan]);
+
+    if (quillCatatan) {
+      quillCatatan.on("text-change", () => {
+        setForm((prevData) => ({
+          ...prevData,
+          catatan: quillCatatan.root.innerHTML,
+        }));
+      });
+    }
+  }, [quillPengirim, quillPenerima, quillTujuan, quillCatatan]);
 
   const handleNewPackage = async (e) => {
     e.preventDefault();
@@ -258,6 +269,19 @@ export default function TambahPaket() {
                     label="Biaya"
                     classLabel="w-full"
                   />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 w-full gap-6">
+                <div className="w-full flex flex-col gap-y-3">
+                  <FormLabel
+                    htmlFor="catatan"
+                    name="Catatan"
+                    className="w-full"
+                  />
+                  <div
+                    className="flex flex-col rounded-lg h-[150px] w-ful border border-textSecondary"
+                    ref={quillRefCatatan}></div>
                 </div>
               </div>
             </div>
