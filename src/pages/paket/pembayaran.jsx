@@ -20,7 +20,7 @@ import Swal from "sweetalert2";
 import parse from "html-react-parser";
 import PackagePaymentMethods from "elements/cards/packagePaymentMethods";
 import { RichTextDisplay } from "elements/richTextDisplay";
-import { formatTanggalPanjang } from "helpers";
+import { formatRupiah, formatTanggalPanjang } from "helpers";
 
 export default function PembayaranPaket() {
   const navigate = useNavigate();
@@ -232,7 +232,7 @@ export default function PembayaranPaket() {
         </div>
         <div className="flex flex-row gap-4 items-center">
           <div className="ml-auto">
-            <p className="text-main font-bold">Rp. {confirms?.total_harga}</p>
+            <p className="text-main font-bold">Rp. {formatRupiah(confirms?.biaya)}</p>
             <p className="text-sm">Total harga</p>
           </div>
           <Buttons

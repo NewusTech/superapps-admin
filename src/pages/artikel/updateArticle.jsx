@@ -15,6 +15,7 @@ import { Trash } from "lucide-react";
 import Buttons from "elements/form/button/button";
 import FormInput from "elements/form/input/input";
 import { useEffect, useRef, useState } from "react";
+import { getArticleById } from "service/api";
 
 export default function UpdateArticle() {
   const { id } = useParams();
@@ -29,6 +30,7 @@ export default function UpdateArticle() {
   const [fileImage, setFileImage] = useState(null);
   const [previewImage, setPreviewImage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [article, setArticle] = useState(null);
 
   useEffect(() => {
     if (quill) {
@@ -40,6 +42,20 @@ export default function UpdateArticle() {
       });
     }
   }, [quill]);
+
+  const fetchArticleById = async (id) => {
+    try {
+      const response = await getArticleById(id);
+      setArticle(response?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchArticleById(id);
+  }, [id]);
+  
 
   const handleImageChange = (e) => {
     const file = e.target.files?.[0];
@@ -107,8 +123,8 @@ export default function UpdateArticle() {
                 className="w-full border border-outlineBorder rounded-md h-[40px] pl-3"
                 id="judul-artikel"
                 name="judul"
-                // value={data?.judul}
-                // onChange={(e) => setData({ ...data, judul: e.target.value })}
+                value={article?.judul}
+                onChange={(e) => setData({ ...article, judul: e.target.value })}
                 htmlFor="judul-artikel"
                 label="Judul Artikel"
                 classLabel="w-full text-[16px] text-neutral-700 font-normal"
@@ -133,9 +149,8 @@ export default function UpdateArticle() {
                   onDragOver={handleDragOver}
                   onDragLeave={handleDragLeave}
                   onDrop={handleDropImage}
-                  className={`w-full ${
-                    data?.image_url || previewImage ? "md:w-8/12" : "w-full"
-                  }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                  className={`w-full ${data?.image_url || previewImage ? "md:w-8/12" : "w-full"
+                    }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                   <>
                     <input
                       type="file"
