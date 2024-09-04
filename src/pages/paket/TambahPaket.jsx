@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { useQuill } from "react-quilljs";
 import { createNewPackage } from "service/api";
 import Swal from "sweetalert2";
+import FormTextArea from "elements/form/text-area/text-area";
 
 export default function TambahPaket() {
   const navigate = useNavigate();
@@ -183,20 +184,35 @@ export default function TambahPaket() {
                     name="Alamat Pengirim"
                     className="w-full"
                   />
-                  <div
-                    className="flex rounded-lg flex-col h-[150px] w-ful border border-textSecondary"
-                    ref={quillRefPengirim}></div>
+
+                  <FormTextArea
+                    value={form.alamat_pengirim}
+                    name="alamat_pengirim"
+                    id="alamat_pengirim"
+                    placeholder="Alamat Pengirim"
+                    onChange={(e) => setForm({ ...form, alamat_pengirim: e.target.value })}
+                    className="w-full border border-outlineBorder pl-3 h-[100px] rounded-md"
+                  />
+
                 </div>
 
                 <div className="w-full flex flex-col gap-y-3">
-                  <FormLabel
-                    htmlFor="alamat-tujuan"
-                    name="Tujuan"
-                    className="w-full"
+
+                  <FormInput
+                    type="text"
+                    placeholder="Tujuan"
+                    className="w-full border border-outlineBorder rounded-md h-[40px] pl-3"
+                    id="tujuan"
+                    name="tujuan"
+                    value={form.tujuan}
+                    onChange={(e) =>
+                      setForm({ ...form, tujuan: e.target.value })
+                    }
+                    htmlFor="tujuan"
+                    label="Tujuan"
+                    classLabel="w-full"
                   />
-                  <div
-                    className="flex flex-col rounded-lg h-[150px] w-ful border border-textSecondary"
-                    ref={quillRefTujuan}></div>
+
                 </div>
               </div>
 
@@ -230,7 +246,7 @@ export default function TambahPaket() {
                       setForm({ ...form, jenis_paket: e.target.value })
                     }
                     htmlFor="paket"
-                    label="jenis Paket"
+                    label="Jenis Paket"
                     classLabel="w-full"
                   />
                 </div>
@@ -240,7 +256,7 @@ export default function TambahPaket() {
                 <div className="flex flex-col w-full gap-y-3">
                   <FormInput
                     type="number"
-                    placeholder="Total Berat"
+                    placeholder="Total Berat (Kg)"
                     className="w-full block border border-outlineBorder rounded-md h-[40px] pl-3"
                     id="total"
                     name="total_berat"
@@ -279,81 +295,91 @@ export default function TambahPaket() {
                     name="Catatan"
                     className="w-full"
                   />
-                  <div
-                    className="flex flex-col rounded-lg h-[150px] w-ful border border-textSecondary"
-                    ref={quillRefCatatan}></div>
-                </div>
-              </div>
-            </div>
-
-            <div className="w-full flex flex-col gap-y-3">
-              <h3 className="font-semibold text-[18px] text-neutral-700">
-                Detail Penerima
-              </h3>
-
-              <div className="grid grid-cols-2 w-full gap-6">
-                <div className="flex flex-col w-full gap-y-3">
-                  <FormInput
-                    type="text"
-                    placeholder="Nama Penerima"
-                    className="w-full border border-outlineBorder rounded-md h-[40px] pl-3"
-                    id="penerima"
-                    name="nama_penerima"
-                    value={form.nama_penerima}
-                    onChange={(e) =>
-                      setForm({ ...form, nama_penerima: e.target.value })
-                    }
-                    htmlFor="penerima"
-                    label="Nama Penerima"
-                    classLabel="w-full"
-                  />
-                </div>
-
-                <div className="flex flex-col w-full gap-y-3">
-                  <FormInput
-                    type="number"
-                    placeholder="Nomor Telepon"
-                    className="w-full border border-outlineBorder rounded-md h-[40px] pl-3"
-                    id="telepon-penerima"
-                    name="no_telp_penerima"
-                    value={form.no_telp_penerima}
-                    onChange={(e) =>
-                      setForm({ ...form, no_telp_penerima: e.target.value })
-                    }
-                    htmlFor="telepon-penerima"
-                    label="Nomor Telepon"
-                    classLabel="w-full"
+                  <FormTextArea
+                    value={form.catatan}
+                    name="catatan"
+                    id="catatan"
+                    placeholder="Catatan"
+                    onChange={(e) => setForm({ ...form, catatan: e.target.value })}
+                    className="w-full border border-outlineBorder pl-3 h-[100px] rounded-md"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 w-full gap-6">
-                <div className="w-full flex flex-col gap-y-3">
-                  <FormLabel
-                    htmlFor="alamat-penerima"
-                    name="Alamat Penerima"
-                    className="w-full"
-                  />
-                  <div
-                    className="flex flex-col rounded-lg h-[150px] w-ful border border-textSecondary"
-                    ref={quillRefPenerima}></div>
+              <div className="w-full flex flex-col gap-y-3">
+                <h3 className="font-semibold text-[18px] text-neutral-700">
+                  Detail Penerima
+                </h3>
+
+                <div className="grid grid-cols-2 w-full gap-6">
+                  <div className="flex flex-col w-full gap-y-3">
+                    <FormInput
+                      type="text"
+                      placeholder="Nama Penerima"
+                      className="w-full border border-outlineBorder rounded-md h-[40px] pl-3"
+                      id="penerima"
+                      name="nama_penerima"
+                      value={form.nama_penerima}
+                      onChange={(e) =>
+                        setForm({ ...form, nama_penerima: e.target.value })
+                      }
+                      htmlFor="penerima"
+                      label="Nama Penerima"
+                      classLabel="w-full"
+                    />
+                  </div>
+
+                  <div className="flex flex-col w-full gap-y-3">
+                    <FormInput
+                      type="number"
+                      placeholder="Nomor Telepon"
+                      className="w-full border border-outlineBorder rounded-md h-[40px] pl-3"
+                      id="telepon-penerima"
+                      name="no_telp_penerima"
+                      value={form.no_telp_penerima}
+                      onChange={(e) =>
+                        setForm({ ...form, no_telp_penerima: e.target.value })
+                      }
+                      htmlFor="telepon-penerima"
+                      label="Nomor Telepon"
+                      classLabel="w-full"
+                    />
+                  </div>
                 </div>
 
-                <div className="flex flex-col w-full gap-y-3">
-                  <FormInput
-                    type="date"
-                    placeholder="Tanggal Diterima"
-                    className="w-full block border border-outlineBorder rounded-md h-[40px] pl-3"
-                    id="diterima"
-                    name="nama_penerima"
-                    value={form.tanggal_diterima}
-                    onChange={(e) =>
-                      setForm({ ...form, tanggal_diterima: e.target.value })
-                    }
-                    htmlFor="diterima"
-                    label="Tanggal Diterima"
-                    classLabel="w-full"
-                  />
+                <div className="grid grid-cols-2 w-full gap-6">
+                  <div className="w-full flex flex-col gap-y-3">
+                    <FormLabel
+                      htmlFor="alamat-penerima"
+                      name="Alamat Penerima"
+                      className="w-full"
+                    />
+                    <FormTextArea
+                      value={form.alamat_penerima}
+                      name="alamat_penerima"
+                      id="alamat_penerima"
+                      placeholder="Alamat Penerima"
+                      onChange={(e) => setForm({ ...form, alamat_penerima: e.target.value })}
+                      className="w-full border border-outlineBorder pl-3 h-[100px] rounded-md"
+                    />
+                  </div>
+
+                  <div className="flex flex-col w-full gap-y-3">
+                    <FormInput
+                      type="date"
+                      placeholder="Tanggal Diterima"
+                      className="w-full block border border-outlineBorder rounded-md h-[40px] pl-3"
+                      id="diterima"
+                      name="nama_penerima"
+                      value={form.tanggal_diterima}
+                      onChange={(e) =>
+                        setForm({ ...form, tanggal_diterima: e.target.value })
+                      }
+                      htmlFor="diterima"
+                      label="Tanggal Diterima"
+                      classLabel="w-full"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
