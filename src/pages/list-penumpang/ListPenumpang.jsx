@@ -11,6 +11,7 @@ import { formatDateArrange, formatTanggalPanjang, formatTime } from "helpers";
 import { getAllCustomerList } from "service/api";
 import { columnCustomers } from "constants/constants";
 import Pagination from "elements/pagination/pagination";
+import { Button } from "@/components/ui/button";
 
 export default function ListPenumpang() {
   const navigate = useNavigate();
@@ -193,22 +194,23 @@ export default function ListPenumpang() {
                                     {col?.key === "jam_berangkat" && time}
                                     {col?.key === "tanggal_berangkat" && date}
                                     {col?.key === "mobil" && item?.mobil}
-                                    {/* {col?.key === "print" && (
-                                    <Btn
-                                      onClick={() =>
-                                        handleDownloadTicket(
-                                          item?.kode_pembayaran
-                                        )
-                                      }
-                                      disabled={isFirstLoading ? true : false}
-                                      type="submit">
-                                      {isFirstLoading ? (
-                                        <Loader className="animate-spin" />
-                                      ) : (
-                                        <IconPrint />
-                                      )}
-                                    </Btn>
-                                  )} */}
+                                    {col?.key === "print" && (
+                                      <Button
+                                        onClick={() =>
+                                          window.open(
+                                            `https://backend-superapps.newus.id/surat-jalan/${item?.id}`,
+                                            "_blank"
+                                          )
+                                        }
+                                        disabled={isFirstLoading ? true : false}
+                                        type="submit">
+                                        {isFirstLoading ? (
+                                          <Loader className="animate-spin" />
+                                        ) : (
+                                          <IconPrint />
+                                        )}
+                                      </Button>
+                                    )}
                                   </td>
                                 );
                               })}

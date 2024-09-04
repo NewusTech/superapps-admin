@@ -331,22 +331,33 @@ export default function RentalScreen() {
                                         </span>
                                       </div>
                                     ))}
-                                  {/* {col?.key === "print" && (
-                                    <Btn
-                                      onClick={() =>
-                                        handleDownloadTicket(
-                                          item?.kode_pembayaran
-                                        )
-                                      }
-                                      disabled={isFirstLoading ? true : false}
-                                      type="submit">
-                                      {isFirstLoading ? (
-                                        <Loader className="animate-spin" />
+                                  {col?.key === "print" && (
+                                    <>
+                                      {item && item?.status === "Sukses" ? (
+                                        <Btn
+                                          onClick={() =>
+                                            window.open(
+                                              `https://backend-superapps.newus.id/rental/e-tiket/${item?.kode_pembayaran}`,
+                                              "_blank"
+                                            )
+                                          }
+                                          disabled={
+                                            isFirstLoading ? true : false
+                                          }
+                                          type="submit">
+                                          {isFirstLoading ? (
+                                            <Loader className="animate-spin" />
+                                          ) : (
+                                            <IconPrint />
+                                          )}
+                                        </Btn>
                                       ) : (
-                                        <IconPrint />
+                                        <Btn disabled type="submit">
+                                          <IconPrint />
+                                        </Btn>
                                       )}
-                                    </Btn>
-                                  )} */}
+                                    </>
+                                  )}
                                 </td>
                               );
                             })}

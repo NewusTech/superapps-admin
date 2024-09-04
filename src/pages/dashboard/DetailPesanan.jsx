@@ -13,6 +13,7 @@ import {
   getDetailPesanan,
   getDownloadInvoice,
   getDownloadTicket,
+  updatePaymentStatus,
 } from "service/api";
 import { Loader, Printer } from "lucide-react";
 import { formatTime } from "helpers";
@@ -22,6 +23,7 @@ export default function DetailPesanan() {
   const navigate = useNavigate();
   const { bookingCode } = useParams();
   const [detail, setDetail] = useState();
+  const [isLoading, setIsLoading] = useState(false);
   const [isFirstLoading, setIsFirstLoading] = useState(false);
   const [isSecondLoading, setIsSecondLoading] = useState(false);
 
@@ -110,8 +112,65 @@ export default function DetailPesanan() {
     }
   };
 
+  const handleUpdatePaymentStatus = async (e) => {
+    e.preventDefault();
+
+    try {
+      setIsLoading(true);
+
+      const response = await updatePaymentStatus(detail?.pesanan?.kode_pesanan);
+
+      if (response.success === true) {
+        setIsLoading(false);
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil menyelesaikan pesanan travel!",
+          timer: 2000,
+          showConfirmButton: false,
+          position: "center",
+        });
+        navigate(`/`);
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: response.message,
+          timer: 2000,
+          showConfirmButton: false,
+          position: "center",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  let status;
+  if (detail && detail?.pembayaran?.status === "Sukses") {
+    status = (
+      <div className="bg-success py-2 px-6 rounded-lg bg-opacity-30">
+        <p className="text-success">{detail && detail?.pembayaran?.status}</p>
+      </div>
+    );
+  } else if (detail && detail?.pembayaran?.status === "Menunggu Pembayaran") {
+    status = (
+      <div className="bg-neutral-200 py-2 px-6 rounded-lg bg-opacity-30">
+        <p className="text-neutral-400">
+          {detail && detail?.pembayaran?.status}
+        </p>
+      </div>
+    );
+  } else if (detail && detail?.pembayaran?.status === "Gagal") {
+    status = (
+      <div className="bg-error-400 py-2 px-6 rounded-lg bg-opacity-30">
+        <p className="text-error-600">{detail && detail?.pembayaran?.status}</p>
+      </div>
+    );
+  }
+
   return (
-    <section className="min-h-screen pt-12 px-4">
+    <section className="min-h-screen pt-12 px-4 flex flex-col gap-y-3">
       <div className="my-5">
         <Breadcrumb>
           <BreadcrumbList>
@@ -126,6 +185,23 @@ export default function DetailPesanan() {
         </Breadcrumb>
       </div>
 
+      {detail?.pembayaran?.status === "Menunggu Pembayaran" && (
+        <div className="flex flex-row self-end w-4/12 gap-x-3">
+          <form onSubmit={handleUpdatePaymentStatus} className="w-full">
+            <Button
+              type="submit"
+              disabled={isLoading ? true : false}
+              className="w-full bg-main hover:bg-primary-600 text-paper space-x-8">
+              {isLoading ? (
+                <Loader className="animate-spin" />
+              ) : (
+                "Selesaikan Pesanan"
+              )}
+            </Button>
+          </form>
+        </div>
+      )}
+
       <div className="w-full flex flex-col gap-y-3">
         <div className="bg-white flex flex-col w-full p-8 gap-y-4">
           <div className="flex flex-row justify-between w-full">
@@ -133,11 +209,7 @@ export default function DetailPesanan() {
               Rincian Pesanan
             </p>
 
-            <div className="bg-success py-2 px-6 rounded-lg bg-opacity-30">
-              <p className="text-success">
-                {detail && detail?.pembayaran?.status}
-              </p>
-            </div>
+            {detail && status}
           </div>
 
           <div className="grid grid-rows-8 w-full gap-y-4">
@@ -290,43 +362,45 @@ export default function DetailPesanan() {
       </div>
 
       <div className="flex flex-row w-full justify-end gap-x-3 mt-12">
-        <div className="flex flex-row w-4/12 gap-x-3">
-          <Button
-            disabled={isSecondLoading ? true : false}
-            onClick={() =>
-              handleDownloadInvoice(detail?.pembayaran?.kode_pembayaran)
-            }
-            type="submit"
-            className="w-full border border-textSecondary bg-neutral-50 hover:bg-neutral-100 text-neutral-500 space-x-8">
-            {isSecondLoading ? (
-              <Loader className="animate-spin" />
-            ) : (
-              <>
-                <Printer className="w-4 h-4" />
+        {detail && detail?.pembayaran?.status === "Sukses" && (
+          <div className="flex flex-row w-4/12 gap-x-3">
+            <Button
+              disabled={isSecondLoading ? true : false}
+              onClick={() =>
+                handleDownloadInvoice(detail?.pembayaran?.kode_pembayaran)
+              }
+              type="submit"
+              className="w-full border border-textSecondary bg-neutral-50 hover:bg-neutral-100 text-neutral-500 space-x-8">
+              {isSecondLoading ? (
+                <Loader className="animate-spin" />
+              ) : (
+                <>
+                  <Printer className="w-4 h-4" />
 
-                <p>Invoice</p>
-              </>
-            )}
-          </Button>
+                  <p>Invoice</p>
+                </>
+              )}
+            </Button>
 
-          <Button
-            onClick={() =>
-              handleDownloadTicket(detail?.pembayaran?.kode_pembayaran)
-            }
-            disabled={isFirstLoading ? true : false}
-            type="submit"
-            className="w-full bg-main hover:bg-primary-600 text-paper space-x-8">
-            {isFirstLoading ? (
-              <Loader className="animate-spin" />
-            ) : (
-              <>
-                <Printer className="w-4 h-4" />
+            <Button
+              onClick={() =>
+                handleDownloadTicket(detail?.pembayaran?.kode_pembayaran)
+              }
+              disabled={isFirstLoading ? true : false}
+              type="submit"
+              className="w-full bg-main hover:bg-primary-600 text-paper space-x-8">
+              {isFirstLoading ? (
+                <Loader className="animate-spin" />
+              ) : (
+                <>
+                  <Printer className="w-4 h-4" />
 
-                <p>Tiket</p>
-              </>
-            )}
-          </Button>
-        </div>
+                  <p>Tiket</p>
+                </>
+              )}
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   );
