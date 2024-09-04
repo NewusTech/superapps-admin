@@ -548,6 +548,18 @@ export const getAllArticles = async () => {
   return await response.json();
 };
 
+export const getArticleById = async (id) => {
+  const response = await fetch(`${apiUrl}/artikel/artikel/${id}`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
 export const createNewArticle = async (data) => {
   const response = await fetch(`${apiUrl}/artikel/artikel`, {
     headers: {
