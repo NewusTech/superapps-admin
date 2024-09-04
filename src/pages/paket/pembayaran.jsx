@@ -65,6 +65,11 @@ export default function PembayaranPaket() {
     }
   }, [confirms?.id]);
 
+  let biaya;
+  if (confirms?.biaya) {
+    biaya = formatRupiah(confirms?.biaya);
+  }
+
   const handlePaymentMethodChange = (metode_id) => {
     setSelectedPaymentMethod(metode_id);
     setData((prevData) => ({ ...prevData, metode_id }));
@@ -232,7 +237,7 @@ export default function PembayaranPaket() {
         </div>
         <div className="flex flex-row gap-4 items-center">
           <div className="ml-auto">
-            <p className="text-main font-bold">Rp. {formatRupiah(confirms?.biaya)}</p>
+            <p className="text-main font-bold">{biaya}</p>
             <p className="text-sm">Total harga</p>
           </div>
           <Buttons
