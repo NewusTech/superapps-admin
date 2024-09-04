@@ -140,7 +140,7 @@ export default function StatusPackagePembayaran() {
             <span className="text-lg font-semibold">{date}</span>
           </div>
           <div className="flex flex-col text-end">
-            <span className="text-sm">Jam Berangkat</span>
+            <span className="text-sm">Waktu Pembayaran</span>
             <span className="text-lg font-semibold">{time}</span>
           </div>
           <div className="flex flex-col">

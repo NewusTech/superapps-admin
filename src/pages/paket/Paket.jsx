@@ -160,7 +160,7 @@ export default function Paket() {
                   </thead>
                   <tbody>
                     {packages?.data?.length === 0 ||
-                    currentItems?.length === 0 ? (
+                      currentItems?.length === 0 ? (
                       <tr>
                         <td colSpan={10}>
                           <p className="text-lg mt-5 font-light text-center pb-5">
@@ -227,9 +227,10 @@ export default function Paket() {
                                     {col?.key === "biaya" && price}
                                     {col?.key === "print" && (
                                       <Button
-                                        // onClick={() =>
-                                        //   handleDownloadTicket(item?.kode_pembayaran)
-                                        // }
+                                        onClick={() => {
+                                          window.open(`https://backend-superapps.newus.id/paket/label/${paket?.pembayaran?.kode_paket}`, "_blank");
+                                        }
+                                        }
                                         // disabled={isFirstLoading ? true : false}
                                         type="submit">
                                         {/* {isFirstLoading ? (
