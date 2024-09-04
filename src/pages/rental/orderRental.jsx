@@ -168,7 +168,6 @@ export default function OrderRental() {
 
   const handleImageKTPChange = (e) => {
     const file = e.target.files?.[0];
-    console.log(file, "ini file");
 
     if (file) {
       setFileImageKTP(file);
@@ -177,14 +176,11 @@ export default function OrderRental() {
         image_ktp: file.name,
       });
       const fileUrl = URL.createObjectURL(file);
-      console.log(fileUrl, "ini url");
 
       var filesss = new File([fileUrl], "foto_ktp.png", {
         type: "image/png",
         lastModified: new Date().getTime(),
       });
-
-      console.log(filesss, "ini files");
 
       setPreviewImageKTP(fileUrl);
     }

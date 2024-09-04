@@ -32,7 +32,7 @@ export default function RiwayatPesanan() {
       const response = await getAllPesanan(search, status, startDate, endDate);
       setOrder(response);
     } catch (error) {
-      console.log(error.name);
+      console.log(error);
     } finally {
       setIsLoading(false);
     }

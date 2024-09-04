@@ -14,9 +14,10 @@ import {
   getDetailTravelCarRent,
   getDownloadInvoice,
   getDownloadTicket,
+  updateRentalStatusPayment,
 } from "service/api";
 import { Loader, Printer } from "lucide-react";
-import { formatTanggalPanjang, formatTime } from "helpers";
+import { formatDecimalRupiah, formatTanggalPanjang, formatTime } from "helpers";
 import Swal from "sweetalert2";
 
 export default function DetailRental() {
@@ -25,6 +26,7 @@ export default function DetailRental() {
   const { kodePembayaran } = useParams();
 
   const [detail, setDetail] = useState();
+  const [isLoading, setIsLoading] = useState(false);
   const [isFirstLoading, setIsFirstLoading] = useState(false);
   const [isSecondLoading, setIsSecondLoading] = useState(false);
 
@@ -41,6 +43,41 @@ export default function DetailRental() {
   useEffect(() => {
     fetchDetailPesanan(kodePembayaran);
   }, [kodePembayaran]);
+
+  const handleUpdatePaymentStatus = async (e) => {
+    e.preventDefault();
+
+    try {
+      setIsFirstLoading(true);
+
+      const response = await updateRentalStatusPayment(kodePembayaran);
+
+      if (response.success === true) {
+        setIsFirstLoading(false);
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil menyelesaikan pembayaran rental!",
+          timer: 2000,
+          showConfirmButton: false,
+          position: "center",
+        });
+        localStorage.clear();
+        navigate(`/travel-car-rent`);
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: response.message,
+          timer: 2000,
+          showConfirmButton: false,
+          position: "center",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsFirstLoading(false);
+    }
+  };
 
   // const handleDownloadTicket = async (paymentCode) => {
   //   try {
@@ -109,7 +146,7 @@ export default function DetailRental() {
   // };
 
   return (
-    <section className="min-h-screen pt-12 px-4">
+    <section className="min-h-screen flex flex-col gap-y-3 pt-12 px-4">
       <div className="my-5">
         <Breadcrumb>
           <BreadcrumbList>
@@ -125,6 +162,23 @@ export default function DetailRental() {
           </BreadcrumbList>
         </Breadcrumb>
       </div>
+
+      {detail?.status === "Menunggu Pembayaran" && (
+        <div className="flex flex-row self-end w-4/12 gap-x-3">
+          <form onSubmit={handleUpdatePaymentStatus} className="w-full">
+            <Button
+              type="submit"
+              disabled={isLoading ? true : false}
+              className="w-full bg-main hover:bg-primary-600 text-paper space-x-8">
+              {isLoading ? (
+                <Loader className="animate-spin" />
+              ) : (
+                "Selesaikan Pesanan"
+              )}
+            </Button>
+          </form>
+        </div>
+      )}
 
       <div className="w-full flex flex-col gap-y-3">
         <div className="bg-white flex flex-col w-full p-8 gap-y-4">
@@ -188,7 +242,7 @@ export default function DetailRental() {
               </p>
 
               <p className="font-normal text-[16px] text-neutral-700">
-                {/* : {order?.titik_antar} */}
+                : {detail && formatTime(detail?.jam_keberangkatan)}
               </p>
             </div>
 
@@ -206,7 +260,7 @@ export default function DetailRental() {
               <p className="font-normal text-[16px] text-neutral-700">All In</p>
 
               <p className="font-normal text-[16px] text-neutral-700">
-                {/* : {detail && detail?.pesanan?.titik_jemput} */}
+                : {detail && detail?.all_in === 0 ? "Tidak" : "Ya"}
               </p>
             </div>
 
@@ -214,7 +268,7 @@ export default function DetailRental() {
               <p className="font-normal text-[16px] text-neutral-700">Harga</p>
 
               <p className="font-normal text-[16px] text-neutral-700">
-                {/* : {detail && detail?.pesanan?.titik_antar} */}
+                : {detail && formatDecimalRupiah(detail?.nominal)}
               </p>
             </div>
           </div>
@@ -232,7 +286,7 @@ export default function DetailRental() {
               <p className="font-normal text-[16px] text-neutral-700">Nama</p>
 
               <p className="font-normal text-[16px] text-neutral-700">
-                {/* : {detail && detail?.area} */}
+                : {detail && detail?.nama}
               </p>
             </div>
 
@@ -240,8 +294,7 @@ export default function DetailRental() {
               <p className="font-normal text-[16px] text-neutral-700">Nik</p>
 
               <p className="font-normal text-[16px] text-neutral-700">
-                {/* : {detail && formatTanggalPanjang(detail?.tanggal_awal_sewa)} -{" "}
-                {detail && formatTanggalPanjang(detail?.tanggal_akhir_sewa)} */}
+                : {detail && detail?.nik}
               </p>
             </div>
 
@@ -251,7 +304,7 @@ export default function DetailRental() {
               </p>
 
               <p className="font-normal text-[16px] text-neutral-700">
-                {/* : {detail && detail?.durasi_sewa} Hari */}
+                : {detail && detail?.no_telp}
               </p>
             </div>
 
@@ -259,7 +312,7 @@ export default function DetailRental() {
               <p className="font-normal text-[16px] text-neutral-700">Email</p>
 
               <p className="font-normal text-[16px] text-neutral-700">
-                {/* : {order?.titik_antar} */}
+                : {detail && detail?.email}
               </p>
             </div>
 
@@ -267,52 +320,58 @@ export default function DetailRental() {
               <p className="font-normal text-[16px] text-neutral-700">Alamat</p>
 
               <p className="font-normal text-[16px] text-neutral-700">
-                {/* : {detail && detail?.alamat_keberangkatan} */}
+                : {detail && detail?.alamat}
               </p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* <div className="flex flex-row w-full justify-end gap-x-3 mt-12">
-        <div className="flex flex-row w-4/12 gap-x-3">
-          <Button
-            disabled={isSecondLoading ? true : false}
-            onClick={() =>
-              handleDownloadInvoice(detail?.pembayaran?.kode_pembayaran)
-            }
-            type="submit"
-            className="w-full border border-textSecondary bg-neutral-50 hover:bg-neutral-100 text-neutral-500 space-x-8">
-            {isSecondLoading ? (
-              <Loader className="animate-spin" />
-            ) : (
-              <>
-                <Printer className="w-4 h-4" />
+      <div className="flex flex-row w-full justify-end gap-x-3 mt-12">
+        {detail && detail?.status === "Sukses" && (
+          <div className="flex flex-row w-4/12 gap-x-3">
+            <Button
+              disabled={isSecondLoading ? true : false}
+              onClick={() =>
+                window.open(
+                  `https://backend-superapps.newus.id/rental/invoice/${detail?.kode_pembayaran}`
+                )
+              }
+              type="submit"
+              className="w-full border border-textSecondary bg-neutral-50 hover:bg-neutral-100 text-neutral-500 space-x-8">
+              {isSecondLoading ? (
+                <Loader className="animate-spin" />
+              ) : (
+                <>
+                  <Printer className="w-4 h-4" />
 
-                <p>Invoice</p>
-              </>
-            )}
-          </Button>
+                  <p>Invoice</p>
+                </>
+              )}
+            </Button>
 
-          <Button
-            onClick={() =>
-              handleDownloadTicket(detail?.pembayaran?.kode_pembayaran)
-            }
-            disabled={isFirstLoading ? true : false}
-            type="submit"
-            className="w-full bg-main hover:bg-primary-600 text-paper space-x-8">
-            {isFirstLoading ? (
-              <Loader className="animate-spin" />
-            ) : (
-              <>
-                <Printer className="w-4 h-4" />
+            <Button
+              onClick={() =>
+                window.open(
+                  `https://backend-superapps.newus.id/rental/e-tiket/${detail?.kode_pembayaran}`
+                )
+              }
+              disabled={isFirstLoading ? true : false}
+              type="submit"
+              className="w-full bg-main hover:bg-primary-600 text-paper space-x-8">
+              {isFirstLoading ? (
+                <Loader className="animate-spin" />
+              ) : (
+                <>
+                  <Printer className="w-4 h-4" />
 
-                <p>Tiket</p>
-              </>
-            )}
-          </Button>
-        </div>
-      </div> */}
+                  <p>Tiket</p>
+                </>
+              )}
+            </Button>
+          </div>
+        )}
+      </div>
     </section>
   );
 }

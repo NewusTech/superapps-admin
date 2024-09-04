@@ -54,7 +54,7 @@ export default function Dashboard() {
       );
       setOrder(response);
     } catch (error) {
-      console.log(error.name);
+      console.log(error);
     } finally {
       setIsLoading(false);
     }
