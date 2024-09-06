@@ -15,20 +15,27 @@ import {
   getDownloadInvoice,
   getDownloadTicket,
   updateRentalStatusPayment,
+  updateRentalStatusPaymentAdmin,
 } from "service/api";
 import { Loader, Printer } from "lucide-react";
 import { formatDecimalRupiah, formatTanggalPanjang, formatTime } from "helpers";
 import Swal from "sweetalert2";
+import FormLabel from "elements/form/label/label";
+import FormTextArea from "elements/form/text-area/text-area";
 
 export default function DetailRental() {
   const navigate = useNavigate();
-  const { bookingCode } = useParams();
   const { kodePembayaran } = useParams();
-
+  const [data, setData] = useState({
+    status: "",
+    keterangan: "",
+  });
   const [detail, setDetail] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [isFirstLoading, setIsFirstLoading] = useState(false);
   const [isSecondLoading, setIsSecondLoading] = useState(false);
+  const [isThirdLoading, setIsThirdLoading] = useState(false);
+  const [isFourthLoading, setIsFourthLoading] = useState(false);
 
   const fetchDetailPesanan = async (kode) => {
     try {
@@ -44,16 +51,19 @@ export default function DetailRental() {
     fetchDetailPesanan(kodePembayaran);
   }, [kodePembayaran]);
 
-  const handleUpdatePaymentStatus = async (e) => {
+  const handleUpdatePaymentStatusSuccess = async (e) => {
     e.preventDefault();
 
     try {
-      setIsFirstLoading(true);
+      setIsFourthLoading(true);
 
-      const response = await updateRentalStatusPayment(kodePembayaran);
+      const response = await updateRentalStatusPaymentAdmin(kodePembayaran, {
+        ...data,
+        status: "Sukses",
+      });
 
       if (response.success === true) {
-        setIsFirstLoading(false);
+        setIsFourthLoading(false);
         Swal.fire({
           icon: "success",
           title: "Berhasil menyelesaikan pembayaran rental!",
@@ -75,75 +85,47 @@ export default function DetailRental() {
     } catch (error) {
       console.log(error);
     } finally {
-      setIsFirstLoading(false);
+      setIsFourthLoading(false);
     }
   };
 
-  // const handleDownloadTicket = async (paymentCode) => {
-  //   try {
-  //     setIsFirstLoading(true);
+  const handleUpdatePaymentStatusFailed = async (e) => {
+    e.preventDefault();
 
-  //     const response = await getDownloadTicket(paymentCode);
+    try {
+      setIsThirdLoading(true);
 
-  //     if (response?.success === true) {
-  //       setIsFirstLoading(false);
-  //       Swal.fire({
-  //         icon: "success",
-  //         title: "Berhasil download e-ticket!",
-  //         timer: 2000,
-  //         showConfirmButton: false,
-  //         position: "center",
-  //       });
+      const response = await updateRentalStatusPaymentAdmin(kodePembayaran, {
+        ...data,
+        status: "Gagal",
+      });
 
-  //       window.open(response?.data?.link, "_blank");
-  //     } else {
-  //       Swal.fire({
-  //         icon: "error",
-  //         title: "Gagal Mendapatkan e-ticket!",
-  //         timer: 2000,
-  //         showConfirmButton: false,
-  //         position: "center",
-  //       });
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   } finally {
-  //     setIsFirstLoading(false);
-  //   }
-  // };
-
-  // const handleDownloadInvoice = async (paymentCode) => {
-  //   try {
-  //     setIsSecondLoading(true);
-
-  //     const response = await getDownloadInvoice(paymentCode);
-
-  //     if (response?.success === true) {
-  //       setIsSecondLoading(false);
-  //       Swal.fire({
-  //         icon: "success",
-  //         title: "Berhasil download invoice!",
-  //         timer: 2000,
-  //         showConfirmButton: false,
-  //         position: "center",
-  //       });
-
-  //       window.open(response?.data?.link, "_blank");
-  //     } else {
-  //       Swal.fire({
-  //         icon: "error",
-  //         title: "Gagal Mendapatkan invoice!",
-  //         timer: 2000,
-  //         showConfirmButton: false,
-  //         position: "center",
-  //       });
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   } finally {
-  //     setIsSecondLoading(false);
-  //   }
-  // };
+      if (response.success === true) {
+        setIsThirdLoading(false);
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil menolak pesanan rental!",
+          timer: 2000,
+          showConfirmButton: false,
+          position: "center",
+        });
+        localStorage.clear();
+        navigate(`/travel-car-rent`);
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: response.message,
+          timer: 2000,
+          showConfirmButton: false,
+          position: "center",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsThirdLoading(false);
+    }
+  };
 
   return (
     <section className="min-h-screen flex flex-col gap-y-3 pt-12 px-4">
@@ -162,23 +144,6 @@ export default function DetailRental() {
           </BreadcrumbList>
         </Breadcrumb>
       </div>
-
-      {detail?.status === "Menunggu Pembayaran" && (
-        <div className="flex flex-row self-end w-4/12 gap-x-3">
-          <form onSubmit={handleUpdatePaymentStatus} className="w-full">
-            <Button
-              type="submit"
-              disabled={isLoading ? true : false}
-              className="w-full bg-main hover:bg-primary-600 text-paper space-x-8">
-              {isLoading ? (
-                <Loader className="animate-spin" />
-              ) : (
-                "Selesaikan Pesanan"
-              )}
-            </Button>
-          </form>
-        </div>
-      )}
 
       <div className="w-full flex flex-col gap-y-3">
         <div className="bg-white flex flex-col w-full p-8 gap-y-4">
@@ -325,9 +290,73 @@ export default function DetailRental() {
             </div>
           </div>
         </div>
+
+        {detail && detail?.status === "Menunggu Verifikasi" && (
+          <div className="w-6/12 flex flex-row p-6">
+            <img
+              src={detail?.bukti_url}
+              alt="payment"
+              className="w-full h-full object-contain"
+            />
+          </div>
+        )}
       </div>
 
-      <div className="flex flex-row w-full justify-end gap-x-3 mt-12">
+      <div className="flex flex-row w-full justify-end gap-x-3 mt-6">
+        {detail?.status === "Menunggu Verifikasi" && (
+          <div className="flex flex-row self-end w-full gap-x-3">
+            <form className="w-full flex flex-col gap-y-3">
+              <div className="grid grid-cols-1 w-full gap-x-5">
+                <div className="w-full flex flex-col gap-y-3">
+                  <FormLabel
+                    htmlFor="keterangan"
+                    name="Keterangan"
+                    className="w-full"
+                  />
+                  <FormTextArea
+                    value={data.keterangan}
+                    name="keterangan"
+                    id="keterangan"
+                    placeholder="Keterangan"
+                    onChange={(e) =>
+                      setData({ ...data, keterangan: e.target.value })
+                    }
+                    className="w-full border border-outlineBorder pl-3 h-[200px] rounded-md"
+                  />
+                </div>
+              </div>
+
+              <div className="w-full flex flex-row justify-end">
+                <div className="flex flex-row w-5/12 gap-x-3">
+                  <Button
+                    onClick={handleUpdatePaymentStatusFailed}
+                    type="submit"
+                    disabled={isThirdLoading ? true : false}
+                    className="w-full bg-error-700 hover:bg-primary-600 text-paper space-x-8">
+                    {isThirdLoading ? (
+                      <Loader className="animate-spin" />
+                    ) : (
+                      "Tolak Pemesanan"
+                    )}
+                  </Button>
+
+                  <Button
+                    onClick={handleUpdatePaymentStatusSuccess}
+                    type="submit"
+                    disabled={isFourthLoading ? true : false}
+                    className="w-full bg-main hover:bg-primary-600 text-paper space-x-8">
+                    {isFourthLoading ? (
+                      <Loader className="animate-spin" />
+                    ) : (
+                      "Selesaikan Pesanan"
+                    )}
+                  </Button>
+                </div>
+              </div>
+            </form>
+          </div>
+        )}
+
         {detail && detail?.status === "Sukses" && (
           <div className="flex flex-row w-4/12 gap-x-3">
             <Button

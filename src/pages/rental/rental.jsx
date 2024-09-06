@@ -124,39 +124,6 @@ export default function RentalScreen() {
     setFilterStatus(value !== "" ? value : "");
   };
 
-  // const handleDownloadTicket = async (paymentCode) => {
-  //   try {
-  //     setIsFirstLoading(true);
-
-  //     const response = await getDownloadTicket(paymentCode);
-
-  //     if (response?.success === true) {
-  //       setIsFirstLoading(false);
-  //       Swal.fire({
-  //         icon: "success",
-  //         title: "Berhasil download e-ticket!",
-  //         timer: 2000,
-  //         showConfirmButton: false,
-  //         position: "center",
-  //       });
-
-  //       window.open(response?.data?.link, "_blank");
-  //     } else {
-  //       Swal.fire({
-  //         icon: "error",
-  //         title: "Gagal Mendapatkan e-ticket!",
-  //         timer: 2000,
-  //         showConfirmButton: false,
-  //         position: "center",
-  //       });
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   } finally {
-  //     setIsFirstLoading(false);
-  //   }
-  // };
-
   return (
     <div className="flex flex-col h-full">
       <div className="">
