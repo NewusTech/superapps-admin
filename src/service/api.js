@@ -911,6 +911,20 @@ export const getAllMasterTravelCarRent = async () => {
   return await response.json();
 };
 
+export const createNewMasterCarRent = async (data) => {
+  const response = await fetch(`${apiUrl}/rental/mobil`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      // "Content-Type": "application/json",
+    },
+    method: "POST",
+    body: data,
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
 export const getDetailMasterTravelCarRent = async (id) => {
   const response = await fetch(`${apiUrl}/rental/mobil/${id}`, {
     headers: {
@@ -947,6 +961,23 @@ export const updateRentalStatusPayment = async (kodePembayaran) => {
         "Content-Type": "application/json",
       },
       method: "PATCH",
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+export const updateRentalStatusPaymentAdmin = async (kodePembayaran, data) => {
+  const response = await fetch(
+    `${apiUrl}/rental/confirm-payment/${kodePembayaran}`,
+    {
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "Content-Type": "application/json",
+      },
+      method: "PUT",
+      body: JSON.stringify(data),
       cache: "no-store",
     }
   );
